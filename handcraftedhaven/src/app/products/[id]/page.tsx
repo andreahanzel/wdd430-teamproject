@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import productData from "@/lib/mock-products.json";
 import ProductReviews from "@/components/ProductReviews";
 import { notFound, useParams, useRouter } from "next/navigation";
 import Image from "next/image";
@@ -12,6 +11,7 @@ import { CheckCircle, ShoppingBag, LogIn } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
 import { useNotification } from "@/contexts/NotificationContext";
+import { getProductById } from "@/services/productServices";
 
 export default function ProductDetailPage() {
 	const params = useParams();
@@ -28,11 +28,20 @@ export default function ProductDetailPage() {
 	const [addedToCart, setAddedToCart] = useState(false);
 
 	useEffect(() => {
-		const foundProduct = productData.find((p) => p.id === id);
-		if (foundProduct) {
-			setProduct(foundProduct);
+		async function loadProduct() {
+			try {
+				const productData = await getProductById(id);
+				if (productData) {
+					setProduct(productData);
+				}
+			} catch (error) {
+				console.error("Error loading product:", error);
+			} finally {
+				setLoading(false);
+			}
 		}
-		setLoading(false);
+
+		loadProduct();
 	}, [id]);
 
 	if (loading) {
@@ -222,7 +231,7 @@ export default function ProductDetailPage() {
 
 							<div className="border-t border-b border-gray-200 py-6">
 								<p className="text-3xl font-bold text-electricBlue">
-									${product.price.toFixed(2)}
+									${Number(product.price).toFixed(2)}
 								</p>
 							</div>
 

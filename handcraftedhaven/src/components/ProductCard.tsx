@@ -94,10 +94,7 @@ export default function ProductCard({ product }: ProductProps) {
 					{/* Price with animated background on hover */}
 					<div className="relative">
 						<span className="text-lg font-bold text-darkPurple group-hover:text-white relative z-10 transition-colors duration-300">
-							$
-							{typeof product.price === "number"
-								? product.price.toFixed(2)
-								: "0.00"}
+							${Number(product.price).toFixed(2)}
 						</span>
 						<div className="absolute inset-0 bg-electricBlue scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 -z-0 rounded-full px-2"></div>
 					</div>
@@ -168,4 +165,4 @@ export default function ProductCard({ product }: ProductProps) {
 			<div className="absolute bottom-0 right-0 w-12 h-12 bg-gradient-to-tl from-neonPink to-electricBlue opacity-30 rounded-tl-3xl"></div>
 		</div>
 	);
-};
+}

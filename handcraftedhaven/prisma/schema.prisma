@@ -55,3 +55,34 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  price       Decimal  @db.Decimal(10, 2)
+  image       String
+  category    String
+  color       String?
+  material    String?
+  sellerId    Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  seller      Seller   @relation(fields: [sellerId], references: [id])
+}
+
+model Seller {
+  id           Int       @id @default(autoincrement())
+  name         String
+  shopName     String
+  profileImage String
+  location     String
+  rating       String
+  sales        String
+  bio          String
+  story        String    @db.Text
+  contact      String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  products     Product[]
+}
