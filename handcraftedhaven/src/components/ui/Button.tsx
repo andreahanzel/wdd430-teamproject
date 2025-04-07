@@ -12,6 +12,8 @@ const buttonVariants = cva(
 		variants: {
 			variant: {
 				primary: "bg-backgroundDark hover:bg-backgroundDark/90 text-white",
+				secondary:
+					"bg-white border border-gray-300 hover:bg-gray-100 text-gray-800",
 				login: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md",
 				register:
 					"bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md",

@@ -1,62 +1,56 @@
 "use client";
 
-import { ShoppingBag } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/contexts/CartContext";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useSession } from "next-auth/react";
 
 export default function CartButton() {
-  const { cartCount } = useCart();
-  const [isClient, setIsClient] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [prevCount, setPrevCount] = useState(0);
+	const { itemCount } = useCart();
+	const [hasItems, setHasItems] = useState(false);
+	const [isClient, setIsClient] = useState(false);
+	const { status } = useSession();
+	const isAuthenticated = status === "authenticated";
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+	// Set isClient to true after mount to avoid hydration issues
+	useEffect(() => {
+		setIsClient(true);
+	}, []);
 
-  useEffect(() => {
-    // Don't animate on initial render
-    if (isClient && prevCount !== cartCount) {
-      setIsAnimating(true);
-      const timer = setTimeout(() => setIsAnimating(false), 1000);
-      setPrevCount(cartCount);
-      return () => clearTimeout(timer);
-    }
-  }, [cartCount, isClient, prevCount]);
+	// Animate badge when itemCount changes
+	useEffect(() => {
+		if (isClient && itemCount > 0) {
+			setHasItems(true);
+		}
+	}, [itemCount, isClient]);
 
-  if (!isClient) {
-    return (
-      <div className="relative p-2 text-white hover:text-neonPink transition-colors">
-        <ShoppingBag size={24} />
-      </div>
-    );
-  }
+	// Only render on client and for authenticated users
+	if (!isClient || !isAuthenticated) {
+		return null;
+	}
 
-  return (
-    <Link href="/cart" className="relative">
-      <div className="relative p-2 text-white hover:text-neonPink transition-colors">
-        <ShoppingBag size={24} />
-        <AnimatePresence>
-          {cartCount > 0 && (
-            <motion.div
-              initial={{ scale: 0.6, opacity: 0 }}
-              animate={{ 
-                scale: isAnimating ? [1, 1.2, 1] : 1, 
-                opacity: 1 
-              }}
-              transition={{ 
-                duration: isAnimating ? 0.5 : 0.2,
-                ease: "easeOut" 
-              }}
-              className="absolute -top-1 -right-1 bg-neonPink text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center"
-            >
-              {cartCount}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </Link>
-  );
+	return (
+		<Link
+			href="/cart"
+			className="relative inline-flex items-center text-white p-2 hover:bg-white/10 rounded-full transition-colors"
+		>
+			<ShoppingCart className="h-6 w-6" />
+			<AnimatePresence>
+				{itemCount > 0 && (
+					<motion.span
+						key="badge"
+						initial={{ scale: 0.6, opacity: 0 }}
+						animate={{ scale: 1, opacity: 1 }}
+						exit={{ scale: 0.6, opacity: 0 }}
+						className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1"
+					>
+						{itemCount}
+					</motion.span>
+				)}
+			</AnimatePresence>
+			<span className="sr-only">View your cart</span>
+		</Link>
+	);
 }

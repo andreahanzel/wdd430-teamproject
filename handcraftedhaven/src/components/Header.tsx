@@ -34,7 +34,8 @@ export default function Header() {
 					</div>
 
 					<div className="flex items-center space-x-4">
-						<CartButton />
+						{/* Only show cart button for authenticated users */}
+						{isAuthenticated && <CartButton />}
 
 						{isAuthenticated ? (
 							<div className="flex items-center space-x-3">
@@ -72,7 +73,9 @@ export default function Header() {
 							Handcrafted Haven
 						</Link>
 						<div className="flex items-center space-x-3">
-							<CartButton />
+							{/* Only show cart button for authenticated users */}
+							{isAuthenticated && <CartButton />}
+
 							{isAuthenticated ? (
 								<Button variant="login" onClick={handleSignOut} size="sm">
 									Sign Out
