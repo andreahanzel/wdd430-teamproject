@@ -4,8 +4,8 @@ import { Button } from "./Button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, FormEvent } from "react";
-import { useNotification } from "@/contexts/NotificationContext";
-import { User, Mail, Lock } from "lucide-react";
+import { useNotification } from "../../contexts/NotificationContext";
+import { User, Mail, Lock, AlertCircle } from "lucide-react";
 
 export default function RegisterForm() {
 	const router = useRouter();
@@ -35,21 +35,40 @@ export default function RegisterForm() {
 			const data = await response.json();
 
 			if (!response.ok) {
-				throw new Error(data.error || "Registration failed");
+				// Format and handle specific error messages
+				let errorMessage = data.error || "Registration failed";
+
+				// Check for specific error messages
+				if (errorMessage.includes("already exists")) {
+					throw new Error(
+						`An account with this email already exists. Please sign in instead.`
+					);
+				}
+
+				throw new Error(errorMessage);
 			}
 
-			// Instead of auto-login, redirect to login page with success message
-			showNotification("Registration successful! Please log in.", "success");
+			// Success
+			showNotification(
+				"Registration successful! Please log in with your new account.",
+				"success"
+			);
 			router.push("/login?registered=true");
 		} catch (error) {
 			if (error instanceof Error) {
 				setError(error.message);
 				showNotification(error.message, "error");
+
+				// Set loading to false only if we're not redirecting
+				setIsLoading(false);
 			} else {
-				setError("An unexpected error occurred");
-				showNotification("An unexpected error occurred", "error");
+				setError("An unexpected error occurred during registration");
+				showNotification(
+					"An unexpected error occurred during registration",
+					"error"
+				);
+				setIsLoading(false);
 			}
-			setIsLoading(false);
 		}
 	}
 
@@ -64,11 +83,25 @@ export default function RegisterForm() {
 				<form onSubmit={handleSubmit} className="p-8 space-y-6">
 					{error && (
 						<div
-							className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md"
+							className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md flex items-start space-x-2"
 							role="alert"
 						>
-							<p className="font-medium">Registration Error</p>
-							<p>{error}</p>
+							<AlertCircle className="h-5 w-5 mt-0.5" />
+							<div>
+								<p className="font-medium">Registration Error</p>
+								<p>{error}</p>
+								{error.includes("already exists") && (
+									<p className="mt-1 text-sm">
+										Already have an account?{" "}
+										<Link
+											href="/login"
+											className="text-blue-600 hover:underline"
+										>
+											Sign in
+										</Link>
+									</p>
+								)}
+							</div>
 						</div>
 					)}
 

@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { CartProvider } from "@/contexts/CartContext";
 import { SessionProvider } from "@/components/SessionProvider";
-import { NotificationProvider } from "@/contexts/NotificationContext";
+import { NotificationProvider } from "../contexts/NotificationContext";
 
 const poppins = Poppins({
 	variable: "--font-poppins",

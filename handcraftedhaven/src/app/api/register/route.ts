@@ -9,8 +9,7 @@ export async function POST(request: NextRequest) {
 		if (!email || !password || !name) {
 			return NextResponse.json(
 				{
-					error:
-						"Missing required fields. Please provide name, email, and password.",
+					error: "Please provide your name, email, and password to register.",
 				},
 				{ status: 400 }
 			);
@@ -20,12 +19,15 @@ export async function POST(request: NextRequest) {
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!emailRegex.test(email)) {
 			return NextResponse.json(
-				{ error: "Please provide a valid email address." },
+				{
+					error:
+						"Please enter a valid email address (e.g., example@domain.com).",
+				},
 				{ status: 400 }
 			);
 		}
 
-		// Password strength check (very basic)
+		// Password strength check
 		if (password.length < 6) {
 			return NextResponse.json(
 				{ error: "Password must be at least 6 characters long." },
@@ -36,13 +38,16 @@ export async function POST(request: NextRequest) {
 		const result = await createUser(name, email, password);
 
 		if (result.error || !result.user) {
-			return NextResponse.json({ error: result.error || "User data not found" }, { status: 400 });
+			return NextResponse.json(
+				{ error: result.error || "User account could not be created." },
+				{ status: 400 }
+			);
 		}
 
 		return NextResponse.json(
 			{
 				success: true,
-				message: "User registered successfully",
+				message: "Your account has been created successfully!",
 				user: {
 					id: result.user.id,
 					name: result.user.name,
@@ -55,7 +60,8 @@ export async function POST(request: NextRequest) {
 		console.error("Registration error:", error);
 		return NextResponse.json(
 			{
-				error: "Registration failed. Please try again later.",
+				error:
+					"We couldn't process your registration at this time. Please try again later.",
 			},
 			{ status: 500 }
 		);

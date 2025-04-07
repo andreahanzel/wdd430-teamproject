@@ -13,7 +13,10 @@ export async function createUser(
 		});
 
 		if (existingUser) {
-			return { error: "User already exists with this email" };
+			return {
+				error:
+					"An account with this email already exists. Please use a different email or try logging in.",
+			};
 		}
 
 		// Hash the password
@@ -38,7 +41,15 @@ export async function createUser(
 		};
 	} catch (error) {
 		console.error("Error creating user:", error);
-		return { error: "Failed to create user" };
+		// Check specific database errors
+		if (error instanceof Error) {
+			if (error.message.includes("Unique constraint")) {
+				return { error: "An account with this email already exists." };
+			}
+		}
+		return {
+			error: "We couldn't create your account. Please try again later.",
+		};
 	}
 }
 
@@ -50,14 +61,19 @@ export async function verifyCredentials(email: string, password: string) {
 		});
 
 		if (!user) {
-			return { error: "No user found with this email" };
+			return {
+				error:
+					"No account found with this email. Please check your email address or create a new account.",
+			};
 		}
 
 		// Compare provided password with stored hash
 		const passwordValid = await bcrypt.compare(password, user.password);
 
 		if (!passwordValid) {
-			return { error: "Invalid password" };
+			return {
+				error: "Incorrect password. Please check your password and try again.",
+			};
 		}
 
 		return {
@@ -70,6 +86,6 @@ export async function verifyCredentials(email: string, password: string) {
 		};
 	} catch (error) {
 		console.error("Error verifying credentials:", error);
-		return { error: "Authentication error" };
+		return { error: "Authentication failed. Please try again later." };
 	}
 }

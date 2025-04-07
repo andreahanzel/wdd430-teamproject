@@ -5,7 +5,7 @@ import Nav from "./nav-links";
 import { Button } from "./ui/Button";
 import CartButton from "./CartButton";
 import { useSession, signOut } from "next-auth/react";
-import { useNotification } from "@/contexts/NotificationContext";
+import { useNotification } from "../contexts/NotificationContext";
 
 export default function Header() {
 	const { data: session, status } = useSession();

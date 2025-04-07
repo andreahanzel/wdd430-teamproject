@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useState, FormEvent, useEffect } from "react";
-import { useNotification } from "@/contexts/NotificationContext";
-import { Mail, Lock } from "lucide-react";
+import { useNotification } from "../../contexts/NotificationContext";
+import { Mail, Lock, AlertCircle } from "lucide-react";
 
 export default function LoginForm() {
 	const router = useRouter();
@@ -44,18 +44,28 @@ export default function LoginForm() {
 			});
 
 			if (result?.error) {
-				setError("Invalid email or password");
-				showNotification("Invalid email or password", "error");
+				// Format the error message
+				const errorMessage = result.error.includes("No account found")
+					? "No account found with this email address. Please register first."
+					: result.error.includes("Incorrect password")
+					? "Incorrect password. Please try again."
+					: "Login failed. Please check your credentials.";
+
+				setError(errorMessage);
+				showNotification(errorMessage, "error");
 				setIsLoading(false);
 				return;
 			}
 
-			showNotification("Login successful!", "success");
+			showNotification("Login successful! Welcome back.", "success");
 			router.push(callbackUrl);
 			router.refresh();
 		} catch (error) {
-			setError("An error occurred. Please try again.");
-			showNotification("An error occurred. Please try again.", "error");
+			setError("An error occurred during login. Please try again.");
+			showNotification(
+				"An error occurred during login. Please try again.",
+				"error"
+			);
 			setIsLoading(false);
 		}
 	}
@@ -71,11 +81,25 @@ export default function LoginForm() {
 				<form onSubmit={handleSubmit} className="p-8 space-y-6">
 					{error && (
 						<div
-							className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md"
+							className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md flex items-start space-x-2"
 							role="alert"
 						>
-							<p className="font-medium">Login Error</p>
-							<p>{error}</p>
+							<AlertCircle className="h-5 w-5 mt-0.5" />
+							<div>
+								<p className="font-medium">Login Error</p>
+								<p>{error}</p>
+								{error.includes("No account found") && (
+									<p className="mt-1 text-sm">
+										New user?{" "}
+										<Link
+											href="/register"
+											className="text-blue-600 hover:underline"
+										>
+											Create an account
+										</Link>
+									</p>
+								)}
+							</div>
 						</div>
 					)}
 
