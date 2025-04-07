@@ -10,14 +10,17 @@ export default function RegisterForm() {
             <h1 className="text-2xl font-semibold text-center">Register</h1>
             <div className="flex-1 space-y-4">
                 <div className="border border-gray-200 rounded-lg px-4 py-3">
+                    <label htmlFor="name" className="sr-only">Name</label>
                     <input className="w-full bg-transparent outline-none text-sm" id="name" type="text" name="name" placeholder="Name" required />
                 </div>
             </div>
             <div className="flex-1 space-y-4">
                 <div className="border border-gray-200 rounded-lg px-4 py-3">
+                    <label htmlFor="email" className="sr-only">Email address</label>
                     <input className="w-full bg-transparent outline-none text-sm" id="email" type="email" name="email" placeholder="Email address" required />
                 </div>
                 <div className="border border-gray-200 rounded-lg px-4 py-3">
+                    <label htmlFor="password" className="sr-only">Password</label>
                     <input className="w-full bg-transparent outline-none text-sm" id="password" type="password" name="password" placeholder="Password" minLength={6} required />
                 </div>
             </div>

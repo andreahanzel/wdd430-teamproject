@@ -35,8 +35,7 @@ export default function CartButton() {
   }
 
   return (
-    <Link href="/cart" className="relative">
-      <div className="relative p-2 text-white hover:text-neonPink transition-colors">
+    <Link href="/cart" className="relative p-2 text-white hover:text-neonPink transition-colors">
         <ShoppingBag size={24} />
         <AnimatePresence>
           {cartCount > 0 && (
@@ -56,7 +55,6 @@ export default function CartButton() {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
     </Link>
   );
 }

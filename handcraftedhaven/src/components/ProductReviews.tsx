@@ -65,10 +65,11 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
                     key={review.id}
                     className="border p-4 rounded-lg shadow-sm bg-gray-50">
                     <div className="flex items-center justify-between mb-1">
-                        <span className="font-semibold text-darkPurple">
+                        <span className="font-semibold">
                             {review.userName}
                         </span>
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-darkPurple">
+                            {/* Format the date */}
                             {review.date.toLocaleDateString("en-US", {
                                 year: "numeric",
                                 month: "long",

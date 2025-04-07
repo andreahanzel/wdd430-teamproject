@@ -8,7 +8,7 @@ export default function Header() {
         <header className="bg-backgroundDark text-white py-4">
             <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center lg:justify-between space-y-4 lg:space-y-0">
                 
-                <Link className="text-2xl font-poppins font-bold" href="/">Handcrafted Haven</Link>
+                <div className="text-2xl font-poppins font-bold">Handcrafted Haven</div>
                 
                 <Nav />
 

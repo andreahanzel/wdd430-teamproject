@@ -216,7 +216,7 @@ export default function ProductsPage() {
           >
             {/* Price Range Filter - Enhanced */}
             <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label htmlFor="price-range" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Price Range
               </label>
               <div className="flex justify-between mb-2">

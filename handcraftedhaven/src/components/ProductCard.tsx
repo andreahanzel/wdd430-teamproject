@@ -58,9 +58,9 @@ export default function ProductCard({ product }: ProductProps) {
       {/* Product info */}
       <div className="p-5">
         <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-bold font-poppins text-darkPurple truncate group-hover:text-electricBlue transition-colors">
+          <h2 className="text-lg font-bold font-poppins text-darkPurple truncate group-hover:text-electricBlue transition-colors">
             {product.name}
-          </h3>
+          </h2>
          
           {/* Price with animated background on hover */}
           <div className="relative">

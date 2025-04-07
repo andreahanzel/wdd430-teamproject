@@ -66,7 +66,7 @@ export default function SellerReviews({ sellerId }: SellerReviewsProps) {
                             </span>
                         </div>
                         <div>
-                            <span className="text-xs text-gray-400">
+                            <span className="text-xs text-darkPurple">
                                 {review.date.toLocaleDateString("en-US", {
                                 year: "numeric",
                                 month: "long",
@@ -94,7 +94,7 @@ export default function SellerReviews({ sellerId }: SellerReviewsProps) {
                         <p className="text-gray-700">{review.comment}</p>
                         <div>
                             <Link href={`/products/${review.productId}`} className="text-electricBlue hover:text-neonPink">
-                                {products.find((p) => p.id === review.productId)?.name}
+                                View product: {products.find((p) => p.id === review.productId)?.name}
                             </Link>
                         </div>
                     </div>

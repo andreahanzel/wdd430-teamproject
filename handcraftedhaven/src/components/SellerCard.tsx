@@ -26,21 +26,21 @@ export default function SellerCard({ seller }: SellerProps) {
         <div className="flex items-center p-5 space-x-4">
             <img
             src={seller.profileImage}
-            alt={seller.name}
+            alt={`profile picture of ${seller.name}`}
             className="w-16 h-16 rounded-full object-cover border-2 border-neonPink"
             />
             <div>
-            <h3 className="text-lg font-bold font-poppins text-darkPurple group-hover:text-neonPink transition-colors">
+            <h2 className="text-lg font-bold font-poppins text-darkPurple group-hover:text-neonPink transition-colors">
                 {seller.name}
-            </h3>
-            <p className="text-sm text-gray-500">{seller.shopName}</p>
-            <p className="text-xs text-gray-400">{seller.location}</p>
+            </h2>
+            <p className="text-sm text-darkPurple">{seller.shopName}</p>
+            <p className="text-xs text-darkPurple">{seller.location}</p>
             </div>
         </div>
 
         {/* Seller bio and stats */}
         <div className="px-5 pb-5">
-            <p className="text-sm text-gray-600 mb-3 line-clamp-3">{seller.bio}</p>
+            <p className="text-sm text-darkPurple mb-3 line-clamp-3">{seller.bio}</p>
 
             <div className="flex justify-between text-xs text-gray-500 mb-4">
             <span>⭐ {seller.rating}</span>
