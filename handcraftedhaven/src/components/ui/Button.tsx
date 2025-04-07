@@ -10,16 +10,33 @@ export function Button({ children, variant, className, ...rest }: ButtonProps) {
     <button
       {...rest}
       className={clsx(
-        "px-4 py-2 rounded transition",
+        "px-4 py-2 rounded-md font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 transition-all duration-200",
         {
-            "border border-electricBlue hover:bg-electricBlue" : variant === "login",
-            "bg-neonPinkDark hover:bg-electricBlue" : variant === "register",
-            "bg-electricBlue text-white hover:bg-neonPink" : variant === "primary",
-            "bg-backgroundDark border border-neonPink text-white hover:bg-neonPinkDark" : variant === "secondary",
-            "w-full py-2 border border-electricBlue text-electricBlue rounded hover:bg-electricBlue hover:text-white transition-colors" : variant === "product",
-            "w-full py-2 border border-neonPink text-neonPink rounded hover:bg-neonPinkDark hover:text-white transition-colors" : variant === "seller",
+          // LOGIN: outlined with hover fill
+          "bg-neonPinkDark border-electricBlue text-white hover:bg-electricBlue hover:text-white focus-visible:ring-electricBlue":
+            variant === "login",
+
+          // REGISTER: strong background, good hover contrast
+          "bg-neonPinkDark text-white hover:bg-electricBlue focus-visible:ring-neonPinkDark":
+            variant === "register",
+
+          // PRIMARY: solid electric blue
+          "bg-electricBlue text-white hover:bg-neonPinkDark focus-visible:ring-electricBlue":
+            variant === "primary",
+
+          // SECONDARY: dark with accent border
+          "bg-backgroundDark border border-neonPink text-white hover:bg-neonPinkDark focus-visible:ring-neonPinkDark":
+            variant === "secondary",
+
+          // PRODUCT: outlined style, ensure hover contrast
+          "w-full border border-electricBlue text-electricBlue hover:bg-electricBlue hover:text-white focus-visible:ring-electricBlue":
+            variant === "product",
+
+          // SELLER: pink accent but high contrast hover
+          "w-full border border-neonPinkDark text-neonPinkDark hover:bg-neonPinkDark hover:text-white focus-visible:ring-neonPinkDark":
+            variant === "seller",
         },
-        className,
+        className
       )}
     >
       {children}

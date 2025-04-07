@@ -68,7 +68,7 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
                         <span className="font-semibold text-darkPurple">
                             {review.userName}
                         </span>
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-gray-700">
                             {review.date.toLocaleDateString("en-US", {
                                 year: "numeric",
                                 month: "long",
@@ -82,7 +82,7 @@ export default function ProductReviews({ productId }: ProductReviewsProps) {
                     {[...Array(5)].map((_, i) => (
                     <svg
                         key={i}
-                        className={`w-4 h-4 ${i < review.rating ? "text-yellow-400" : "text-gray-300"}`}
+                        className={`w-4 h-4 ${i < review.rating ? "text-yellow-400" : "text-gray-700"}`}
                         fill="currentColor"
                         viewBox="0 0 20 20">
                         <path

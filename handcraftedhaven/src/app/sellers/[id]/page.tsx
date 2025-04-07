@@ -35,7 +35,7 @@ export default function SellerDetailPage() {
             <div className="mb-8">
                 <Link 
                 href="/sellers"
-                className="inline-flex items-center text-electricBlue hover:text-neonPinkDark">
+                className="inline-flex items-center text-darkPurple hover:text-neonPinkDark">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -66,7 +66,7 @@ export default function SellerDetailPage() {
 
                 {isLoading ? (
                 <div className="flex justify-center items-center py-20">
-                    <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-electricBlue"></div>
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-neonPinkDark"></div>
                 </div>
                 ) : sellerProducts.length === 0 ? (
                 <div className="text-center py-16 bg-white rounded-xl shadow">
