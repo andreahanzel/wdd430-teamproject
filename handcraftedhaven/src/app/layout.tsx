@@ -35,21 +35,35 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" className="scroll-smooth">
 			<body
-				className={`${inter.variable} ${poppins.variable} ${firaCode.variable} font-sans`}
+				className={`${inter.variable} ${poppins.variable} ${firaCode.variable} font-sans min-h-screen flex flex-col bg-gray-50`}
 			>
 				<SessionProvider>
 					<NotificationProvider>
 						<CartProvider>
-							<Header />
-
-							<main>{children}</main>
-
-							<Footer />
+							<div className="flex flex-col min-h-screen">
+								<Header />
+								
+								<main className="flex-grow">
+									<div className="mx-auto w-full max-w-[2000px]">
+										{children}
+									</div>
+								</main>
+								
+								<Footer />
+							</div>
 						</CartProvider>
 					</NotificationProvider>
 				</SessionProvider>
+				
+				{/* Skip to content link for accessibility */}
+				<a 
+					href="#main-content" 
+					className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-blue-600 focus:shadow-lg"
+				>
+					Skip to content
+				</a>
 			</body>
 		</html>
 	);

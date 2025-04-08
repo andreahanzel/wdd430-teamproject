@@ -54,20 +54,28 @@ export default function ProductDetailPage() {
 
 	if (!product) return notFound();
 
-	const handleAddToCart = () => {
+	const handleAddToCart = async () => {
 		if (!isAuthenticated) {
 			showNotification("Please sign in to add items to your cart", "info");
 			router.push(`/login?callbackUrl=/products/${id}`);
 			return;
 		}
 
-		addToCart(product, quantity);
-		setAddedToCart(true);
+		try {
+			await addToCart(product, quantity);
+			setAddedToCart(true);
 
-		// Reset notification after 3 seconds
-		setTimeout(() => {
-			setAddedToCart(false);
-		}, 3000);
+			// Reset notification after 3 seconds
+			setTimeout(() => {
+				setAddedToCart(false);
+			}, 3000);
+		} catch (error) {
+			console.error("Error adding to cart:", error);
+			showNotification(
+				error instanceof Error ? error.message : "Failed to add item to cart",
+				"error"
+			);
+		}
 	};
 
 	// Redirect or show sign-in prompt if not authenticated

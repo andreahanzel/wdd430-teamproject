@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingCart } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useCart } from "@/contexts/CartContext";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
 export default function CartButton() {
-	const { itemCount } = useCart();
+	const { itemCount, isLoading } = useCart();
 	const [hasItems, setHasItems] = useState(false);
 	const [isClient, setIsClient] = useState(false);
 	const { status } = useSession();
@@ -27,8 +27,12 @@ export default function CartButton() {
 	}, [itemCount, isClient]);
 
 	// Only render on client and for authenticated users
-	if (!isClient || !isAuthenticated) {
-		return null;
+	if (!isClient || !isAuthenticated || isLoading) {
+		return (
+			<div className="relative inline-flex items-center text-white p-2">
+				<ShoppingBag className="h-6 w-6" />
+			</div>
+		);
 	}
 
 	return (
@@ -36,7 +40,7 @@ export default function CartButton() {
 			href="/cart"
 			className="relative inline-flex items-center text-white p-2 hover:bg-white/10 rounded-full transition-colors"
 		>
-			<ShoppingCart className="h-6 w-6" />
+			<ShoppingBag className="h-6 w-6" />
 			<AnimatePresence>
 				{itemCount > 0 && (
 					<motion.span

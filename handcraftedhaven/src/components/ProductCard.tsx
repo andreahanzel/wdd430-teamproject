@@ -5,6 +5,8 @@ import { Button } from "./ui/Button";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useNotification } from "../contexts/NotificationContext";
+import { useCart } from "@/contexts/CartContext";
+import { ShoppingBag } from "lucide-react";
 
 interface ProductProps {
 	product?: {
@@ -21,9 +23,11 @@ interface ProductProps {
 export default function ProductCard({ product }: ProductProps) {
 	const [isHovered, setIsHovered] = useState(false);
 	const [imageLoaded, setImageLoaded] = useState(false);
+	const [isAdding, setIsAdding] = useState(false);
 	const { status } = useSession();
 	const isAuthenticated = status === "authenticated";
 	const { showNotification } = useNotification();
+	const { addToCart } = useCart();
 
 	if (!product) return null;
 
@@ -32,6 +36,22 @@ export default function ProductCard({ product }: ProductProps) {
 			"Please sign in to view product details or add to cart",
 			"info"
 		);
+	};
+
+	const handleAddToCart = async () => {
+		if (!isAuthenticated) {
+			handleAuthenticationRequired();
+			return;
+		}
+
+		setIsAdding(true);
+		try {
+			await addToCart(product, 1);
+		} catch (error) {
+			console.error("Failed to add to cart:", error);
+		} finally {
+			setIsAdding(false);
+		}
 	};
 
 	return (
@@ -116,30 +136,30 @@ export default function ProductCard({ product }: ProductProps) {
 				</p>
 
 				{/* Bottom action area */}
-				<div className="pt-2 border-t border-gray-100 mt-auto">
+				<div className="pt-2 border-t border-gray-100 mt-auto flex justify-between">
 					{isAuthenticated ? (
-						<Link href={`/products/${product.id}`} className="block">
-							<Button
-								variant="product"
-								className="w-full group-hover:bg-electricBlue group-hover:text-white transition-colors duration-300"
-							>
-								<span>View Product</span>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									className="h-4 w-4 ml-2 transform group-hover:translate-x-1 transition-transform"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
+						<>
+							<Link href={`/products/${product.id}`} className="flex-1 mr-2">
+								<Button
+									variant="product"
+									className="w-full group-hover:bg-electricBlue group-hover:text-white transition-colors duration-300"
 								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M14 5l7 7m0 0l-7 7m7-7H3"
-									/>
-								</svg>
+									<span>View</span>
+								</Button>
+							</Link>
+							<Button
+								variant="primary"
+								className="px-3"
+								onClick={handleAddToCart}
+								disabled={isAdding}
+							>
+								{isAdding ? (
+									<div className="animate-spin h-5 w-5 border-2 border-white rounded-full border-t-transparent"></div>
+								) : (
+									<ShoppingBag size={18} />
+								)}
 							</Button>
-						</Link>
+						</>
 					) : (
 						<Link
 							href="/login"

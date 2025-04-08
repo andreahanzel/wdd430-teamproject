@@ -1,37 +1,43 @@
 /* handcraftedhaven/src/components/Checkout.module.css */
 .progressContainer {
-    position: relative;
-    margin-top: 0.75rem;
-  }
-  
-  .progressBarBackground {
-    position: absolute;
-    height: 4px;
-    background-color: #e5e7eb;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-  
-  .progressBar {
-    position: absolute;
-    height: 4px;
-    background-color: #3b82f6;
-    top: 0;
-    left: 0;
-    transition: all 0.3s;
-  }
-  
-  /* Create utility classes for different progress widths */
-  .progressBar0 {
-    width: 0%;
-  }
-  .progressBar33 {
-    width: 33.33%;
-  }
-  .progressBar66 {
-    width: 66.66%;
-  }
-  .progressBar100 {
-    width: 100%;
-  }
+	position: relative;
+	height: 4px;
+	width: 100%;
+	margin-top: 1rem;
+	overflow: hidden;
+	border-radius: 4px;
+}
+
+.progressBarBackground {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: #e5e7eb;
+}
+
+.progressBar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	background-color: #3b82f6;
+	transition: width 0.5s ease-in-out;
+}
+
+.progressBar0 {
+	width: 0%;
+}
+
+.progressBar33 {
+	width: 33.33%;
+}
+
+.progressBar66 {
+	width: 66.66%;
+}
+
+.progressBar100 {
+	width: 100%;
+}

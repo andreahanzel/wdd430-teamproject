@@ -8,11 +8,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { ShoppingBag, LogIn } from "lucide-react";
 
-export const metadata = {
-	title: "Shopping Cart | HandcraftedHaven",
-	description: "Review and manage the handcrafted items in your shopping cart.",
-};
-
 export default function CartPage() {
 	const { status } = useSession();
 	const router = useRouter();
