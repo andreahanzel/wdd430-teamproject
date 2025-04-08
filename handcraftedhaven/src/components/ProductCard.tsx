@@ -14,11 +14,13 @@ interface ProductProps {
 		price: number;
 		image: string;
 		category: string;
+		sellerId?: number;
 	};
 }
 
 export default function ProductCard({ product }: ProductProps) {
 	const [isHovered, setIsHovered] = useState(false);
+	const [imageLoaded, setImageLoaded] = useState(false);
 	const { status } = useSession();
 	const isAuthenticated = status === "authenticated";
 	const { showNotification } = useNotification();
@@ -45,8 +47,8 @@ export default function ProductCard({ product }: ProductProps) {
 				</span>
 			</div>
 
-			{/* Image container with overlay */}
-			<div className="relative h-64 overflow-hidden">
+			{/* Image container with overlay - fixed height to prevent layout shift */}
+			<div className="relative h-64 overflow-hidden bg-gray-100">
 				<div
 					className={`absolute inset-0 bg-gradient-to-t from-darkPurple/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10`}
 				></div>
@@ -54,8 +56,16 @@ export default function ProductCard({ product }: ProductProps) {
 				<img
 					src={product.image}
 					alt={product.name}
-					className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+					className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${
+						imageLoaded ? 'opacity-100' : 'opacity-0'
+					}`}
+					onLoad={() => setImageLoaded(true)}
 				/>
+				
+				{/* Placeholder while image loads */}
+				{!imageLoaded && (
+					<div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+				)}
 
 				{/* Action button that appears on hover */}
 				<div
@@ -84,8 +94,8 @@ export default function ProductCard({ product }: ProductProps) {
 				</div>
 			</div>
 
-			{/* Product info */}
-			<div className="p-5">
+			{/* Product info - fixed height to prevent layout shift */}
+			<div className="p-5 h-36 flex flex-col">
 				<div className="flex justify-between items-start mb-2">
 					<h3 className="text-lg font-bold font-poppins text-darkPurple truncate group-hover:text-electricBlue transition-colors">
 						{product.name}
@@ -101,12 +111,12 @@ export default function ProductCard({ product }: ProductProps) {
 				</div>
 
 				{/* Description with truncate */}
-				<p className="text-sm text-gray-600 mb-4 line-clamp-2">
+				<p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-grow">
 					{product.description}
 				</p>
 
 				{/* Bottom action area */}
-				<div className="pt-2 border-t border-gray-100">
+				<div className="pt-2 border-t border-gray-100 mt-auto">
 					{isAuthenticated ? (
 						<Link href={`/products/${product.id}`} className="block">
 							<Button

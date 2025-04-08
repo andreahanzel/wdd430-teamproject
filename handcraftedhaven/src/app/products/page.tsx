@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
+import { Skeleton } from "@/components/ui/Skeleton";
 import {
 	getProducts,
 	getCategories,
@@ -170,7 +171,7 @@ export default function ProductsPage() {
 										>
 											<path
 												fillRule="evenodd"
-												d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+												d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 101.414 1.414L10 11.414l1.293 1.293a1 1 001.414-1.414L11.414 10l1.293-1.293a1 1 00-1.414-1.414L10 8.586 8.707 7.293z"
 												clipRule="evenodd"
 											/>
 										</svg>
@@ -211,7 +212,7 @@ export default function ProductsPage() {
 									>
 										<path
 											fillRule="evenodd"
-											d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 011.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
+											d="M5.293 7.293a1 1 011.414 0L10 10.586l3.293-3.293a1 1 011.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
 											clipRule="evenodd"
 										/>
 									</svg>
@@ -472,11 +473,26 @@ export default function ProductsPage() {
 
 				{/* Loading State */}
 				{isLoading ? (
-					<div className="flex justify-center items-center py-20">
-						<div
-							className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-electricBlue"
-							aria-label="Loading products"
-						></div>
+					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+						{[...Array(8)].map((_, index) => (
+							<div key={index} className="bg-white rounded-xl shadow overflow-hidden">
+								{/* Image placeholder */}
+								<Skeleton className="w-full h-64" />
+								
+								{/* Content placeholders */}
+								<div className="p-5 h-36">
+									<div className="flex justify-between mb-2">
+										<Skeleton className="h-6 w-2/3" />
+										<Skeleton className="h-6 w-16" />
+									</div>
+									<Skeleton className="h-4 w-full mt-2" />
+									<Skeleton className="h-4 w-4/5 mt-2" />
+									<div className="pt-2 mt-6 border-t border-gray-100">
+										<Skeleton className="h-10 w-full mt-2" />
+									</div>
+								</div>
+							</div>
+						))}
 					</div>
 				) : products.length === 0 ? (
 					<div className="text-center py-16 bg-white rounded-xl shadow">

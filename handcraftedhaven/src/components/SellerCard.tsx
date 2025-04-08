@@ -3,21 +3,32 @@
 import Link from "next/link";
 import { Button } from "./ui/Button";
 import { Seller } from "@/types/database";
+import { useState } from "react";
 
 interface SellerCardProps {
 	seller: Seller;
 }
 
 export default function SellerCard({ seller }: SellerCardProps) {
+	const [imageLoaded, setImageLoaded] = useState(false);
+
 	return (
-		<div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-			<div className="relative h-52 overflow-hidden">
+		<div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-[350px] flex flex-col">
+			<div className="relative h-52 overflow-hidden bg-gray-100">
 				{/* Profile image */}
 				<img
 					src={seller.profileImage}
 					alt={seller.name}
-					className="w-full h-full object-cover"
+					className={`w-full h-full object-cover transition-opacity duration-300 ${
+						imageLoaded ? 'opacity-100' : 'opacity-0'
+					}`}
+					onLoad={() => setImageLoaded(true)}
 				/>
+				
+				{/* Image placeholder */}
+				{!imageLoaded && (
+					<div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+				)}
 
 				{/* Overlay gradient */}
 				<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent">
@@ -28,7 +39,7 @@ export default function SellerCard({ seller }: SellerCardProps) {
 				</div>
 			</div>
 
-			<div className="p-4">
+			<div className="p-4 flex-1 flex flex-col">
 				{/* Shop name and ratings */}
 				<div className="flex justify-between items-center mb-3">
 					<h4 className="font-bold text-darkPurple">{seller.shopName}</h4>
@@ -48,10 +59,10 @@ export default function SellerCard({ seller }: SellerCardProps) {
 				</div>
 
 				{/* Short bio */}
-				<p className="text-sm text-gray-600 mb-4 line-clamp-2">{seller.bio}</p>
+				<p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-grow">{seller.bio}</p>
 
 				{/* Sales count and view button */}
-				<div className="flex justify-between items-center">
+				<div className="flex justify-between items-center mt-auto">
 					<div className="text-xs text-gray-500">
 						<span className="font-medium">{seller.sales}</span> sales
 					</div>

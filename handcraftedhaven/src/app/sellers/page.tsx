@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SellerCard from "@/components/SellerCard";
 import { getSellers } from "@/services/sellerServices";
 import { Seller } from "@/types/database";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 export default function SellersPage() {
 	const [sellers, setSellers] = useState<Seller[]>([]);
@@ -38,10 +39,29 @@ export default function SellersPage() {
 					</p>
 				</div>
 
-				{/* Loading State */}
+				{/* Loading State with Skeletons */}
 				{isLoading ? (
-					<div className="flex justify-center items-center py-20">
-						<div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-electricBlue"></div>
+					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+						{[...Array(8)].map((_, index) => (
+							<div key={index} className="bg-white rounded-xl shadow-md overflow-hidden h-[350px]">
+								{/* Image placeholder */}
+								<Skeleton className="w-full h-52" />
+								
+								{/* Content placeholders */}
+								<div className="p-4">
+									<div className="flex justify-between items-center mb-3">
+										<Skeleton className="h-5 w-2/3" />
+										<Skeleton className="h-5 w-12" />
+									</div>
+									<Skeleton className="h-4 w-full" />
+									<Skeleton className="h-4 w-5/6 mt-2" />
+									<div className="flex justify-between items-center mt-6">
+										<Skeleton className="h-4 w-16" />
+										<Skeleton className="h-8 w-24" />
+									</div>
+								</div>
+							</div>
+						))}
 					</div>
 				) : sellers.length === 0 ? (
 					<div className="text-center py-16 bg-white rounded-xl shadow">
