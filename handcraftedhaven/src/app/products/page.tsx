@@ -475,10 +475,13 @@ export default function ProductsPage() {
 				{isLoading ? (
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 						{[...Array(8)].map((_, index) => (
-							<div key={index} className="bg-white rounded-xl shadow overflow-hidden">
+							<div
+								key={index}
+								className="bg-white rounded-xl shadow overflow-hidden"
+							>
 								{/* Image placeholder */}
 								<Skeleton className="w-full h-64" />
-								
+
 								{/* Content placeholders */}
 								<div className="p-5 h-36">
 									<div className="flex justify-between mb-2">

@@ -57,11 +57,11 @@ export default function ProductCard({ product }: ProductProps) {
 					src={product.image}
 					alt={product.name}
 					className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${
-						imageLoaded ? 'opacity-100' : 'opacity-0'
+						imageLoaded ? "opacity-100" : "opacity-0"
 					}`}
 					onLoad={() => setImageLoaded(true)}
 				/>
-				
+
 				{/* Placeholder while image loads */}
 				{!imageLoaded && (
 					<div className="absolute inset-0 bg-gray-200 animate-pulse"></div>

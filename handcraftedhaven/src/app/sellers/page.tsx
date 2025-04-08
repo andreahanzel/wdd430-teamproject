@@ -43,10 +43,13 @@ export default function SellersPage() {
 				{isLoading ? (
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
 						{[...Array(8)].map((_, index) => (
-							<div key={index} className="bg-white rounded-xl shadow-md overflow-hidden h-[350px]">
+							<div
+								key={index}
+								className="bg-white rounded-xl shadow-md overflow-hidden h-[350px]"
+							>
 								{/* Image placeholder */}
 								<Skeleton className="w-full h-52" />
-								
+
 								{/* Content placeholders */}
 								<div className="p-4">
 									<div className="flex justify-between items-center mb-3">

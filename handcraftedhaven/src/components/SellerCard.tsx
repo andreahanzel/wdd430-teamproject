@@ -20,11 +20,11 @@ export default function SellerCard({ seller }: SellerCardProps) {
 					src={seller.profileImage}
 					alt={seller.name}
 					className={`w-full h-full object-cover transition-opacity duration-300 ${
-						imageLoaded ? 'opacity-100' : 'opacity-0'
+						imageLoaded ? "opacity-100" : "opacity-0"
 					}`}
 					onLoad={() => setImageLoaded(true)}
 				/>
-				
+
 				{/* Image placeholder */}
 				{!imageLoaded && (
 					<div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
@@ -59,7 +59,9 @@ export default function SellerCard({ seller }: SellerCardProps) {
 				</div>
 
 				{/* Short bio */}
-				<p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-grow">{seller.bio}</p>
+				<p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-grow">
+					{seller.bio}
+				</p>
 
 				{/* Sales count and view button */}
 				<div className="flex justify-between items-center mt-auto">
