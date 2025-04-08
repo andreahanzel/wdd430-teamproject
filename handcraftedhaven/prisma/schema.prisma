@@ -19,6 +19,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
+  reviews       Review[]
 }
 
 model Account {
@@ -69,6 +70,7 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   seller      Seller   @relation(fields: [sellerId], references: [id])
+  reviews     Review[]
 }
 
 model Seller {
@@ -85,4 +87,23 @@ model Seller {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
   products     Product[]
+  reviews      Review[]
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  productId Int?
+  sellerId  Int?
+  userId    String
+  userName  String
+  rating    Int
+  comment   String
+  date      DateTime @default(now())
+  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  seller    Seller?  @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([sellerId])
+  @@index([userId])
 }

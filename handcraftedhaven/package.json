@@ -8,8 +8,9 @@
 		"start": "next start",
 		"lint": "next lint",
 		"prisma:generate": "prisma generate",
-		"prisma:seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts",
-		"db:setup": "prisma generate && prisma db push && prisma db seed"
+		"prisma:push": "prisma db push --accept-data-loss",
+		"prisma:seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} scripts/seed-reviews.ts",
+		"db:setup": "ts-node --compiler-options {\"module\":\"CommonJS\"} scripts/setup-db.ts"
 	},
 	"prisma": {
 		"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -30,7 +31,8 @@
 		"react-dom": "^18.2.0",
 		"react-social-icons": "^6.22.0",
 		"tailwind-merge": "^3.2.0",
-		"zod": "^3.21.4"
+		"zod": "^3.21.4",
+		"date-fns": "^2.30.0"
 	},
 	"devDependencies": {
 		"@types/bcrypt": "^5.0.0",

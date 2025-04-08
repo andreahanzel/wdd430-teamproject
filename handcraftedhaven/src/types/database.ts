@@ -11,6 +11,7 @@ export interface Product {
 	createdAt: Date;
 	updatedAt: Date;
 	seller?: Seller;
+	reviews?: Review[];
 }
 
 export interface Seller {
@@ -27,4 +28,20 @@ export interface Seller {
 	createdAt: Date;
 	updatedAt: Date;
 	products?: Product[];
+	reviews?: Review[];
+}
+
+export interface Review {
+	id: number;
+	productId?: number | null;
+	sellerId?: number | null;
+	userId: string;
+	userName: string;
+	rating: number;
+	comment: string;
+	date: Date;
+	user?: {
+		name?: string | null;
+		image?: string | null;
+	};
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/client";
-import { Prisma } from "@prisma/client";
+import { Decimal } from "@prisma/client/runtime/library";
 
 export async function GET(request: Request) {
 	try {
@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 		}
 
 		// Build filter object based on query params
-		const where: Prisma.ProductWhereInput = {};
+		const where: any = {};
 
 		// Category filter
 		const category = searchParams.get("category");
@@ -41,10 +41,10 @@ export async function GET(request: Request) {
 		if (minPrice || maxPrice) {
 			where.price = {};
 			if (minPrice) {
-				where.price.gte = new Prisma.Decimal(minPrice);
+				where.price.gte = new Decimal(minPrice);
 			}
 			if (maxPrice) {
-				where.price.lte = new Prisma.Decimal(maxPrice);
+				where.price.lte = new Decimal(maxPrice);
 			}
 		}
 

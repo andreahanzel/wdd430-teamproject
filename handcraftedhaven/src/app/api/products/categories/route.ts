@@ -10,7 +10,10 @@ export async function GET() {
 			},
 		});
 
-		return NextResponse.json(["All", ...categories.map((c) => c.category)]);
+		return NextResponse.json([
+			"All",
+			...categories.map((c: { category: string }) => c.category),
+		]);
 	} catch (error) {
 		console.error("Error fetching categories:", error);
 		return NextResponse.json(

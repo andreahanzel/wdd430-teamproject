@@ -30,8 +30,12 @@ export async function GET() {
 		});
 
 		return NextResponse.json({
-			colors: colors.map((c) => c.color).filter((c) => c !== null),
-			materials: materials.map((m) => m.material).filter((m) => m !== null),
+			colors: colors
+				.map((c: { color: string | null }) => c.color)
+				.filter((c: string | null): c is string => c !== null),
+			materials: materials
+				.map((m: { material: string | null }) => m.material)
+				.filter((m: string | null): m is string => m !== null),
 		});
 	} catch (error) {
 		console.error("Error fetching product properties:", error);

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { getSellerById } from "@/services/sellerServices";
 import { Seller } from "@/types/database";
 import ProductCard from "@/components/ProductCard";
+import SellerReviews from "@/components/SellerReviews";
 
 export default function SellerDetailPage() {
 	const params = useParams();
@@ -165,6 +166,9 @@ export default function SellerDetailPage() {
 						</div>
 					</div>
 				</div>
+
+				{/* Seller Reviews */}
+				<SellerReviews sellerId={seller.id} sellerName={seller.name} />
 
 				{/* Products by this seller */}
 				<div className="mb-8">

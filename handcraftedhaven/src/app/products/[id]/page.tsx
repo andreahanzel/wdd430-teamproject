@@ -353,7 +353,7 @@ export default function ProductDetailPage() {
 				</div>
 
 				{/* Product Reviews */}
-				<ProductReviews productId={product.id} />
+				<ProductReviews productId={product.id} productName={product.name} />
 
 				{/* Suggested Products */}
 				<div className="mt-24">
