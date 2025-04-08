@@ -168,11 +168,13 @@ export default function SellerDetailPage() {
 				</div>
 
 				{/* Seller Reviews */}
-				<SellerReviews sellerId={seller.id} sellerName={seller.name} />
+				<div className="mb-16">
+					<SellerReviews sellerId={seller.id} sellerName={seller.name} />
+				</div>
 
-				{/* Products by this seller */}
-				<div className="mb-8">
-					<h2 className="text-2xl font-bold text-center text-darkPurple mb-6">
+				{/* Products by this seller - moved below reviews with more spacing */}
+				<div className="mt-16 pt-8 border-t border-gray-200">
+					<h2 className="text-2xl font-bold text-center text-darkPurple mb-8">
 						Handcrafted by {seller.name}
 					</h2>
 
