@@ -265,7 +265,7 @@ export default function ProductDetailPage() {
 											value={quantity}
 											onChange={(e) => setQuantity(parseInt(e.target.value))}
 											aria-label="Product quantity"
-											className="border border-gray-300 rounded-md p-2 w-20"
+											className="border border-gray-300 rounded-md p-2 w-20 text-gray-800"
 										>
 											{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
 												<option key={num} value={num}>

@@ -475,7 +475,7 @@ export default function Checkout() {
 													onChange={handleInputChange}
 													className={`w-full px-4 py-2 border ${
 														errors.state ? "border-errorRed" : "border-gray-300"
-													} rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue`}
+													} rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue text-gray-800`}
 												/>
 												{errors.state && (
 													<p className="mt-1 text-xs text-errorRed">
@@ -501,7 +501,7 @@ export default function Checkout() {
 														errors.zipCode
 															? "border-errorRed"
 															: "border-gray-300"
-													} rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue`}
+													} rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue text-gray-800`}
 												/>
 												{errors.zipCode && (
 													<p className="mt-1 text-xs text-errorRed">
@@ -524,7 +524,7 @@ export default function Checkout() {
 												name="phone"
 												value={formData.phone}
 												onChange={handleInputChange}
-												className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue"
+												className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue text-gray-800"
 											/>
 										</div>
 
@@ -775,7 +775,7 @@ export default function Checkout() {
 														errors.cardName
 															? "border-errorRed"
 															: "border-gray-300"
-													} rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue`}
+													} rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue text-gray-800`}
 													placeholder="Name on card"
 												/>
 												{errors.cardName && (
@@ -802,7 +802,7 @@ export default function Checkout() {
 														errors.cardNumber
 															? "border-errorRed"
 															: "border-gray-300"
-													} rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue`}
+													} rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue text-gray-800`}
 													placeholder="1234 5678 9012 3456"
 												/>
 												{errors.cardNumber && (
@@ -830,7 +830,7 @@ export default function Checkout() {
 															errors.cardExpiry
 																? "border-errorRed"
 																: "border-gray-300"
-														} rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue`}
+														} rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue text-gray-800`}
 														placeholder="MM/YY"
 													/>
 													{errors.cardExpiry && (
@@ -857,7 +857,7 @@ export default function Checkout() {
 															errors.cardCvc
 																? "border-errorRed"
 																: "border-gray-300"
-														} rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue`}
+														} rounded-md focus:ring-2 focus:ring-electricBlue focus:border-electricBlue text-gray-800`}
 														placeholder="123"
 													/>
 													{errors.cardCvc && (
