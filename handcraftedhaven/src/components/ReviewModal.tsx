@@ -139,7 +139,7 @@ export default function ReviewModal({
 								<textarea
 									id="review-comment"
 									rows={4}
-									className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-electricBlue focus:border-electricBlue transition-colors"
+									className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-electricBlue focus:border-electricBlue transition-colors text-gray-800"
 									placeholder="Share your experience..."
 									value={comment}
 									onChange={(e) => setComment(e.target.value)}
