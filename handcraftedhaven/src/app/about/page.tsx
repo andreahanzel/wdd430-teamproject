@@ -25,31 +25,31 @@ export const metadata = {
 
 export default function About() {
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-gray-50 text-center">
+    <section id="main-content" className="py-20 bg-gradient-to-br from-backgroundDark via-darkPurple to-black/60 text-white text-center shadow-inner shadow-electricBlue/10">
       <div className="container mx-auto px-4 space-y-20">
 
         {/* Our Story */}
         <div>
-          <h1 className="text-4xl font-bold font-poppins text-darkPurple mb-4 relative inline-block">
+        <h1 className="text-4xl font-bold font-poppins text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] mb-6 relative inline-block">
             Our Story
             <span className="absolute left-0 w-full h-1 bg-gradient-to-r from-electricBlue to-neonPink bottom-[-8px]"></span>
           </h1>
-          <p className="mt-6 text-base text-gray-800 dark:text-gray-500 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base text-white/90 max-w-3xl mx-auto leading-relaxed">
             HandcraftedHaven was founded on one single mission: to recognize the artists and artisans who dedicate their heart and soul to each and every piece. What was a simple idea has evolved into an energetic marketplace where art, culture, and imagination interact.
           </p>
         </div>
 
         {/* Our Mission */}
         <div>
-          <h2 className="text-2xl font-semibold text-[var(--secondary)] mb-4">Our Mission</h2>
-          <p className="text-base text-gray-800 dark:text-gray-500 max-w-3xl mx-auto leading-relaxed">
+        <h2 className="text-2xl font-bold text-electricBlue mb-4">Our Mission</h2>
+          <p className="text-base text-white/90 max-w-3xl mx-auto leading-relaxed">
             We empower small creators by providing a meaningful platform that honors authenticity, sustainability, and beauty. Each hand-made product carries a personal story behind it — and each shopping experience supports real individuals, their passion, and their purpose.
           </p>
         </div>
 
         {/* Meet the Team */}
         <div>
-          <h2 className="text-2xl font-semibold text-[var(--accent)] mb-10">Meet the Team</h2>
+        <h2 className="text-2xl font-bold text-neonPink drop-shadow-[0_0_10px_rgba(255,0,128,0.4)] mb-10">Meet the Team</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 place-items-center">
 
             {/* Team Member - Jane */}
@@ -59,10 +59,10 @@ export default function About() {
                 alt="Jane Doe - Founder"
                 width={120}
                 height={120}
-                className="rounded-full border-4 border-[var(--accent)] shadow-md"
+                className="rounded-full border-4 border-neonPink shadow-lg shadow-neonPink/30 transition-transform duration-300 hover:scale-105"
               />
-              <h3 className="text-base font-semibold text-gray-900  dark:text-gray-900">Jane Doe</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-500">Founder & Creative Director</p>
+              <h3 className="text-base font-semibold text-white">Jane Doe</h3>
+              <p className="text-sm text-white/85">Founder & Creative Director</p>
             </div>
 
             {/* Team Member - Leo */}
@@ -72,10 +72,10 @@ export default function About() {
                 alt="Leo Ramirez - Head of Artisan Relations"
                 width={120}
                 height={120}
-                className="rounded-full border-4 border-[var(--secondary)] shadow-md"
-              />
-              <h3 className="text-base font-semibold text-gray-900  dark:text-gray-900">Leo Ramirez</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-500">Head of Artisan Relations</p>
+                className="rounded-full border-4 border-electricBlue shadow-lg shadow-electricBlue/30 transition-transform duration-300 hover:scale-105"
+                />
+              <h3 className="text-base font-semibold text-white">Leo Ramirez</h3>
+              <p className="text-sm text-white/85">Head of Artisan Relations</p>
             </div>
 
             {/* Team Member - Priya */}
@@ -85,10 +85,10 @@ export default function About() {
                 alt="Priya Shah - Sustainability Lead"
                 width={120}
                 height={120}
-                className="rounded-full border-4 border-[var(--primary)] shadow-md"
-              />
-              <h3 className="text-base font-semibold text-gray-900  dark:text-gray-900">Priya Shah</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-500">Sustainability Lead</p>
+                className="rounded-full border-4 border-neonPinkDark shadow-lg shadow-neonPinkDark/30 transition-transform duration-300 hover:scale-105"
+                />
+              <h3 className="text-base font-semibold text-white">Priya Shah</h3>
+              <p className="text-sm text-white/85">Sustainability Lead</p>
             </div>
 
             {/* Team Member - Marcus */}
@@ -98,18 +98,18 @@ export default function About() {
                 alt="Marcus Lee - Tech & E-Commerce Manager"
                 width={120}
                 height={120}
-                className="rounded-full border-4 border-[var(--error)] shadow-md"
-              />
-              <h3 className="text-base font-semibold text-gray-900 dark:text-gray-900">Marcus Lee</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-500">Tech & E-Commerce Manager</p>
+                className="rounded-full border-4 border-errorRed shadow-lg shadow-errorRed/30 transition-transform duration-300 hover:scale-105"
+                />
+              <h3 className="text-base font-semibold text-white">Marcus Lee</h3>
+              <p className="text-sm text-white/85">Tech & E-Commerce Manager</p>
             </div>
           </div>
         </div>
 
         {/* Why Handmade */}
         <div>
-          <h2 className="text-2xl font-semibold text-[var(--primary)] mb-4">Why Handmade?</h2>
-          <p className="text-base text-gray-800 dark:text-gray-500 max-w-3xl mx-auto leading-relaxed">
+        <h2 className="text-2xl font-bold text-electricBlue mb-6">Why Handmade?</h2>
+        <p className="text-base text-white/90 max-w-3xl mx-auto leading-relaxed">
             All these handmade items reflect care, culture, and uniqueness. We do believe in complementing slow fashion, ethical production, and the art of making. It's not shopping — it's storytelling.
           </p>
         </div>

@@ -65,7 +65,7 @@ export default function AnalyticsSection() {
     }
 
     return (
-        <div className={styles.container}>
+        <main id="main-content" className={styles.container}>
             <div className={styles.gridContainer}>
                 <div className={styles.card}>
                     <h3 className={styles.title}>Total Sales</h3>
@@ -112,6 +112,6 @@ export default function AnalyticsSection() {
                     ))}
                 </div>
             </div>
-        </div>
+        </main>
     )
 }

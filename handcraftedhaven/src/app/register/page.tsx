@@ -5,7 +5,7 @@ import { UserPlus } from "lucide-react";
 
 export default function Register() {
 	return (
-		<main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 flex items-center justify-center p-6">
+		<main id="main-content" className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 flex items-center justify-center p-6">
 			<div className="w-full max-w-md bg-white/10 backdrop-blur-lg rounded-xl shadow-2xl border border-white/10 p-8 sm:p-10 text-white">
 				<div className="mb-6 text-center">
 					<div className="w-16 h-16 mx-auto flex items-center justify-center bg-pink-600/50 rounded-full shadow-md">

@@ -70,7 +70,8 @@ export default function EditSellerProfilePage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] px-4 py-10">
+        <main id="main-content" className="min-h-screen bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460] px-4 py-10">
+
         <div className="max-w-4xl mx-auto bg-white/10 backdrop-blur-md text-white rounded-2xl shadow-2xl p-10 border border-white/20">
             <h1 className="text-3xl font-bold mb-10 text-center">Edit Your Seller Profile</h1>
 
@@ -182,6 +183,6 @@ export default function EditSellerProfilePage() {
             </div>
             </form>
         </div>
-        </div>
+        </main>
     )
 }
