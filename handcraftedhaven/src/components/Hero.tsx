@@ -8,7 +8,7 @@ export default function Hero() {
             
           <div className="max-w-2xl">
             <h1 className="text-4xl md:text-5xl font-poppins font-bold mb-4">
-              Discover Unique <span className="text-neonPink">Handcrafted</span> Treasures
+              Discover Unique <span className="text-neonPinkDark">Handcrafted</span> Treasures
             </h1>
             <p className="text-lg mb-8">
               Support artisans and find one-of-a-kind items made with passion and skill.
