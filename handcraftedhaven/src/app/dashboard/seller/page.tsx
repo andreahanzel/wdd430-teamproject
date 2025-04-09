@@ -243,7 +243,7 @@ export default function SellerDashboard() {
                 </aside>
 
                 {/* Main Content */}
-                <main className="flex-1 p-8">
+                <main id="main-content" className="flex-1 p-8">
                     <div className="max-w-6xl mx-auto">
                         {activeSection === 'dashboard' && (
                             <>

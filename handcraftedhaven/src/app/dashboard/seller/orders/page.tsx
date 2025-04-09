@@ -162,7 +162,7 @@ import {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 p-8">
+        <main id="main-content" className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 p-8">
         <div className="max-w-7xl mx-auto">
             <div className="flex items-center mb-6">
             <button 
@@ -345,6 +345,6 @@ import {
             </div>
             )}
         </div>
-        </div>
+        </main>
     )
 }

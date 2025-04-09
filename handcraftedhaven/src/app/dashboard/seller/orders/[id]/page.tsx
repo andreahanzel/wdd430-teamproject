@@ -167,7 +167,7 @@ import {
     if (!order) return null
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 p-8">
+        <main id="main-content" className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 p-8">
         <div className="max-w-4xl mx-auto">
             <button 
             onClick={() => router.push('/dashboard/seller/orders')}
@@ -387,6 +387,6 @@ import {
             </div>
             </div>
         </div>
-        </div>
+        </main>
     )
 }

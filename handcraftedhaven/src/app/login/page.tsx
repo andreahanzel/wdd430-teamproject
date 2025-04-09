@@ -7,7 +7,7 @@ import { LogIn } from "lucide-react";
 
 export default function Login() {
 	return (
-		<main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 flex items-center justify-center p-6">
+		<main id="main-content" className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 flex items-center justify-center p-6">
 			<div className="w-full max-w-md bg-white/10 backdrop-blur-lg rounded-xl shadow-2xl border border-white/10 p-8 sm:p-10 text-center">
 				
 				<div className="mb-6">

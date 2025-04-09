@@ -59,5 +59,5 @@ export default function CartPage() {
 		);
 	}
 
-	return <Cart />;
+	return <div id="main-content"><Cart /></div>;
 }

@@ -105,7 +105,7 @@ export default function ProductsPage() {
 	};
 
 	return (
-			<section className="py-16 min-h-screen bg-gradient-to-br from-darkPurple via-backgroundDark to-neonPink/10 text-white">
+		<section id="main-content" className="py-16 min-h-screen bg-gradient-to-br from-darkPurple via-backgroundDark to-neonPink/10 text-white">
 			<div className="max-w-screen-xl mx-auto px-4">
 				{/* Heading with underline effect */}
 				<div className="text-center mb-16">

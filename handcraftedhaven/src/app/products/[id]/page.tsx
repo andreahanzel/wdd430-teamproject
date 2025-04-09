@@ -80,7 +80,7 @@ export default function ProductDetailPage() {
 
 	// Show product details for all users, regardless of authentication
 	return (
-		<section className="min-h-screen py-16 bg-gradient-to-br from-darkPurple via-backgroundDark to-neonPink/10 text-white">
+		<section id="main-content" className="min-h-screen py-16 bg-gradient-to-br from-darkPurple via-backgroundDark to-neonPink/10 text-white">
 			<div className="container mx-auto px-4">
 				<Link
 					href="/products"
