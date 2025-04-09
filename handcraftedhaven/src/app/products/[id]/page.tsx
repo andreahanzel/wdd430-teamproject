@@ -78,98 +78,9 @@ export default function ProductDetailPage() {
 		}
 	};
 
-	// Redirect or show sign-in prompt if not authenticated
-	if (!isAuthenticated) {
-		return (
-			<section className="py-16 bg-gray-50">
-				<div className="container mx-auto px-4">
-					<Link
-						href="/products"
-						className="inline-flex items-center text-electricBlue hover:text-neonPink mb-8"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							strokeWidth={1.5}
-							stroke="currentColor"
-							className="w-5 h-5 mr-2"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-							/>
-						</svg>
-						Back to all products
-					</Link>
-
-					<div className="bg-white shadow-md rounded-2xl p-8 md:p-12">
-						<div className="grid md:grid-cols-2 gap-12 items-center">
-							{/* Product Image */}
-							<div className="relative overflow-hidden rounded-lg">
-								<div className="absolute top-4 left-4 z-10">
-									<span className="bg-darkPurple text-white text-xs tracking-wider uppercase font-semibold px-4 py-2 rounded-full">
-										{product.category}
-									</span>
-								</div>
-								<div className="h-full flex items-center justify-center p-8">
-									<Image
-										src={product.image}
-										alt={product.name}
-										width={500}
-										height={500}
-										className="object-contain max-h-[500px] w-auto filter blur-sm"
-									/>
-								</div>
-							</div>
-
-							{/* Authentication Required Message */}
-							<div className="space-y-8 flex flex-col items-center justify-center text-center">
-								<div>
-									<h1 className="text-3xl font-bold text-darkPurple mb-4">
-										{product.name}
-									</h1>
-									<p className="text-gray-600 mb-8">
-										Sign in to view full product details and make purchases
-									</p>
-
-									<div className="flex flex-col space-y-4">
-										<Link
-											href={`/login?callbackUrl=/products/${id}`}
-											className="w-full"
-										>
-											<Button
-												variant="login"
-												className="w-full py-3 flex items-center justify-center gap-2"
-											>
-												<LogIn size={18} />
-												Sign In to Continue
-											</Button>
-										</Link>
-
-										<p className="text-sm text-gray-500">
-											Don't have an account?{" "}
-											<Link
-												href="/register"
-												className="text-electricBlue hover:underline"
-											>
-												Create one now
-											</Link>
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		);
-	}
-
-	// Original product view for authenticated users
+	// Show product details for all users, regardless of authentication
 	return (
-		<section className="py-16 bg-gray-50">
+		<section className="min-h-screen py-16 bg-gradient-to-br from-darkPurple via-backgroundDark to-neonPink/10 text-white">
 			<div className="container mx-auto px-4">
 				<Link
 					href="/products"
@@ -192,7 +103,7 @@ export default function ProductDetailPage() {
 					Back to all products
 				</Link>
 
-				<div className="bg-white shadow-md rounded-2xl p-8 md:p-12">
+				<div className="bg-gradient-to-br from-backgroundDark via-darkPurple to-black/20 border border-white/10 shadow-xl shadow-neonPink/30 ring-1 ring-white/5 shadow-neonPink/30 rounded-2xl p-8 md:p-12 text-white">
 					<div className="grid md:grid-cols-2 gap-12 items-center">
 						{/* Image Section */}
 						<div className="relative overflow-hidden rounded-lg">
@@ -215,7 +126,7 @@ export default function ProductDetailPage() {
 						{/* Product Details Section */}
 						<div className="space-y-8">
 							<div>
-								<h1 className="text-4xl font-bold text-darkPurple">
+							<h1 className="text-4xl font-extrabold text-neonPink font-poppins tracking-tight">
 									{product.name}
 								</h1>
 								<div className="flex items-center mt-2">
@@ -238,16 +149,16 @@ export default function ProductDetailPage() {
 							</div>
 
 							<div className="border-t border-b border-gray-200 py-6">
-								<p className="text-3xl font-bold text-electricBlue">
+								<p className="text-3xl font-bold text-neonPink">
 									${Number(product.price).toFixed(2)}
 								</p>
 							</div>
 
 							<div>
-								<h2 className="text-lg font-semibold text-darkPurple mb-2">
+							<h2 className="text-lg font-semibold text-white mb-2">
 									Description
 								</h2>
-								<p className="text-gray-700">{product.description}</p>
+								<p className="text-white/80">{product.description}</p>
 							</div>
 
 							<div className="pt-4">
@@ -255,18 +166,18 @@ export default function ProductDetailPage() {
 									<div className="mr-4">
 										<label
 											htmlFor="quantity-select"
-											className="block text-sm font-medium text-gray-700 mb-1"
+											className="block text-sm font-medium text-white mb-1"
 										>
 											Quantity
 										</label>
 										<select
-											id="quantity-select"
-											name="quantity"
-											value={quantity}
-											onChange={(e) => setQuantity(parseInt(e.target.value))}
-											aria-label="Product quantity"
-											className="border border-gray-300 rounded-md p-2 w-20 text-gray-800"
-										>
+										id="quantity-select"
+										name="quantity"
+										value={quantity}
+										onChange={(e) => setQuantity(parseInt(e.target.value))}
+										aria-label="Product quantity"
+										className="border border-white/20 bg-backgroundDark text-white rounded-md p-2 w-20"
+									>
 											{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
 												<option key={num} value={num}>
 													{num}
@@ -275,7 +186,7 @@ export default function ProductDetailPage() {
 										</select>
 									</div>
 									<div>
-										<label className="block text-sm font-medium text-gray-700 mb-1">
+									<label className="block text-sm font-medium text-white mb-1">
 											Seller
 										</label>
 										<Link
@@ -288,14 +199,29 @@ export default function ProductDetailPage() {
 								</div>
 
 								<div className="flex space-x-4">
-									<Button
-										variant="primary"
-										className="flex-1 py-3 flex items-center justify-center gap-2"
-										onClick={handleAddToCart}
-									>
-										<ShoppingBag size={18} />
-										Add to Cart
-									</Button>
+									{isAuthenticated ? (
+										<Button
+											variant="primary"
+											className="flex-1 py-3 flex items-center justify-center gap-2 shadow-md hover:shadow-lg shadow-electricBlue/30 hover:shadow-neonPink/40 transition-transform transform hover:scale-105"
+											onClick={handleAddToCart}
+										>
+											<ShoppingBag size={18} />
+											Add to Cart
+										</Button>
+									) : (
+										<Link
+											href={`/login?callbackUrl=/products/${id}`}
+											className="flex-1"
+										>
+											<Button
+												variant="login"
+												className="flex-1 w-full py-3 flex items-center justify-center gap-2 shadow-md hover:shadow-lg shadow-electricBlue/30 hover:shadow-neonPink/40 transition-transform transform hover:scale-105"
+												>
+												<LogIn size={18} />
+												Sign In to Purchase
+											</Button>
+										</Link>
+									)}
 									<button
 										className="p-3 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
 										aria-label="Add to wishlist"
@@ -306,8 +232,8 @@ export default function ProductDetailPage() {
 											viewBox="0 0 24 24"
 											strokeWidth={1.5}
 											stroke="currentColor"
-											className="w-6 h-6 text-neonPink"
-										>
+											className="w-6 h-6 text-neonPink hover:text-pink-600 drop-shadow-sm transition"
+											>
 											<path
 												strokeLinecap="round"
 												strokeLinejoin="round"
@@ -335,7 +261,7 @@ export default function ProductDetailPage() {
 								</AnimatePresence>
 							</div>
 
-							<div className="bg-gray-50 p-4 rounded-lg">
+							<div className="bg-backgroundDark/70 border border-white/10 p-4 rounded-lg">
 								<div className="flex items-center text-sm">
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
@@ -351,7 +277,7 @@ export default function ProductDetailPage() {
 											d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 00 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.56 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"
 										/>
 									</svg>
-									<span className="text-gray-700">
+									<span className="text-white/80">
 										Free shipping on orders over $50
 									</span>
 								</div>

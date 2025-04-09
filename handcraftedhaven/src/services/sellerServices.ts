@@ -43,3 +43,20 @@ export async function getSellerById(id: number): Promise<Seller | null> {
 		return null;
 	}
 }
+
+export async function getSellerByContact(contact: string): Promise<Seller | null> {
+	try {
+		const response = await fetch(`/api/sellers?contact=${encodeURIComponent(contact)}`);
+
+		if (!response.ok) {
+			if (response.status === 404) return null;
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		const seller = await response.json();
+		return formatSeller(seller);
+	} catch (error) {
+		console.error(`Error fetching seller with contact ${contact}:`, error);
+		return null;
+	}
+}

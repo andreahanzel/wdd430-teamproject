@@ -15,8 +15,7 @@ const buttonVariants = cva(
 				secondary:
 					"bg-white border border-gray-300 hover:bg-gray-100 text-gray-800",
 				login: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md",
-				register:
-					"bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md",
+				register: "bg-[#017A40] hover:bg-[#016237] text-white px-4 py-2 rounded-md",
 				product: "bg-gray-200 hover:bg-gray-300 text-gray-800",
 				seller: "bg-yellow-200 hover:bg-yellow-300 text-gray-800",
 			},

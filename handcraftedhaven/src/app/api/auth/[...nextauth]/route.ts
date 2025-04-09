@@ -1,4 +1,4 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -36,11 +36,8 @@ export const authOptions: NextAuthOptions = {
 					throw new Error("Incorrect password");
 				}
 
-				return {
-					id: user.id,
-					email: user.email,
-					name: user.name,
-				};
+				return user;
+
 			},
 		}),
 	],
@@ -55,8 +52,19 @@ export const authOptions: NextAuthOptions = {
 		async session({ session, token }) {
 			if (token && session.user) {
 				session.user.id = token.sub!;
+				session.user.role = token.role;
 			}
 			return session;
+		},
+		async jwt({ token, user }) {
+			if (user) {
+				const dbUser = await prisma.user.findUnique({
+					where: { id: user.id },
+					select: { role: true },
+				});
+				token.role = dbUser?.role ?? 'CUSTOMER'; // Store role in token
+			}
+			return token;
 		},
 	},
 };

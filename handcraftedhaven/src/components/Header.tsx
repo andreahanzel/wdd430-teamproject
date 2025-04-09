@@ -19,7 +19,7 @@ export default function Header() {
 	};
 
 	return (
-		<header className="bg-backgroundDark text-white py-4 sticky top-0 z-40 shadow-md">
+		<header className="bg-gradient-to-br from-backgroundDark via-darkPurple to-black/50 text-white py-4 sticky top-0 z-40 shadow-md shadow-neonPink/30 ring-1 ring-white/10">
 			<div className="container mx-auto px-4">
 				{/* Desktop Layout */}
 				<div className="hidden lg:flex lg:items-center lg:justify-between">

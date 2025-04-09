@@ -1,8 +1,27 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/client";
 
-export async function GET() {
+export async function GET(req: Request) {
+	const { searchParams } = new URL(req.url);
+	const contact = searchParams.get("contact");
+
 	try {
+		if (contact) {
+			const seller = await prisma.seller.findFirst({
+				where: { contact },
+				include: { products: true },
+			});
+
+			if (!seller) {
+				return NextResponse.json(
+					{ error: "Seller not found" },
+					{ status: 404 }
+				);
+			}
+
+			return NextResponse.json(seller);
+		}
+
 		const sellers = await prisma.seller.findMany({
 			include: {
 				products: true,

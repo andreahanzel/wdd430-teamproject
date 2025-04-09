@@ -81,86 +81,87 @@ export default function Cart() {
 						<ul className="divide-y divide-gray-100">
 							<AnimatePresence>
 								{cartItems.map((item) => (
-									<motion.li
-										key={item.id}
-										initial={{ opacity: 0, y: 20 }}
-										animate={{ opacity: 1, y: 0 }}
-										exit={{
-											opacity: 0,
-											height: 0,
-											marginTop: 0,
-											marginBottom: 0,
-											overflow: "hidden",
-										}}
-										transition={{ duration: 0.3 }}
-										className="p-4 flex flex-col sm:flex-row gap-4"
-									>
-										<div className="flex-shrink-0">
-											<div className="h-20 w-20 bg-gray-50 rounded border border-gray-100 overflow-hidden">
-												<img
-													src={item.image}
-													alt={item.name}
-													className="h-full w-full object-cover"
-												/>
-											</div>
-										</div>
-
-										<div className="flex-1">
-											<div className="flex flex-col sm:flex-row sm:justify-between">
-												<div>
-													<Link
-														href={`/products/${item.id}`}
-														className="text-gray-800 font-medium hover:text-blue-600 transition-colors"
-													>
-														{item.name}
-													</Link>
-													<Link
-														href={`/sellers/${item.sellerId}`}
-														className="block text-xs text-gray-500 hover:text-blue-500 transition-colors mt-1"
-													>
-														From: Artisan #{item.sellerId}
-													</Link>
-												</div>
-												<div className="font-semibold text-gray-800 mt-2 sm:mt-0">
-													${(item.price * item.quantity).toFixed(2)}
+									<li key={item.id}>
+										<motion.div
+											initial={{ opacity: 0, y: 20 }}
+											animate={{ opacity: 1, y: 0 }}
+											exit={{
+												opacity: 0,
+												height: 0,
+												marginTop: 0,
+												marginBottom: 0,
+												overflow: "hidden",
+											}}
+											transition={{ duration: 0.3 }}
+											className="p-4 flex flex-col sm:flex-row gap-4"
+										>
+											<div className="flex-shrink-0">
+												<div className="h-20 w-20 bg-gray-50 rounded border border-gray-100 overflow-hidden">
+													<img
+														src={item.image}
+														alt={item.name}
+														className="h-full w-full object-cover"
+													/>
 												</div>
 											</div>
 
-											<div className="flex justify-between items-center mt-4">
-												<div className="flex items-center border border-gray-200 rounded">
+											<div className="flex-1">
+												<div className="flex flex-col sm:flex-row sm:justify-between">
+													<div>
+														<Link
+															href={`/products/${item.id}`}
+															className="text-gray-800 font-medium hover:text-blue-600 transition-colors"
+														>
+															{item.name}
+														</Link>
+														<Link
+															href={`/sellers/${item.sellerId}`}
+															className="block text-xs text-gray-500 hover:text-blue-500 transition-colors mt-1"
+														>
+															From: Artisan #{item.sellerId}
+														</Link>
+													</div>
+													<div className="font-semibold text-gray-800 mt-2 sm:mt-0">
+														${(item.price * item.quantity).toFixed(2)}
+													</div>
+												</div>
+
+												<div className="flex justify-between items-center mt-4">
+													<div className="flex items-center border border-gray-200 rounded">
+														<button
+															onClick={() =>
+																updateQuantity(item.id, item.quantity - 1)
+															}
+															className="px-2 py-1 text-gray-500 hover:text-gray-800 bg-gray-50 rounded-l hover:bg-gray-100 transition-colors"
+															aria-label="Decrease quantity"
+														>
+															<Minus size={16} />
+														</button>
+														<span className="px-4 py-1 text-sm font-medium border-x border-gray-200 text-gray-800">
+															{item.quantity}
+														</span>
+														<button
+															onClick={() =>
+																updateQuantity(item.id, item.quantity + 1)
+															}
+															className="px-2 py-1 text-gray-500 hover:text-gray-800 bg-gray-50 rounded-r hover:bg-gray-100 transition-colors"
+															aria-label="Increase quantity"
+														>
+															<Plus size={16} />
+														</button>
+													</div>
+
 													<button
-														onClick={() =>
-															updateQuantity(item.id, item.quantity - 1)
-														}
-														className="px-2 py-1 text-gray-500 hover:text-gray-800 bg-gray-50 rounded-l hover:bg-gray-100 transition-colors"
-														aria-label="Decrease quantity"
+														onClick={() => removeFromCart(item.id)}
+														className="text-gray-400 hover:text-red-500 p-1 rounded-full hover:bg-gray-50 transition-colors"
+														aria-label="Remove item"
 													>
-														<Minus size={16} />
-													</button>
-													<span className="px-4 py-1 text-sm font-medium border-x border-gray-200 text-gray-800">
-														{item.quantity}
-													</span>
-													<button
-														onClick={() =>
-															updateQuantity(item.id, item.quantity + 1)
-														}
-														className="px-2 py-1 text-gray-500 hover:text-gray-800 bg-gray-50 rounded-r hover:bg-gray-100 transition-colors"
-														aria-label="Increase quantity"
-													>
-														<Plus size={16} />
+														<Trash2 size={18} />
 													</button>
 												</div>
-
-												<button
-													onClick={() => removeFromCart(item.id)}
-													className="text-gray-400 hover:text-red-500 p-1 rounded-full hover:bg-gray-50 transition-colors"
-													aria-label="Remove item"
-												>
-													<Trash2 size={18} />
-												</button>
 											</div>
-										</div>
-									</motion.li>
+										</motion.div>
+									</li>
 								))}
 							</AnimatePresence>
 						</ul>

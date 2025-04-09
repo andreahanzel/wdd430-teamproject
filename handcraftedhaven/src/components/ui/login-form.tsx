@@ -6,7 +6,8 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useState, FormEvent, useEffect } from "react";
 import { useNotification } from "../../contexts/NotificationContext";
-import { Mail, Lock, AlertCircle } from "lucide-react";
+import { User, Mail, Lock, AlertCircle, Eye, EyeOff } from "lucide-react";
+
 
 export default function LoginForm() {
 	const router = useRouter();
@@ -16,16 +17,19 @@ export default function LoginForm() {
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const { showNotification } = useNotification();
+	const [showPassword, setShowPassword] = useState(false);
 
 	// Show success message if redirected from registration
 	useEffect(() => {
-		if (registered === "true") {
+		const param = new URLSearchParams(window.location.search).get("registered");
+		if (param === "true") {
 			showNotification(
 				"Registration successful! Please log in with your new account.",
 				"success"
 			);
 		}
-	}, [registered, showNotification]);
+	}, []); // only run once on first render
+	
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -71,120 +75,107 @@ export default function LoginForm() {
 	}
 
 	return (
-		<div className="w-full max-w-md mx-auto">
-			<div className="bg-white rounded-xl shadow-lg overflow-hidden">
-				<div className="bg-backgroundDark p-6 text-center">
-					<h1 className="text-2xl font-bold text-white mb-2">Welcome Back</h1>
-					<p className="text-gray-300 text-sm">Sign in to your account</p>
+		<div className="bg-white/10 backdrop-blur-lg border border-white/10 rounded-xl shadow-xl p-8 sm:p-10 text-white">
+			<h2 className="text-2xl font-bold mb-2 text-white">Sign in to your account</h2>
+			<p className="text-pink-100 mb-6 text-sm">Welcome back! Enter your credentials.</p>
+
+			<form onSubmit={handleSubmit} className="space-y-6">
+				{error && (
+					<div className="bg-pink-600/40 border border-pink-300 text-white p-4 rounded-lg flex items-start space-x-2">
+						<AlertCircle className="h-5 w-5 mt-0.5" />
+						<div>
+							<p className="font-medium">Login Error</p>
+							<p>{error}</p>
+							{error.includes("No account found") && (
+								<p className="mt-1 text-sm">
+									New user?{" "}
+									<Link href="/register" className="text-white underline hover:text-pink-200">
+										Create an account
+									</Link>
+								</p>
+							)}
+						</div>
+					</div>
+				)}
+
+				<div>
+					<label htmlFor="email" className="block text-sm font-medium text-pink-200 mb-1">
+						Email address
+					</label>
+					<div className="relative">
+						<Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-pink-300" />
+						<input
+							id="email"
+							name="email"
+							type="email"
+							required
+							placeholder="you@example.com"
+							className="w-full pl-10 pr-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-transparent transition duration-300"
+						/>
+					</div>
 				</div>
 
-				<form onSubmit={handleSubmit} className="p-8 space-y-6">
-					{error && (
-						<div
-							className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md flex items-start space-x-2"
-							role="alert"
+				<div>
+					<label htmlFor="password" className="block text-sm font-medium text-pink-200 mb-1">
+						Password
+					</label>
+					<div className="relative">
+						<Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-pink-300" />
+						<input
+							id="password"
+							name="password"
+							type={showPassword ? "text" : "password"} // dynamic type
+							required
+							placeholder="••••••••"
+							minLength={6}
+							className="w-full pl-10 pr-10 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-transparent transition duration-300"
+						/>
+						<button
+							type="button"
+							onClick={() => setShowPassword(!showPassword)}
+							className="absolute right-3 top-1/2 transform -translate-y-1/2 text-pink-300 hover:text-pink-200 transition"
+							aria-label={showPassword ? "Hide password" : "Show password"}
+							title={showPassword ? "Hide password" : "Show password"} 
 						>
-							<AlertCircle className="h-5 w-5 mt-0.5" />
-							<div>
-								<p className="font-medium">Login Error</p>
-								<p>{error}</p>
-								{error.includes("No account found") && (
-									<p className="mt-1 text-sm">
-										New user?{" "}
-										<Link
-											href="/register"
-											className="text-blue-600 hover:underline"
-										>
-											Create an account
-										</Link>
-									</p>
-								)}
-							</div>
-						</div>
-					)}
+							{showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+						</button>
 
-					<div className="space-y-5">
-						<div className="relative">
-							<label
-								htmlFor="email"
-								className="block text-sm font-medium text-gray-700 mb-1"
-							>
-								Email Address
-							</label>
-							<div className="relative rounded-md shadow-sm">
-								<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-									<Mail className="h-5 w-5 text-gray-400" />
-								</div>
-								<input
-									className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-backgroundDark focus:border-backgroundDark transition duration-150"
-									id="email"
-									type="email"
-									name="email"
-									placeholder="you@example.com"
-									required
-								/>
-							</div>
-						</div>
-
-						<div className="relative">
-							<label
-								htmlFor="password"
-								className="block text-sm font-medium text-gray-700 mb-1"
-							>
-								Password
-							</label>
-							<div className="relative rounded-md shadow-sm">
-								<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-									<Lock className="h-5 w-5 text-gray-400" />
-								</div>
-								<input
-									className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-backgroundDark focus:border-backgroundDark transition duration-150"
-									id="password"
-									type="password"
-									name="password"
-									placeholder="••••••••"
-									minLength={6}
-									required
-								/>
-							</div>
-						</div>
-
-						<div className="flex justify-end">
-							<Link
-								href="#"
-								className="text-sm text-backgroundDark hover:text-backgroundDark/80"
-							>
-								Forgot password?
-							</Link>
-						</div>
 					</div>
+				</div>
 
-					<div>
+				<div className="flex justify-end text-sm">
+					<Link href="#" className="text-pink-200 hover:text-white transition">
+						Forgot password?
+					</Link>
+				</div>
+
+				<Button
+					variant="primary"
+					type="submit"
+					disabled={isLoading}
+					className="w-full bg-pink-600 hover:bg-pink-500 text-white py-2.5 rounded-lg shadow-md transition duration-300 transform hover:scale-105"
+				>
+					{isLoading ? "Signing in..." : "Sign In"}
+				</Button>
+
+				<div className="relative flex py-3 items-center">
+					<div className="flex-grow border-t border-white/20" />
+					<span className="mx-3 text-white/60 text-sm">or</span>
+					<div className="flex-grow border-t border-white/20" />
+				</div>
+
+				<div className="text-center">
+					<p className="text-pink-100 mb-4 text-sm">Don't have an account?</p>
+					<Link href="/register" className="w-full inline-block">
 						<Button
-							variant="login"
-							disabled={isLoading}
-							className="w-full py-3 flex justify-center"
+							variant="primary"
+							className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-lg shadow-md transition duration-300 transform hover:scale-105"
 						>
-							{isLoading ? "Signing in..." : "Sign In"}
+							Create Account
 						</Button>
-					</div>
-
-					<div className="relative flex py-3 items-center">
-						<div className="flex-grow border-t border-gray-200"></div>
-						<span className="flex-shrink mx-3 text-gray-400 text-sm">or</span>
-						<div className="flex-grow border-t border-gray-200"></div>
-					</div>
-
-					<div className="text-center">
-						<p className="text-gray-600 mb-4">Don't have an account?</p>
-						<Link href="/register" className="w-full inline-block">
-							<Button variant="register" className="w-full">
-								Create Account
-							</Button>
-						</Link>
-					</div>
-				</form>
-			</div>
+					</Link>
+				</div>
+			</form>
 		</div>
 	);
 }
