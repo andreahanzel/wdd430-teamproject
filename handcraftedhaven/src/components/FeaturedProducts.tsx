@@ -33,7 +33,7 @@ export default function FeaturedProducts() {
 
 	if (loading) {
 		return (
-			<section className="py-20 bg-gray-50 relative overflow-hidden">
+			<section className="py-20 bg-gradient-to-br from-backgroundDark via-darkPurple to-black/60 relative overflow-hidden text-white shadow-inner shadow-electricBlue/10">
 				<div className="container mx-auto px-4 relative flex justify-center">
 					<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-electricBlue"></div>
 				</div>
@@ -42,7 +42,7 @@ export default function FeaturedProducts() {
 	}
 
 	return (
-		<section className="py-20 bg-gray-50 relative overflow-hidden">
+		<section className="py-20 bg-gradient-to-br from-backgroundDark via-darkPurple to-black/60 relative overflow-hidden text-white shadow-inner shadow-electricBlue/10">
 			{/* Decorative background elements */}
 			<div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-electricBlue/10 to-transparent rounded-full -translate-x-1/2 -translate-y-1/2"></div>
 			<div className="absolute bottom-0 right-0 w-64 h-64 bg-gradient-to-tl from-neonPink/10 to-transparent rounded-full translate-x-1/3 translate-y-1/3"></div>
@@ -52,10 +52,10 @@ export default function FeaturedProducts() {
 					<span className="inline-block text-neonPink font-medium text-sm uppercase tracking-wider mb-2">
 						Handpicked For You
 					</span>
-					<h2 className="text-4xl font-poppins font-bold text-darkPurple mb-4">
+					<h2 className="text-4xl font-poppins font-bold text-white mb-4 drop-shadow">
 						Featured Artisan Creations
 					</h2>
-					<p className="text-gray-600">
+					<p className="text-white/90">
 						Discover our collection of unique, handcrafted treasures created
 						with passion and skill by talented artisans.
 					</p>
@@ -83,7 +83,7 @@ export default function FeaturedProducts() {
 
 								{/* Category badge */}
 								<div className="absolute top-3 left-3 z-20">
-									<span className="inline-block px-3 py-1 text-xs font-medium bg-neonPink text-white rounded-full shadow-md">
+								<span className="inline-block px-3 py-1 text-xs font-medium bg-pink-800 text-white rounded-full shadow-md">
 										{product.category}
 									</span>
 								</div>
@@ -105,7 +105,7 @@ export default function FeaturedProducts() {
 								</h3>
 
 								<div className="flex justify-between items-center mt-2">
-									<span className="text-lg font-bold text-neonPink">
+								<span className="text-lg font-bold text-pink-600">
 										$
 										{typeof product.price === "number"
 											? product.price.toFixed(2)

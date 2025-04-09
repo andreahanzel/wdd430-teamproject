@@ -73,9 +73,9 @@ export default function ProductReviews({
 		: 0;
 
 	return (
-		<div className="mt-20 bg-white p-6 rounded-xl shadow-md">
+		<div className="mt-20 bg-gradient-to-br from-backgroundDark via-darkPurple to-black/30 border border-white/10 shadow-lg shadow-neonPink/20 rounded-xl p-6 text-white">
 			<div className="flex justify-between items-center mb-6">
-				<h2 className="text-2xl font-bold text-darkPurple">Customer Reviews</h2>
+			<h2 className="text-2xl font-bold text-white">Customer Reviews</h2>
 
 				{isAuthenticated ? (
 					<Button variant="primary" onClick={() => setIsModalOpen(true)}>
@@ -106,7 +106,7 @@ export default function ProductReviews({
 						</svg>
 					))}
 				</div>
-				<p className="text-sm text-gray-600">
+				<p className="text-sm text-white/70">
 					{averageRating.toFixed(1)} ({reviews.length}{" "}
 					{reviews.length === 1 ? "review" : "reviews"})
 				</p>
@@ -125,7 +125,7 @@ export default function ProductReviews({
 					{reviews.map((review) => (
 						<div
 							key={review.id}
-							className="border p-4 rounded-lg shadow-sm bg-gray-50"
+							className="bg-white/5 backdrop-blur-md p-4 rounded-lg border border-white/10 shadow-inner"
 						>
 							<div className="flex items-center justify-between mb-2">
 								<div className="flex items-center">
@@ -142,11 +142,11 @@ export default function ProductReviews({
 											</span>
 										)}
 									</div>
-									<span className="font-semibold text-darkPurple">
+									<span className="font-semibold text-white">
 										{review.userName}
 									</span>
 								</div>
-								<span className="text-xs text-gray-400">
+								<span className="text-xs text-white">
 									{formatDistanceToNow(new Date(review.date), {
 										addSuffix: true,
 									})}
@@ -170,7 +170,7 @@ export default function ProductReviews({
 							</div>
 
 							{/* Review comment */}
-							<p className="text-gray-700">{review.comment}</p>
+							<p className="text-white/80">{review.comment}</p>
 						</div>
 					))}
 				</div>

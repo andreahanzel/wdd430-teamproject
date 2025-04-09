@@ -33,7 +33,7 @@ export default function ProductCard({ product }: ProductProps) {
 
 	const handleAuthenticationRequired = () => {
 		showNotification(
-			"Please sign in to view product details or add to cart",
+			"Please sign in to add items to your cart",
 			"info"
 		);
 	};
@@ -56,14 +56,14 @@ export default function ProductCard({ product }: ProductProps) {
 
 	return (
 		<div
-			className="group relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+			className="group relative bg-white/20 backdrop-blur-lg rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-white/20"
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>
 			{/* Category badge */}
 			<div className="absolute top-4 left-4 z-10">
-				<span className="inline-block px-3 py-1 text-xs font-medium bg-neonPinkDark text-white rounded-full shadow-md">
-					{product.category}
+				<span className="inline-block px-3 py-1 text-xs font-semibold bg-gradient-to-r from-neonPink to-electricBlue text-white rounded-full shadow-md backdrop-blur-sm">
+				{product.category}
 				</span>
 			</div>
 
@@ -84,40 +84,28 @@ export default function ProductCard({ product }: ProductProps) {
 
 				{/* Placeholder while image loads */}
 				{!imageLoaded && (
-					<div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+				<div className="absolute inset-0 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-100 animate-pulse"></div>
 				)}
 
 				{/* Action button that appears on hover */}
 				<div
 					className={`absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20`}
 				>
-					{isAuthenticated ? (
-						<Link
-							href={`/products/${product.id}`}
-							className="transform -translate-y-4 group-hover:translate-y-0 transition-all duration-300"
-						>
-							<Button variant="secondary" className="shadow-lg">
-								Quick View
-							</Button>
-						</Link>
-					) : (
-						<Link
-							href="/login"
-							onClick={handleAuthenticationRequired}
-							className="transform -translate-y-4 group-hover:translate-y-0 transition-all duration-300"
-						>
-							<Button variant="secondary" className="shadow-lg">
-								Sign in to View
-							</Button>
-						</Link>
-					)}
+					<Link
+						href={`/products/${product.id}`}
+						className="transform -translate-y-4 group-hover:translate-y-0 transition-all duration-300"
+					>
+						<Button variant="secondary" className="shadow-lg">
+							Quick View
+						</Button>
+					</Link>
 				</div>
 			</div>
 
 			{/* Product info - fixed height to prevent layout shift */}
 			<div className="p-5 h-36 flex flex-col">
 				<div className="flex justify-between items-start mb-2">
-					<h3 className="text-lg font-bold font-poppins text-darkPurple truncate group-hover:text-electricBlue transition-colors">
+				<h3 className="text-lg font-bold font-poppins text-white truncate group-hover:text-neonPink transition-colors">
 						{product.name}
 					</h3>
 
@@ -126,8 +114,9 @@ export default function ProductCard({ product }: ProductProps) {
 						<span className="text-lg font-bold text-darkPurple group-hover:text-white relative z-10 transition-colors duration-300">
 							${Number(product.price).toFixed(2)}
 						</span>
-						<div className="absolute inset-0 bg-electricBlue scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 -z-0 rounded-full px-2"></div>
+						<div className="absolute inset-0 bg-gradient-to-r from-electricBlue to-neonPink scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 -z-0 rounded-full px-2"></div>
 					</div>
+
 				</div>
 
 				{/* Description with truncate */}
@@ -137,62 +126,39 @@ export default function ProductCard({ product }: ProductProps) {
 
 				{/* Bottom action area */}
 				<div className="pt-2 border-t border-gray-100 mt-auto flex justify-between">
+					<Link href={`/products/${product.id}`} className="flex-1 mr-2">
+						<Button
+							variant="product"
+							className="w-full group-hover:bg-electricBlue group-hover:text-white transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
+							>
+							<span>View</span>
+						</Button>
+					</Link>
 					{isAuthenticated ? (
-						<>
-							<Link href={`/products/${product.id}`} className="flex-1 mr-2">
-								<Button
-									variant="product"
-									className="w-full group-hover:bg-electricBlue group-hover:text-white transition-colors duration-300"
-								>
-									<span>View</span>
-								</Button>
-							</Link>
-							<Button
-								variant="primary"
-								className="px-3"
-								onClick={handleAddToCart}
-								disabled={isAdding}
-							>
-								{isAdding ? (
-									<div className="animate-spin h-5 w-5 border-2 border-white rounded-full border-t-transparent"></div>
-								) : (
-									<ShoppingBag size={18} />
-								)}
-							</Button>
-						</>
+					<Button
+						variant="primary"
+						className="px-3 shadow-md hover:shadow-lg hover:scale-105 transition-transform"
+						onClick={handleAddToCart}
+						disabled={isAdding}
+						aria-label="Add to cart"
+					>
+						<ShoppingBag size={18} />
+					</Button> 
 					) : (
-						<Link
-							href="/login"
-							onClick={handleAuthenticationRequired}
-							className="block"
-						>
-							<Button
-								variant="product"
-								className="w-full group-hover:bg-electricBlue group-hover:text-white transition-colors duration-300"
-							>
-								<span>Sign in to View</span>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									className="h-4 w-4 ml-2"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-									/>
-								</svg>
-							</Button>
+						<Link href={`/login?callbackUrl=/products/${product.id}`}>
+						<Button variant="primary" className="px-3">
+							<span className="sr-only">Sign in to purchase</span>
+							<ShoppingBag size={18} />
+						</Button>
 						</Link>
+
+
 					)}
 				</div>
 			</div>
 
 			{/* Decorative corner accent */}
-			<div className="absolute bottom-0 right-0 w-12 h-12 bg-gradient-to-tl from-neonPink to-electricBlue opacity-30 rounded-tl-3xl"></div>
-		</div>
+			<div className="absolute bottom-0 right-0 w-12 h-12 bg-gradient-to-tl from-neonPink to-electricBlue opacity-40 rounded-tl-3xl shadow-md shadow-electricBlue/30"></div>
+			</div>
 	);
 }

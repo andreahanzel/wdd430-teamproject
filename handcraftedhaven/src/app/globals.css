@@ -15,6 +15,20 @@ body {
   font-family: var(--font-inter);
 }
 
+/* Add these new styles */
+input, textarea, select {
+  @apply text-gray-900 dark:text-white bg-white dark:bg-gray-800;
+}
+
+input::placeholder, textarea::placeholder {
+  @apply text-gray-400 dark:text-gray-400;
+}
+
+/* Focus styles */
+input:focus, textarea:focus, select:focus {
+  @apply ring-2 ring-electricBlue outline-none;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-poppins);
 }
@@ -30,6 +44,13 @@ code {
   
   .btn-secondary {
     @apply border border-darkPurple text-darkPurple hover:bg-darkPurple hover:text-white font-medium py-2 px-6 rounded-md transition-colors;
+  }
+  
+  /* Add form input component */
+  .form-input {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
+          focus:outline-none focus:ring-2 focus:ring-electricBlue 
+          bg-white dark:bg-gray-800 text-gray-900 dark:text-white;
   }
 }
 

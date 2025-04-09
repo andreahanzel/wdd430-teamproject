@@ -114,3 +114,54 @@ export interface PaymentDetails {
 	cardName?: string;
 	cardNumberLastFour?: string;
 }
+
+// For the seller dashboard
+export interface SellerOrderItem {
+	id: number;
+	productId: number;
+	productName: string;
+	productImage: string;
+	quantity: number;
+	price: number;
+	}
+	
+	export interface SellerOrder {
+	id: number;
+	orderNumber: string;
+	status: string;
+	totalAmount: number;
+	customerName: string;
+	customerEmail: string;
+	customerPhone?: string;
+	shippingAddress: ShippingAddress;
+	paymentDetails?: PaymentDetails;
+	orderItems: SellerOrderItem[];
+	createdAt: Date;
+	updatedAt: Date;
+	}
+	
+	// Analytics types
+	export interface AnalyticsData {
+		salesOverTime: {
+		date: string;
+		sales: number;
+		}[];
+		salesByCategory: {
+		category: string;
+		sales: number;
+		}[];
+		topProducts: {
+		id: number;
+		name: string;
+		sales: number;
+		revenue: number;
+		image: string;
+		}[];
+		summary: {
+		totalSales: number;
+		totalRevenue: number;
+		totalOrders: number;
+		averageOrderValue: number;
+		newCustomers: number;
+		};
+	}

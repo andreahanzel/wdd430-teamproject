@@ -1,0 +1,118 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .gridContainer {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
+
+.smallCard {
+    composes: card;
+    height: 8rem;
+}
+
+.largeCard {
+    composes: card;
+    height: 24rem;
+}
+
+.title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+
+.value {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+}
+
+.productName {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+}
+
+.productSales {
+    color: #6b7280;
+    margin-top: 0.25rem;
+}
+
+.chartContainer {
+    height: 20rem;
+}
+
+.chart {
+    display: flex;
+    align-items: flex-end;
+    height: 16rem;
+    margin-top: 1rem;
+    gap: 0.5rem;
+}
+
+.chartBar {
+    width: 100%;
+    background-color: #dbeafe;
+    border-radius: 0.125rem;
+    height: var(--bar-height, 0%);
+    transition: height 0.3s ease;
+}
+
+.chartLabel {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+    text-align: center;
+}
+
+.productList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.productItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.loadingCard {
+    composes: card;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.flexCol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}

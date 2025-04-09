@@ -105,22 +105,22 @@ export default function ProductsPage() {
 	};
 
 	return (
-		<section className="py-16 bg-gradient-to-b from-white to-gray-50">
-			<div className="container mx-auto px-4">
+			<section className="py-16 min-h-screen bg-gradient-to-br from-darkPurple via-backgroundDark to-neonPink/10 text-white">
+			<div className="max-w-screen-xl mx-auto px-4">
 				{/* Heading with underline effect */}
 				<div className="text-center mb-16">
-					<h1 className="text-4xl font-bold font-poppins text-darkPurple mb-2 relative inline-block">
+				<h1 className="text-4xl font-bold font-poppins text-white mb-2 relative inline-block drop-shadow-lg">
 						Discover Our Handcrafted Products
 						<span className="absolute left-0 w-full h-1 bg-gradient-to-r from-electricBlue to-neonPink bottom-[-8px]"></span>
 					</h1>
-					<p className="text-gray-600 mt-3 max-w-2xl mx-auto">
+					<p className="text-white mt-3 max-w-2xl mx-auto">
 						Explore our collection of unique items made with passion and skill
 						by talented artisans.
 					</p>
 				</div>
 
 				{/* Enhanced Search and Filter UI */}
-				<div className="bg-white dark:bg-backgroundDark/90 rounded-xl shadow-lg p-6 mb-12 border border-gray-100 dark:border-gray-800">
+				<div className="bg-gradient-to-br from-darkPurple/80 via-backgroundDark/80 to-electricBlue/10 text-white border border-white/10 backdrop-blur-sm shadow-xl shadow-neonPink/20 rounded-xl p-6 mb-12">
 					{/* Main Search and Filter Controls */}
 					<div className="flex flex-col md:flex-row md:items-center gap-6">
 						{/* Search with icon and animation */}
@@ -135,9 +135,7 @@ export default function ProductsPage() {
 									placeholder="Search by name or description..."
 									value={searchTerm}
 									onChange={(e) => setSearchTerm(e.target.value)}
-									className="w-full px-4 py-3 pl-10 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 
-                            focus:ring-2 focus:ring-electricBlue dark:focus:ring-neonPink focus:border-transparent 
-                            transition-all duration-300 dark:text-gray-100"
+									className="w-full px-4 py-3 pl-10 rounded-lg bg-backgroundDark border border-white/20 text-white placeholder-white/70 focus:ring-2 focus:ring-neonPink"
 									aria-label="Search products by name or description"
 								/>
 								<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -191,10 +189,7 @@ export default function ProductsPage() {
 									aria-label="Filter products by category"
 									value={selectedCategory}
 									onChange={(e) => setSelectedCategory(e.target.value)}
-									className="appearance-none w-full px-4 py-3 rounded-lg border-2 border-gray-200 dark:border-gray-700 
-                            bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100
-                            focus:ring-2 focus:ring-electricBlue dark:focus:ring-neonPink focus:border-transparent
-                            transition-all duration-300"
+									className="appearance-none w-full px-4 py-3 rounded-lg border border-white/20 bg-backgroundDark text-white focus:ring-2 focus:ring-electricBlue"
 								>
 									{categories.map((category) => (
 										<option key={category} value={category}>
@@ -335,7 +330,7 @@ export default function ProductsPage() {
 											setPriceRange([priceRange[0], parseInt(e.target.value)])
 										}
 										className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer 
-                              accent-electricBlue dark:accent-neonPink"
+                            accent-electricBlue dark:accent-neonPink"
 										aria-label="Maximum price slider"
 									/>
 								</div>
@@ -430,9 +425,9 @@ export default function ProductsPage() {
 				{/* Product count and result info */}
 				<div className="flex justify-between items-center mb-8">
 					<div>
-						<p className="text-gray-600">
+						<p className="text-white">
 							Showing{" "}
-							<span className="font-medium text-darkPurple">
+							<span className="font-medium text-neonPink">
 								{products.length}
 							</span>{" "}
 							products
@@ -440,7 +435,7 @@ export default function ProductsPage() {
 								<span>
 									{" "}
 									in{" "}
-									<span className="font-medium text-darkPurple">
+									<span className="font-medium text-electricBlue">
 										{selectedCategory}
 									</span>
 								</span>
@@ -452,7 +447,7 @@ export default function ProductsPage() {
 							priceRange[1] < 200) && (
 							<div className="flex flex-wrap gap-2 mt-2">
 								{selectedColors.length > 0 && (
-									<span className="text-xs bg-electricBlue/10 text-electricBlue px-2 py-1 rounded-full">
+									<span className="text-xs bg-electricBlue/20 text-white px-2 py-1 rounded-full shadow shadow-electricBlue/30">
 										Colors: {selectedColors.join(", ")}
 									</span>
 								)}
@@ -498,7 +493,7 @@ export default function ProductsPage() {
 						))}
 					</div>
 				) : products.length === 0 ? (
-					<div className="text-center py-16 bg-white rounded-xl shadow">
+					<div className="text-center py-16 bg-backgroundDark/80 text-white rounded-xl shadow-lg shadow-neonPink/20">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							className="h-16 w-16 mx-auto text-gray-300 mb-4"
@@ -529,13 +524,16 @@ export default function ProductsPage() {
 						</button>
 					</div>
 				) : (
-					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-						{products.map((product) => (
+					<div className="bg-backgroundDark/50 p-6 rounded-xl shadow-inner shadow-black/30">
+						<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+							{products.map((product) => (
 							<div key={product.id} className="animate-fadeIn">
 								<ProductCard product={product} />
 							</div>
-						))}
+							))}
+						</div>
 					</div>
+
 				)}
 			</div>
 		</section>

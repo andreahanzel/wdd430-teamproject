@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function Hero() {
     return (
-        <section className="bg-backgroundDark text-white py-20">
+      <section className="bg-gradient-to-br from-backgroundDark via-darkPurple to-black/60 text-white py-24 relative overflow-hidden shadow-lg shadow-neonPink/20">
         <div className="container mx-auto px-4">
             
           <div className="max-w-2xl">
