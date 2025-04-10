@@ -6,12 +6,13 @@ import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
 import { 
-    Plus, Package, LineChart, User, ShoppingBag, Settings, 
+    Plus, Package, LineChart, User, ShoppingBag,
     AlertTriangle, ChevronRight, Star, Store, Heart, 
     BarChart3, Zap, Layers
 } from 'lucide-react'
 
-// ProfileNotice Component 
+
+// Profile Notice Component
 function ProfileNotice() {
     return (
         <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-10 border border-white/10 text-center">
@@ -21,16 +22,15 @@ function ProfileNotice() {
             <h3 className="text-xl font-bold text-white mb-3">Seller Profile Required</h3>
             <p className="text-pink-100 mb-6">You need to create a seller profile before you can manage your store.</p>
             <Link href="/dashboard/seller/profile/new">
-                <Button 
-                    variant="primary"
-                    className="bg-pink-600 hover:bg-pink-500 text-white py-2 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105"
-                >
+                <Button className="bg-pink-600 hover:bg-pink-500 text-white py-2 px-6 rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
                     Create Seller Profile
                 </Button>
             </Link>
         </div>
     )
 }
+
+
 
 // LoadingState Component (Shown while checking profile status)
 function LoadingState() {
@@ -73,8 +73,7 @@ function DashboardCard({
                 
                 <Button 
                     variant="primary" 
-                    className="bg-indigo-600/60 hover:bg-indigo-500 text-white group-hover:bg-indigo-500 flex items-center gap-1.5 transition-all duration-300"
-                >
+                    className="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold shadow-md group-hover:bg-indigo-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-700"                    >
                     {buttonText}
                     <ChevronRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Button>
@@ -94,6 +93,37 @@ export default function SellerDashboard() {
     const [profileChecked, setProfileChecked] = useState(false)
     const [loading, setLoading] = useState(true)
     const [sellerData, setSellerData] = useState<any>(null)
+    type TopProduct = {
+        sales: number;
+        // Add other properties if needed
+    };
+    
+    const [analytics, setAnalytics] = useState<{
+        topProducts: TopProduct[];
+        totalOrders: number;
+        totalSales: number;
+    } | null>(null);
+    const [analyticsLoading, setAnalyticsLoading] = useState(true)
+
+
+    useEffect(() => {
+        const fetchAnalytics = async () => {
+            try {
+                const res = await fetch('/api/seller/analytics');
+                const data = await res.json();
+                setAnalytics(data);
+            } catch (err) {
+                console.error('Error fetching analytics:', err);
+            } finally {
+                setAnalyticsLoading(false);
+            }
+        };
+    
+        if (hasProfile) {
+            fetchAnalytics();
+        }
+    }, [hasProfile]);
+    
 
     // Check if the seller has a profile
     const checkProfile = async () => {
@@ -164,6 +194,7 @@ export default function SellerDashboard() {
     }
 
     if (session?.user?.role !== 'SELLER') return null
+    
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700">
@@ -216,13 +247,6 @@ export default function SellerDashboard() {
                             Profile
                         </button>
 
-                        <button 
-                            onClick={() => setActiveSection('settings')} 
-                            className={`flex items-center w-full p-3 rounded-lg ${activeSection === 'settings' ? 'bg-white/10 text-white' : 'text-pink-100 hover:bg-white/5'} transition duration-200`}
-                        >
-                            <Settings className="h-5 w-5 mr-3" />
-                            Settings
-                        </button>
                     </nav>
                     
                     {hasProfile && sellerData && (
@@ -284,57 +308,68 @@ export default function SellerDashboard() {
                                         <>
                                             {/* Stats Cards */}
                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                                                <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-6 border border-white/10">
-                                                    <div className="flex items-center justify-between">
-                                                        <div>
-                                                            <p className="text-pink-200 text-sm">Total Products</p>
-                                                            <h3 className="text-3xl font-bold text-white mt-1">0</h3>
-                                                        </div>
-                                                        <div className="w-10 h-10 bg-indigo-600/30 rounded-lg flex items-center justify-center">
-                                                            <Package className="w-5 h-5 text-indigo-300" />
-                                                        </div>
-                                                    </div>
+                                            {/* Total Products */}
+                                            <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-6 border border-white/10">
+                                                <div className="flex items-center justify-between">
+                                                <div>
+                                                    <p className="text-pink-200 text-sm">Total Products</p>
+                                                    <h3 className="text-3xl font-bold text-white mt-1">
+                                                    {analytics ? analytics.topProducts.reduce((sum: number, p: TopProduct) => sum + p.sales, 0) : 0}
+                                                    </h3>
                                                 </div>
-                                                
-                                                <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-6 border border-white/10">
-                                                    <div className="flex items-center justify-between">
-                                                        <div>
-                                                            <p className="text-pink-200 text-sm">Total Sales</p>
-                                                            <h3 className="text-3xl font-bold text-white mt-1">{sellerData?.sales || "0"}</h3>
-                                                        </div>
-                                                        <div className="w-10 h-10 bg-pink-600/30 rounded-lg flex items-center justify-center">
-                                                            <ShoppingBag className="w-5 h-5 text-pink-300" />
-                                                        </div>
-                                                    </div>
+                                                <div className="w-10 h-10 bg-indigo-600/30 rounded-lg flex items-center justify-center">
+                                                    <Package className="w-5 h-5 text-indigo-300" />
                                                 </div>
-                                                
-                                                <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-6 border border-white/10">
-                                                    <div className="flex items-center justify-between">
-                                                        <div>
-                                                            <p className="text-pink-200 text-sm">Rating</p>
-                                                            <h3 className="text-3xl font-bold text-white mt-1 flex items-center">
-                                                                {sellerData?.rating || "0"}
-                                                                <Star className="w-5 h-5 ml-1 text-yellow-400" />
-                                                            </h3>
-                                                        </div>
-                                                        <div className="w-10 h-10 bg-yellow-600/30 rounded-lg flex items-center justify-center">
-                                                            <Star className="w-5 h-5 text-yellow-300" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-6 border border-white/10">
-                                                    <div className="flex items-center justify-between">
-                                                        <div>
-                                                            <p className="text-pink-200 text-sm">Revenue</p>
-                                                            <h3 className="text-3xl font-bold text-white mt-1">$0</h3>
-                                                        </div>
-                                                        <div className="w-10 h-10 bg-green-600/30 rounded-lg flex items-center justify-center">
-                                                            <BarChart3 className="w-5 h-5 text-green-300" />
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
+
+                                            {/* Total Sales */}
+                                            <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-6 border border-white/10">
+                                                <div className="flex items-center justify-between">
+                                                <div>
+                                                    <p className="text-pink-200 text-sm">Total Sales</p>
+                                                    <h3 className="text-3xl font-bold text-white mt-1">
+                                                    {analytics ? analytics.totalOrders : 0}
+                                                    </h3>
+                                                </div>
+                                                <div className="w-10 h-10 bg-pink-600/30 rounded-lg flex items-center justify-center">
+                                                    <ShoppingBag className="w-5 h-5 text-pink-300" />
+                                                </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Rating */}
+                                            <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-6 border border-white/10">
+                                                <div className="flex items-center justify-between">
+                                                <div>
+                                                    <p className="text-pink-200 text-sm">Rating</p>
+                                                    <h3 className="text-3xl font-bold text-white mt-1 flex items-center">
+                                                    {sellerData?.rating || "0"}
+                                                    <Star className="w-5 h-5 ml-1 text-yellow-400" />
+                                                    </h3>
+                                                </div>
+                                                <div className="w-10 h-10 bg-yellow-600/30 rounded-lg flex items-center justify-center">
+                                                    <Star className="w-5 h-5 text-yellow-300" />
+                                                </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Revenue */}
+                                            <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-6 border border-white/10">
+                                                <div className="flex items-center justify-between">
+                                                <div>
+                                                    <p className="text-pink-200 text-sm">Revenue</p>
+                                                    <h3 className="text-3xl font-bold text-white mt-1">
+                                                    ${analytics ? analytics.totalSales.toFixed(2) : "0.00"}
+                                                    </h3>
+                                                </div>
+                                                <div className="w-10 h-10 bg-green-600/30 rounded-lg flex items-center justify-center">
+                                                    <BarChart3 className="w-5 h-5 text-green-300" />
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
+
                                             
                                             {/* Quick Access Cards */}
                                             <h2 className="text-2xl font-bold text-white mb-6">Quick Access</h2>
@@ -479,21 +514,7 @@ export default function SellerDashboard() {
                                 <ProfileNotice />
                             )
                         )}
-                        
-                        {activeSection === 'settings' && (
-                            <div>
-                                <div className="flex justify-between items-center mb-8">
-                                    <div>
-                                        <h1 className="text-3xl font-bold text-white mb-2">Settings</h1>
-                                        <p className="text-pink-200">Configure your store settings</p>
-                                    </div>
-                                </div>
-                                <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-8 border border-white/10">
-                                    <h3 className="text-xl font-bold text-white mb-4">Store Settings</h3>
-                                    <p className="text-pink-100 mb-4">Settings functionality coming soon!</p>
-                                </div>
-                            </div>
-                        )}
+
                     </div>
                 </main>
             </div>

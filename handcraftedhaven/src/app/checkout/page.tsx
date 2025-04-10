@@ -2,12 +2,19 @@
 
 import dynamic from 'next/dynamic';
 
-const DynamicCheckoutPage = dynamic(() => import('@/components/Checkout'), { ssr: false });
+const DynamicCheckoutPage = dynamic(() => import('@/components/Checkout'), { 
+  ssr: false,
+  loading: () => (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 flex items-center justify-center">
+      <div className="w-16 h-16 border-t-4 border-white rounded-full animate-spin"></div>
+    </div>
+  )
+});
 
 export default function CheckoutPage() {
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-gray-50 min-h-screen">
-      <div className="container mx-auto px-4">
+    <section className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 text-white">
+      <div className="pt-16">
         <DynamicCheckoutPage />
       </div>
     </section>

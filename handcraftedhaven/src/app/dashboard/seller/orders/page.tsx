@@ -177,13 +177,16 @@ import {
             <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-6 mb-8 border border-white/10">
             <div className="flex flex-col md:flex-row justify-between gap-4 items-center mb-6">
                 <div className="relative w-full md:w-1/2">
+                <label htmlFor="searchOrders" className="sr-only">Search Orders</label>
                 <input
-                    type="text"
-                    placeholder="Search orders, products or customers..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-pink-500/50"
-                />
+                id="searchOrders"
+                type="text"
+                placeholder="Search orders, products or customers..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-pink-500/50"
+/>
+
                 <Search className="absolute left-3 top-2.5 h-4 w-4 text-white/50" />
                 </div>
                 
@@ -333,8 +336,8 @@ import {
                         <Link href={`/dashboard/seller/orders/${order.id}`}>
                         <Button 
                             variant="secondary" 
-                            className="border border-white/20 text-white hover:bg-white/10 transition duration-300"
-                        >
+                            className="bg-pink-600 hover:bg-pink-500 text-white font-semibold shadow-lg transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-pink-700"
+                            >
                             View Details
                         </Button>
                         </Link>

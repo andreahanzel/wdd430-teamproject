@@ -33,17 +33,17 @@ export default function Nav() {
             key={link.name}
             href={link.href}
             className={clsx(
-              "flex items-center gap-2 p-3 text-white rounded-lg hover:bg-electricBlue transition-colors",
+              "flex items-center gap-2 p-3 text-white font-medium rounded-lg hover:bg-electricBlue/80 transition-colors",
               {
                 "bg-electricBlue": pathname === link.href,
                 // Special styling for Dashboard link
-                "bg-indigo-600 hover:bg-indigo-700": link.name === "Dashboard" && pathname !== link.href,
-                "bg-indigo-700": link.name === "Dashboard" && pathname === link.href,
+                "bg-indigo-700 hover:bg-indigo-800": link.name === "Dashboard" && pathname !== link.href,
+                "bg-indigo-800": link.name === "Dashboard" && pathname === link.href,
               }
             )}
           >
             <LinkIcon className="w-6 h-6 md:hidden text-white" />
-            <p className="hidden md:block text-sm font-medium">{link.name}</p>
+            <p className="hidden md:block text-sm font-medium drop-shadow-md">{link.name}</p>
           </Link>
         );
       })}

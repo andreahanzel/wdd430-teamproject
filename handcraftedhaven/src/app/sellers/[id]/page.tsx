@@ -43,7 +43,7 @@ export default function SellerDetailPage() {
 	if (!seller) return notFound();
 
 	return (
-		<section id="main-content" className="py-12 bg-gradient-to-b from-white to-gray-50">
+			<section id="main-content" className="py-12 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 min-h-screen text-white">
 			<div className="container mx-auto px-4">
 				{/* Back Link */}
 				<Link
@@ -68,7 +68,7 @@ export default function SellerDetailPage() {
 				</Link>
 
 				{/* Seller Profile Header */}
-				<div className="bg-white shadow-md rounded-xl overflow-hidden mb-12">
+				<div className="bg-white/10 backdrop-blur-lg shadow-xl border border-white/10 rounded-xl overflow-hidden mb-12">
 					<div className="relative h-64 md:h-80">
 						<img
 							src={seller.profileImage}
@@ -143,26 +143,26 @@ export default function SellerDetailPage() {
 					{/* Seller Details */}
 					<div className="p-6 md:p-8">
 						<div className="mb-8">
-							<h3 className="text-xl font-semibold text-darkPurple mb-3">
+							<h3 className="text-xl font-semibold text-white mb-3">
 								About the Artisan
 							</h3>
-							<p className="text-gray-700">{seller.bio}</p>
+							<p className="text-pink-100">{seller.bio}</p>
 						</div>
 
 						<div className="mb-8">
-							<h3 className="text-xl font-semibold text-darkPurple mb-3">
+							<h3 className="text-xl font-semibold text-white mb-3">
 								Artisan's Story
 							</h3>
-							<p className="text-gray-700 whitespace-pre-line">
+							<p className="text-pink-100 whitespace-pre-line">
 								{seller.story}
 							</p>
 						</div>
 
 						<div>
-							<h3 className="text-xl font-semibold text-darkPurple mb-3">
+							<h3 className="text-xl font-semibold text-white mb-3">
 								Contact
 							</h3>
-							<p className="text-gray-700">{seller.contact}</p>
+							<p className="text-pink-100">{seller.contact}</p>
 						</div>
 					</div>
 				</div>
@@ -173,9 +173,9 @@ export default function SellerDetailPage() {
 				</div>
 
 				{/* Products by this seller - moved below reviews with more spacing */}
-				<div className="mt-16 pt-8 border-t border-gray-200">
-					<h2 className="text-2xl font-bold text-center text-darkPurple mb-8">
-						Handcrafted by {seller.name}
+				<div className="mt-16 pt-8 border-t border-white/20">
+				<h2 className="text-2xl font-bold text-center text-white mb-8">
+					Handcrafted by {seller.name}
 					</h2>
 
 					{seller.products && seller.products.length > 0 ? (
@@ -187,10 +187,10 @@ export default function SellerDetailPage() {
 							))}
 						</div>
 					) : (
-						<div className="text-center py-12 bg-white rounded-lg shadow">
-							<p className="text-lg text-gray-600">
-								No products available from this artisan yet.
-							</p>
+						<div className="text-center py-12 bg-white/10 backdrop-blur-lg border border-white/10 rounded-lg shadow-xl">
+						<p className="text-lg text-white">
+							No products available from this artisan yet.
+						</p>
 						</div>
 					)}
 				</div>

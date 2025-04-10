@@ -17,7 +17,7 @@ interface SellerProfileCardProps {
 
 export default function SellerProfileCard({ seller }: SellerProfileCardProps) {
     return (
-        <div className="bg-white shadow-md rounded-2xl p-8 md:p-12 mb-12">
+        <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/10 p-8 md:p-12 mb-12">
         <div className="flex flex-col md:flex-row gap-8 items-center">
             <img
             src={seller.profileImage}
@@ -25,8 +25,8 @@ export default function SellerProfileCard({ seller }: SellerProfileCardProps) {
             className="w-24 h-24 rounded-full object-cover border-2 border-electricBlue"
             />
             <div className="text-center md:text-left">
-            <h1 className="text-3xl font-bold text-darkPurple">{seller.shopName}</h1>
-            <p className="text-gray-500">
+            <h1 className="text-3xl font-bold text-white">{seller.shopName}</h1>
+            <p className="text-pink-100">
                 {seller.name} — {seller.location}
             </p>
             <p className="text-sm text-gray-600 mt-2">{seller.story}</p>

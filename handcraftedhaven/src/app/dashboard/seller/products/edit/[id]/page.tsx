@@ -1,15 +1,15 @@
 'use client'
 
+import { use } from 'react' // Added this import
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { AlertTriangle, ArrowLeft, Save, Camera } from 'lucide-react'
 
-export default function EditProductPage({ params }: { params: { id: string } }) {
-    // Use a ref to store the ID instead of React.use
-    // @ts-ignore -- Next.js params warning, will be fixed in future update
-    const productId = params.id
+export default function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
+    // Properly unwrap the params promise
+    const { id: productId } = use(params)
     
     const { data: session } = useSession()
     const router = useRouter()
@@ -97,7 +97,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 flex items-center justify-center p-8">
+            <div id="main-content" className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 flex items-center justify-center p-8">
                 <div className="max-w-4xl w-full mx-auto">
                     <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-8 border border-white/10 animate-pulse">
                         <div className="h-8 bg-white/20 rounded-lg w-1/3 mb-10"></div>
@@ -123,7 +123,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
 
     if (error === 'Product not found') {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 flex items-center justify-center p-8">
+            <div id="main-content" className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 p-8">
                 <div className="max-w-md mx-auto bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-10 border border-white/10 text-center">
                     <div className="flex justify-center mb-6">
                         <AlertTriangle size={64} className="text-pink-300" />
@@ -144,7 +144,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
 
     if (error) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 flex items-center justify-center p-8">
+            <div id="main-content" className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 flex items-center justify-center p-8">
                 <div className="max-w-md mx-auto bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-10 border border-white/10 text-center">
                     <div className="flex justify-center mb-6">
                         <AlertTriangle size={64} className="text-pink-300" />
@@ -165,7 +165,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
 
     if (!product) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 flex items-center justify-center p-8">
+            <div id="main-content" className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 p-8">
                 <div className="max-w-md mx-auto bg-white/10 backdrop-blur-lg rounded-xl shadow-xl p-10 border border-white/10 text-center">
                     <h3 className="text-xl font-bold text-white mb-3">Product not found</h3>
                     <Button 
@@ -181,7 +181,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 p-8">
+        <div id="main-content" className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 p-8">
             <div className="max-w-4xl mx-auto">
                 <button 
                     onClick={() => router.back()}
@@ -263,7 +263,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
                                         defaultValue={product.category}
                                         required
                                         className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-transparent transition duration-300"
-                                    >
+                                        >
                                         <option value="">Select a category</option>
                                         <option value="Home Decor">Home Decor</option>
                                         <option value="Jewelry">Jewelry</option>
@@ -272,6 +272,8 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
                                         <option value="Furniture">Furniture</option>
                                         <option value="Other">Other</option>
                                     </select>
+
+
                                 </div>
 
                                 <div>
@@ -303,9 +305,6 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
                         </div>
 
                         <div className="mt-10">
-                            <label htmlFor="image" className="block text-sm font-medium text-pink-200 mb-2">
-                                Product Image
-                            </label>
                             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                                 <div className="relative group w-32 h-32 rounded-xl overflow-hidden border-2 border-white/20">
                                     <img 
@@ -318,8 +317,11 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
                                     />
                                 </div>
                                 <div className="flex-1">
+                                <span className="text-pink-200 block mb-2 text-sm font-medium">
+                                    Product Image *
+                                </span>
                                     <label 
-                                        htmlFor="image" 
+                                        htmlFor="image"
                                         className="flex items-center justify-center w-full bg-white/5 border border-white/10 border-dashed rounded-lg px-4 py-6 text-pink-200 cursor-pointer hover:bg-white/10 transition duration-300"
                                     >
                                         <Camera className="w-6 h-6 mr-3" />
@@ -333,7 +335,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
                                             className="hidden"
                                         />
                                     </label>
-                                    
+
                                     {selectedFile && (
                                         <p className="mt-3 text-sm text-pink-200">
                                             Selected: {selectedFile.name}

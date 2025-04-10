@@ -13,7 +13,7 @@ export default function SellerCard({ seller }: SellerCardProps) {
 	const [imageLoaded, setImageLoaded] = useState(false);
 
 	return (
-		<div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-[350px] flex flex-col">
+		<div className="bg-purple-900/70 backdrop-blur-lg border border-white/10 rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 h-[350px] flex flex-col">
 			<div className="relative h-52 overflow-hidden bg-gray-100">
 				{/* Profile image */}
 				<img
@@ -42,7 +42,7 @@ export default function SellerCard({ seller }: SellerCardProps) {
 			<div className="p-4 flex-1 flex flex-col">
 				{/* Shop name and ratings */}
 				<div className="flex justify-between items-center mb-3">
-					<h4 className="font-bold text-darkPurple">{seller.shopName}</h4>
+				<h4 className="font-bold text-white">{seller.shopName}</h4>
 					<div className="flex items-center bg-yellow-50 px-2 py-1 rounded">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +59,7 @@ export default function SellerCard({ seller }: SellerCardProps) {
 				</div>
 
 				{/* Short bio */}
-				<p className="text-sm text-gray-600 mb-4 line-clamp-2 flex-grow">
+				<p className="text-sm text-pink-100 mb-4 line-clamp-2 flex-grow">
 					{seller.bio}
 				</p>
 

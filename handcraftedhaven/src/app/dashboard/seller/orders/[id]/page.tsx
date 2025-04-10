@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
 import { 
     AlertTriangle, 
@@ -24,46 +24,48 @@ import {
     return status.charAt(0).toUpperCase() + status.slice(1)
     }
 
-    export default function OrderDetailPage({ params }: { params: { id: string } }) {
-    const { data: session, status } = useSession()
-    const router = useRouter()
-    const [order, setOrder] = useState<any | null>(null)
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
-    const [isSubmitting, setIsSubmitting] = useState(false)
-
-    useEffect(() => {
-        if (status === 'authenticated' && session?.user?.role !== 'SELLER') {
-        router.push('/')
-        return
-        }
-
-        const fetchOrder = async () => {
-        try {
-            const orderId = parseInt(params.id)
-            if (isNaN(orderId)) {
-            throw new Error('Invalid order ID')
+    export default function OrderDetailPage() {
+        const params = useParams();
+        const id = params?.id as string;
+        const { data: session, status } = useSession();
+        const router = useRouter();
+        const [order, setOrder] = useState<any | null>(null);
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState<string | null>(null);
+        const [isSubmitting, setIsSubmitting] = useState(false);
+        
+            useEffect(() => {
+            if (status === 'authenticated' && session?.user?.role !== 'SELLER') {
+                router.push('/');
+                return;
             }
-
-            const orderData = await getSellerOrderById(orderId)
-            if (!orderData) {
-            setError('Order not found')
-            } else {
-            setOrder(orderData)
-            setError(null)
+        
+            const fetchOrder = async () => {
+                try {
+                const orderId = parseInt(id);
+                if (isNaN(orderId)) {
+                    throw new Error('Invalid order ID');
+                }
+        
+                const orderData = await getSellerOrderById(orderId);
+                if (!orderData) {
+                    setError('Order not found');
+                } else {
+                    setOrder(orderData);
+                    setError(null);
+                }
+                } catch (error) {
+                console.error('Error fetching order:', error);
+                setError('Could not load order details. Please try again.');
+                } finally {
+                setLoading(false);
+                }
+            };
+        
+            if (status === 'authenticated') {
+                fetchOrder();
             }
-        } catch (error) {
-            console.error('Error fetching order:', error)
-            setError('Could not load order details. Please try again.')
-        } finally {
-            setLoading(false)
-        }
-        }
-
-        if (status === 'authenticated') {
-        fetchOrder()
-        }
-    }, [params.id, session, router, status])
+            }, [id, session, router, status]);
 
     const getStatusColor = (status: string) => {
         switch (status.toLowerCase()) {

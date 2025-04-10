@@ -11,14 +11,14 @@ const buttonVariants = cva(
 	{
 		variants: {
 			variant: {
-				primary: "bg-backgroundDark hover:bg-backgroundDark/90 text-white",
-				secondary:
-					"bg-white border border-gray-300 hover:bg-gray-100 text-gray-800",
-				login: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md",
-				register: "bg-[#017A40] hover:bg-[#016237] text-white px-4 py-2 rounded-md",
+				primary: "bg-backgroundDark hover:bg-backgroundDark/90 text-white drop-shadow-md",
+				secondary: "bg-white border border-gray-300 hover:bg-gray-100 text-gray-800",
+				login: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md drop-shadow-md",
+				register: "bg-[#017A40] hover:bg-[#016237] text-white px-4 py-2 rounded-md drop-shadow-md",
 				product: "bg-gray-200 hover:bg-gray-300 text-gray-800",
 				seller: "bg-yellow-200 hover:bg-yellow-300 text-gray-800",
 			},
+
 			size: {
 				default: "h-10 px-4 py-2",
 				sm: "h-8 px-3 rounded-md",
