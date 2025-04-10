@@ -209,13 +209,14 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 	};
 
 	// Calculate total number of items
-	const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+	const itemCount = cartItems
+	.filter(item => item.quantity > 0) // Only count actual cart items
+	.reduce((total, item) => total + item.quantity, 0);
 
 	// Calculate total price
-	const cartTotal = cartItems.reduce(
-		(total, item) => total + item.price * item.quantity,
-		0
-	);
+	const cartTotal = cartItems
+  .filter(item => item.quantity > 0) // Only calculate for actual cart items
+  .reduce((total, item) => total + item.price * item.quantity, 0);
 
 	return (
 		<CartContext.Provider

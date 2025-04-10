@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/', request.url))
     }
 
-    // Optional redirect only when coming from login and arriving at '/'
+    // Optional redirect for sellers coming from login
     if (
         token && 
         token.role === 'SELLER' && 
@@ -21,6 +21,15 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/dashboard/seller', request.url))
     }
     
+    // Optional redirect for customers coming from login
+    if (
+        token && 
+        token.role === 'CUSTOMER' && 
+        pathname === '/' && 
+        request.headers.get('referer')?.includes('/login')
+    ) {
+        return NextResponse.redirect(new URL('/dashboard/customer', request.url))
+    }
 
     // Seller routes protection
     if (pathname.startsWith('/dashboard/seller')) {
@@ -50,6 +59,13 @@ export async function middleware(request: NextRequest) {
             } catch (error) {
                 console.error('Error checking seller profile:', error)
             }
+        }
+    }
+
+    // Customer routes protection
+    if (pathname.startsWith('/dashboard/customer')) {
+        if (token?.role !== 'CUSTOMER') {
+            return NextResponse.redirect(new URL('/', request.url))
         }
     }
 

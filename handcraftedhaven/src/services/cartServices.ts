@@ -6,21 +6,22 @@ import { CartItem } from "@/types/database";
 export async function getCartItems(): Promise<CartItem[]> {
 	try {
 		const response = await fetch("/api/cart");
-
+	
 		if (!response.ok) {
 			if (response.status === 401) {
-				// User is not authenticated
-				return [];
+			return [];
 			}
 			throw new Error(`HTTP error! status: ${response.status}`);
 		}
-
-		return await response.json();
-	} catch (error) {
+	
+		const items = await response.json();
+		// Filter out saved items (quantity = 0)
+		return items.filter((item: CartItem) => item.quantity > 0);
+		} catch (error) {
 		console.error("Error fetching cart items:", error);
 		return [];
+		}
 	}
-}
 
 /**
  * Add an item to cart
