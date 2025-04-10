@@ -63,8 +63,19 @@ export default function SellerReviews({
 				error instanceof Error ? error.message : "Failed to submit review",
 				"error"
 			);
-			throw error;
-		}
+
+			if (
+					error instanceof Error &&
+					error.message === "You have already reviewed this item"
+				) {
+					showNotification("You've already reviewed this artisan.", "info");
+				} else {
+					showNotification(
+					error instanceof Error ? error.message : "Failed to submit review",
+					"error"
+					);
+				}
+						}
 	};
 
 	// Calculate average rating
@@ -73,9 +84,9 @@ export default function SellerReviews({
 		: 0;
 
 	return (
-		<div className="mt-16 bg-white p-6 rounded-xl shadow-md">
+			<div className="mt-16 bg-white/10 backdrop-blur-lg p-6 rounded-xl shadow-xl border border-white/10">
 			<div className="flex justify-between items-center mb-6">
-				<h2 className="text-2xl font-bold text-darkPurple">Artisan Reviews</h2>
+			<h2 className="text-2xl font-bold text-white">Artisan Reviews</h2>
 
 				{isAuthenticated ? (
 					<Button variant="primary" onClick={() => setIsModalOpen(true)}>
@@ -106,9 +117,9 @@ export default function SellerReviews({
 						</svg>
 					))}
 				</div>
-				<p className="text-sm text-gray-600">
-					{averageRating.toFixed(1)} ({reviews.length}{" "}
-					{reviews.length === 1 ? "review" : "reviews"})
+				<p className="text-sm text-pink-100">
+				{averageRating.toFixed(1)} ({reviews.length}{" "}
+				{reviews.length === 1 ? "review" : "reviews"})
 				</p>
 			</div>
 
@@ -117,19 +128,18 @@ export default function SellerReviews({
 					<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-electricBlue"></div>
 				</div>
 			) : reviews.length === 0 ? (
-				<p className="text-gray-500 py-8 text-center">
-					No reviews yet for this artisan.
+				<p className="text-pink-100 py-8 text-center">
+				No reviews yet for this artisan.
 				</p>
 			) : (
 				<div className="space-y-6">
 					{reviews.map((review) => (
 						<div
 							key={review.id}
-							className="border p-4 rounded-lg shadow-sm bg-gray-50"
-						>
+							className="border border-white/10 p-4 rounded-lg shadow-sm bg-white/10 backdrop-blur-sm">
 							<div className="flex items-center justify-between mb-2">
 								<div className="flex items-center">
-									<div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-2 overflow-hidden">
+								<div className="w-8 h-8 rounded-full bg-purple-800 border border-white/20 flex items-center justify-center mr-2 overflow-hidden">
 										{review.user?.image ? (
 											<img
 												src={review.user.image}
@@ -137,16 +147,16 @@ export default function SellerReviews({
 												className="w-full h-full object-cover"
 											/>
 										) : (
-											<span className="text-sm font-medium text-gray-600">
+											<span className="text-sm font-medium text-white">
 												{review.userName.charAt(0).toUpperCase()}
 											</span>
 										)}
 									</div>
-									<span className="font-semibold text-darkPurple">
+									<span className="font-semibold text-white">
 										{review.userName}
 									</span>
 								</div>
-								<span className="text-xs text-gray-400">
+								<span className="text-xs text-pink-200">
 									{formatDistanceToNow(new Date(review.date), {
 										addSuffix: true,
 									})}
@@ -170,7 +180,7 @@ export default function SellerReviews({
 							</div>
 
 							{/* Review comment */}
-							<p className="text-gray-700">{review.comment}</p>
+							<p className="text-white">{review.comment}</p>
 						</div>
 					))}
 				</div>

@@ -9,24 +9,14 @@ import { useSession } from "next-auth/react";
 
 export default function CartButton() {
 	const { itemCount, isLoading } = useCart();
-	const [hasItems, setHasItems] = useState(false);
-	const [isClient, setIsClient] = useState(false);
 	const { status } = useSession();
 	const isAuthenticated = status === "authenticated";
+	const [isClient, setIsClient] = useState(false);
 
-	// Set isClient to true after mount to avoid hydration issues
 	useEffect(() => {
 		setIsClient(true);
 	}, []);
 
-	// Animate badge when itemCount changes
-	useEffect(() => {
-		if (isClient && itemCount > 0) {
-			setHasItems(true);
-		}
-	}, [itemCount, isClient]);
-
-	// Only render on client and for authenticated users
 	if (!isClient || !isAuthenticated || isLoading) {
 		return (
 			<div className="relative inline-flex items-center text-white p-2">
@@ -38,17 +28,18 @@ export default function CartButton() {
 	return (
 		<Link
 			href="/cart"
-			className="relative inline-flex items-center text-white p-2 hover:bg-white/10 rounded-full transition-colors"
+			className="relative inline-flex items-center text-white p-2 hover:bg-white/10 rounded-full transition"
+			aria-label="View your cart"
 		>
 			<ShoppingBag className="h-6 w-6" />
 			<AnimatePresence>
 				{itemCount > 0 && (
 					<motion.span
-						key="badge"
-						initial={{ scale: 0.6, opacity: 0 }}
-						animate={{ scale: 1, opacity: 1 }}
-						exit={{ scale: 0.6, opacity: 0 }}
-						className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1"
+					key="badge"
+					initial={{ scale: 0.6, opacity: 0 }}
+					animate={{ scale: 1, opacity: 1 }}
+					exit={{ scale: 0.6, opacity: 0 }}
+					className="absolute -top-1 -right-1 bg-pink-600 text-white text-xs font-bold rounded-full h-5 min-w-[20px] px-1 flex items-center justify-center border border-white"
 					>
 						{itemCount}
 					</motion.span>

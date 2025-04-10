@@ -11,11 +11,16 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/', request.url))
     }
 
-    // Seller auto-redirect on login if at homepage
-    if (token && token.role === 'SELLER' && pathname === '/') {
-        // Only redirect from the homepage to avoid interfering with normal browsing
+    // Optional redirect only when coming from login and arriving at '/'
+    if (
+        token && 
+        token.role === 'SELLER' && 
+        pathname === '/' && 
+        request.headers.get('referer')?.includes('/login')
+    ) {
         return NextResponse.redirect(new URL('/dashboard/seller', request.url))
     }
+    
 
     // Seller routes protection
     if (pathname.startsWith('/dashboard/seller')) {

@@ -65,7 +65,7 @@ export default function NewProductPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 p-8">
+        <div id="main-content" className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 p-8">
             <div className="max-w-4xl mx-auto">
                 <button 
                     onClick={() => router.back()}
@@ -149,7 +149,7 @@ export default function NewProductPage() {
                                         name="category"
                                         required
                                         className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-pink-500/50 focus:border-transparent transition duration-300"
-                                    >
+                                        >
                                         <option value="">Select a category</option>
                                         <option value="Home Decor">Home Decor</option>
                                         <option value="Jewelry">Jewelry</option>
@@ -158,6 +158,7 @@ export default function NewProductPage() {
                                         <option value="Furniture">Furniture</option>
                                         <option value="Other">Other</option>
                                     </select>
+
                                 </div>
 
                                 <div>
@@ -189,9 +190,9 @@ export default function NewProductPage() {
                         </div>
 
                         <div className="mt-10">
-                            <label htmlFor="image" className="block text-sm font-medium text-pink-200 mb-2">
-                                Product Image *
-                            </label>
+                        <span className="block text-sm font-medium text-pink-200 mb-2">
+                            Product Image *
+                        </span>
                             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
                                 {imagePreview ? (
                                     <div className="relative group w-32 h-32 rounded-xl overflow-hidden border-2 border-white/20">

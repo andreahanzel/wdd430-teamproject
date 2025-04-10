@@ -63,8 +63,20 @@ export default function ProductReviews({
 				error instanceof Error ? error.message : "Failed to submit review",
 				"error"
 			);
-			throw error;
-		}
+			
+			if (
+				error instanceof Error &&
+				error.message === "You have already reviewed this item"
+				) {
+					showNotification("You've already reviewed this product.", "info");
+				} else {
+					showNotification(
+					error instanceof Error ? error.message : "Failed to submit review",
+					"error"
+					);
+				}
+				
+			}
 	};
 
 	// Calculate average rating

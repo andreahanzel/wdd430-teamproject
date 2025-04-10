@@ -26,15 +26,15 @@ export default function SellersPage() {
 	}, []);
 
 	return (
-		<section id="main-content" className="py-16 bg-gradient-to-b from-white to-gray-50">
+			<section id="main-content" className="py-16 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 min-h-screen text-white">
 			<div className="container mx-auto px-4">
 				{/* Heading */}
 				<div className="text-center mb-16">
-					<h1 className="text-4xl font-bold font-poppins text-darkPurple mb-2 relative inline-block">
-						Meet Our Artisans
+				<h1 className="text-4xl font-bold font-poppins text-white mb-2 relative inline-block">
+				Meet Our Artisans
 						<span className="absolute left-0 w-full h-1 bg-gradient-to-r from-electricBlue to-neonPink bottom-[-8px]"></span>
 					</h1>
-					<p className="text-gray-600 mt-3 max-w-2xl mx-auto">
+					<p className="text-pink-100 mt-3 max-w-2xl mx-auto">
 						Discover unique shops and creators from around the world.
 					</p>
 				</div>

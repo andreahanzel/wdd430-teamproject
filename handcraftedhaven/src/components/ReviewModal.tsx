@@ -81,11 +81,11 @@ export default function ReviewModal({
 						animate={{ opacity: 1, scale: 1, y: 0 }}
 						exit={{ opacity: 0, scale: 0.95, y: 20 }}
 						transition={{ type: "spring", damping: 15 }}
-						className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl p-6 z-50 w-full max-w-md"
-					>
+						className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-purple-900/90 backdrop-blur-lg text-white rounded-xl shadow-2xl border border-purple-500/30 p-6 z-50 w-full max-w-md"
+						>
 						{/* Header */}
 						<div className="flex justify-between items-center mb-4">
-							<h2 className="text-xl font-bold text-darkPurple">
+							<h2 className="text-xl font-bold text-white">
 								{type === "product"
 									? `Review ${name}`
 									: `Review Artisan: ${name}`}
@@ -102,9 +102,9 @@ export default function ReviewModal({
 						<form onSubmit={handleSubmit}>
 							{/* Rating selector */}
 							<div className="mb-4">
-								<label className="block text-sm font-medium text-gray-700 mb-2">
-									Your Rating
-								</label>
+							<label className="block text-sm font-medium text-white mb-2">
+								Your Rating
+							</label>
 								<div className="flex gap-1">
 									{[1, 2, 3, 4, 5].map((star) => (
 										<button
@@ -130,16 +130,16 @@ export default function ReviewModal({
 
 							{/* Comment textarea */}
 							<div className="mb-6">
-								<label
-									htmlFor="review-comment"
-									className="block text-sm font-medium text-gray-700 mb-2"
+							<label
+								htmlFor="review-comment"
+								className="block text-sm font-medium text-white mb-2"
 								>
 									Your Review
 								</label>
 								<textarea
 									id="review-comment"
 									rows={4}
-									className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-electricBlue focus:border-electricBlue transition-colors text-gray-800"
+									className="w-full px-3 py-2 bg-black/30 text-white border border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors placeholder-white/50"
 									placeholder="Share your experience..."
 									value={comment}
 									onChange={(e) => setComment(e.target.value)}
