@@ -10,6 +10,8 @@ export default function Nav() {
   const pathname = usePathname();
   const { data: session } = useSession();
   const isSeller = session?.user?.role === "SELLER";
+  const isCustomer = session?.user?.role === "CUSTOMER";
+  const isAuthenticated = !!session;
 
   // Base links that are always shown
   const baseLinks = [
@@ -19,10 +21,16 @@ export default function Nav() {
     { name: "About", href: "/about", icon: InfoIcon },
   ];
 
-  // Conditionally add dashboard link for sellers
-  const links = isSeller 
-    ? [...baseLinks, { name: "Dashboard", href: "/dashboard/seller", icon: LayoutDashboard }]
-    : baseLinks;
+  // Add dashboard links based on user role
+  let links = [...baseLinks];
+  
+  if (isAuthenticated) {
+    if (isSeller) {
+      links.push({ name: "Dashboard", href: "/dashboard/seller", icon: LayoutDashboard });
+    } else if (isCustomer) {
+      links.push({ name: "Dashboard", href: "/dashboard/customer", icon: LayoutDashboard });
+    }
+  }
 
   return (
     <nav className="flex w-full justify-between p-3 rounded-lg md:justify-center md:space-x-16">

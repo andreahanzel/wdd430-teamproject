@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { Button } from "./ui/Button";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useNotification } from "../contexts/NotificationContext";
 import { useCart } from "@/contexts/CartContext";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag, Heart, Loader2 } from "lucide-react";
 
 interface ProductProps {
 	product?: {
@@ -24,12 +24,44 @@ export default function ProductCard({ product }: ProductProps) {
 	const [isHovered, setIsHovered] = useState(false);
 	const [imageLoaded, setImageLoaded] = useState(false);
 	const [isAdding, setIsAdding] = useState(false);
-	const { status } = useSession();
+	const [isSaving, setIsSaving] = useState(false);
+	const [isSaved, setIsSaved] = useState(false);
+	const [savedItemId, setSavedItemId] = useState<number | null>(null);
+	const { data: session, status } = useSession();
 	const isAuthenticated = status === "authenticated";
 	const { showNotification } = useNotification();
 	const { addToCart } = useCart();
 
 	if (!product) return null;
+
+	// Memoized function to check if product is saved
+	const checkIfSaved = useCallback(async () => {
+		if (!isAuthenticated || !product) return;
+		
+		try {
+			const response = await fetch('/api/customer/saved');
+			
+			if (response.ok) {
+				const savedProducts = await response.json();
+				const savedItem = savedProducts.find((item: any) => item.productId === product.id);
+				
+				if (savedItem) {
+					setIsSaved(true);
+					setSavedItemId(parseInt(savedItem.id));
+				} else {
+					setIsSaved(false);
+					setSavedItemId(null);
+				}
+			}
+		} catch (error) {
+			console.error('Error checking if product is saved:', error);
+		}
+	}, [isAuthenticated, product]);
+
+	// Call checkIfSaved when component mounts and when authentication status changes
+	useEffect(() => {
+		checkIfSaved();
+	}, [checkIfSaved]);
 
 	const handleAuthenticationRequired = () => {
 		showNotification(
@@ -38,7 +70,10 @@ export default function ProductCard({ product }: ProductProps) {
 		);
 	};
 
-	const handleAddToCart = async () => {
+	const handleAddToCart = async (e: React.MouseEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
+		
 		if (!isAuthenticated) {
 			handleAuthenticationRequired();
 			return;
@@ -47,10 +82,63 @@ export default function ProductCard({ product }: ProductProps) {
 		setIsAdding(true);
 		try {
 			await addToCart(product, 1);
+			showNotification("Added to cart successfully!", "success");
 		} catch (error) {
 			console.error("Failed to add to cart:", error);
+			showNotification("Failed to add to cart", "error");
 		} finally {
 			setIsAdding(false);
+		}
+	};
+
+	const handleSaveClick = async (e: React.MouseEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
+		
+		if (!isAuthenticated) {
+			handleAuthenticationRequired();
+			return;
+		}
+
+		setIsSaving(true);
+		try {
+			if (isSaved && savedItemId) {
+				// Remove from saved
+				const response = await fetch(`/api/customer/saved/${savedItemId}`, {
+					method: 'DELETE',
+				});
+				
+				if (response.ok) {
+					setIsSaved(false);
+					setSavedItemId(null);
+					showNotification('Product removed from saved items', 'success');
+				} else {
+					throw new Error("Failed to remove from saved items");
+				}
+			} else {
+				// Add to saved
+				const response = await fetch('/api/customer/saved', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ productId: product.id }),
+				});
+				
+				if (response.ok) {
+					const data = await response.json();
+					setIsSaved(true);
+					setSavedItemId(data.savedProduct.id);
+					showNotification('Product saved successfully!', 'success');
+				} else {
+					throw new Error("Failed to save product");
+				}
+			}
+		} catch (error) {
+			console.error('Error toggling save status:', error);
+			showNotification('Failed to update saved items', 'error');
+		} finally {
+			setIsSaving(false);
 		}
 	};
 
@@ -67,40 +155,61 @@ export default function ProductCard({ product }: ProductProps) {
 				</span>
 			</div>
 
-			{/* Image container with overlay - fixed height to prevent layout shift */}
-			<div className="relative h-64 overflow-hidden bg-gray-100">
-				<div
-					className={`absolute inset-0 bg-gradient-to-t from-darkPurple/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10`}
-				></div>
-
-				<img
-					src={product.image}
-					alt={product.name}
-					className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${
-						imageLoaded ? "opacity-100" : "opacity-0"
-					}`}
-					onLoad={() => setImageLoaded(true)}
-				/>
-
-				{/* Placeholder while image loads */}
-				{!imageLoaded && (
-				<div className="absolute inset-0 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-100 animate-pulse"></div>
-				)}
-
-				{/* Action button that appears on hover */}
-				<div
-					className={`absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20`}
-				>
-					<Link
-						href={`/products/${product.id}`}
-						className="transform -translate-y-4 group-hover:translate-y-0 transition-all duration-300"
+			{/* Save button */}
+			{isAuthenticated && (
+				<div className="absolute top-4 right-4 z-[30]">
+					<button
+						onClick={handleSaveClick}
+						disabled={isSaving}
+						aria-label={isSaved ? "Remove from saved" : "Save for later"}
+						className={`p-2 rounded-full transition-all duration-300 ${
+							isSaved 
+								? 'bg-pink-500 text-white hover:bg-pink-600' 
+								: 'bg-white/20 backdrop-blur-sm text-white hover:bg-white/30'
+						}`}
 					>
-						<Button variant="secondary" className="shadow-lg">
-							Quick View
-						</Button>
-					</Link>
+						{isSaving ? (
+							<Loader2 className="w-5 h-5 animate-spin" />
+						) : (
+							<Heart className={`w-5 h-5 ${isSaved ? 'fill-white' : ''}`} />
+						)}
+					</button>
 				</div>
-			</div>
+			)}
+
+			{/* Image container with overlay - fixed height to prevent layout shift */}
+			<Link href={`/products/${product.id}`} className="block">
+				<div className="relative h-64 overflow-hidden bg-gray-100">
+					<div
+						className={`absolute inset-0 bg-gradient-to-t from-darkPurple/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10`}
+					></div>
+
+					<img
+						src={product.image}
+						alt={product.name}
+						className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${
+							imageLoaded ? "opacity-100" : "opacity-0"
+						}`}
+						onLoad={() => setImageLoaded(true)}
+					/>
+
+					{/* Placeholder while image loads */}
+					{!imageLoaded && (
+					<div className="absolute inset-0 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-100 animate-pulse"></div>
+					)}
+
+					{/* Action button that appears on hover */}
+					<div
+						className={`absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20`}
+					>
+						<div className="transform -translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+							<Button variant="secondary" className="shadow-lg">
+								Quick View
+							</Button>
+						</div>
+					</div>
+				</div>
+			</Link>
 
 			{/* Product info - fixed height to prevent layout shift */}
 			<div className="p-5 h-36 flex flex-col">
@@ -142,7 +251,11 @@ export default function ProductCard({ product }: ProductProps) {
 						disabled={isAdding}
 						aria-label="Add to cart"
 					>
-						<ShoppingBag size={18} />
+						{isAdding ? (
+							<Loader2 className="w-5 h-5 animate-spin" />
+						) : (
+							<ShoppingBag size={18} />
+						)}
 					</Button> 
 					) : (
 						<Link href={`/login?callbackUrl=/products/${product.id}`}>
@@ -151,8 +264,6 @@ export default function ProductCard({ product }: ProductProps) {
 							<ShoppingBag size={18} />
 						</Button>
 						</Link>
-
-
 					)}
 				</div>
 			</div>

@@ -5,8 +5,9 @@ export default function Homepage() {
   return (
     <>
       <Hero />
-
-      <FeaturedProducts />
+      <div id="main-content">
+        <FeaturedProducts />
+      </div>
     </>
   );
 }

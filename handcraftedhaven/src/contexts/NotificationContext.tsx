@@ -42,7 +42,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 		// Auto dismiss after 5 seconds
 		setTimeout(() => {
 			dismissNotification(id);
-		}, 5000);
+		}, 10000);
 	};
 
 	const dismissNotification = (id: string) => {
@@ -72,7 +72,7 @@ function NotificationContainer({
 	dismissNotification: (id: string) => void;
 }) {
 	return (
-		<div className="fixed top-4 right-4 z-50 flex flex-col gap-2 w-full max-w-md">
+		<div className="fixed top-24 right-6 z-50 flex flex-col gap-4 w-full max-w-md">
 			<AnimatePresence>
 				{notifications.map((notification) => (
 					<motion.div
@@ -81,15 +81,16 @@ function NotificationContainer({
 						animate={{ opacity: 1, x: 0 }}
 						exit={{ opacity: 0, x: 50 }}
 						transition={{ duration: 0.3 }}
-						className={`rounded-lg shadow-lg p-4 flex items-start justify-between ${
-						notification.type === "success"
-						? "bg-green-600 text-white border-l-4 border-green-800"
-						: notification.type === "error"
-						? "bg-red-600 text-white border-l-4 border-red-800"
-						: notification.type === "warning"
-						? "bg-yellow-500 text-white border-l-4 border-yellow-700"
-						: "bg-blue-600 text-white border-l-4 border-blue-800"
-						}`}
+						className={`rounded-xl p-4 flex items-start justify-between border backdrop-blur-lg shadow-lg
+							${
+							notification.type === 'success'
+								? 'bg-green-500/20 text-green-200 border-green-400/20'
+								: notification.type === 'error'
+								? 'bg-red-500/20 text-red-200 border-red-400/20'
+								: notification.type === 'warning'
+								? 'bg-yellow-400/20 text-yellow-200 border-yellow-400/20'
+								: 'bg-blue-500/20 text-blue-200 border-blue-400/20'
+							}`}
 					>
 						<div className="flex-1">{notification.message}</div>
 						<button

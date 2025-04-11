@@ -7,7 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { useCart } from "@/contexts/CartContext";
-import { CheckCircle, ShoppingBag, LogIn } from "lucide-react";
+/* Import the Heart and Loader2 icons */
+import { CheckCircle, ShoppingBag, LogIn, Heart, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
 import { useNotification } from "@/contexts/NotificationContext";
@@ -26,6 +27,10 @@ export default function ProductDetailPage() {
 	const [loading, setLoading] = useState(true);
 	const [quantity, setQuantity] = useState(1);
 	const [addedToCart, setAddedToCart] = useState(false);
+	/* State variables for save functionality */
+	const [isSaved, setIsSaved] = useState(false);
+	const [isSaving, setIsSaving] = useState(false);
+	const [savedItemId, setSavedItemId] = useState<number | null>(null);
 
 	useEffect(() => {
 		async function loadProduct() {
@@ -43,6 +48,82 @@ export default function ProductDetailPage() {
 
 		loadProduct();
 	}, [id]);
+
+	/* New effect for checking if product is saved */
+	useEffect(() => {
+		// Only check if product is saved when the user is authenticated
+		if (isAuthenticated && product) {
+			checkIfSaved();
+		}
+	}, [isAuthenticated, product]);
+
+	/* Function to check if product is in saved items */
+	const checkIfSaved = async () => {
+		try {
+			const response = await fetch('/api/customer/saved');
+			
+			if (response.ok) {
+				const savedProducts = await response.json();
+				const savedItem = savedProducts.find((item: any) => item.productId === id);
+				
+				if (savedItem) {
+					setIsSaved(true);
+					setSavedItemId(parseInt(savedItem.id));
+				} else {
+					setIsSaved(false);
+					setSavedItemId(null);
+				}
+			}
+		} catch (error) {
+			console.error('Error checking if product is saved:', error);
+		}
+	};
+
+	/* Function to toggle save status */
+	const toggleSave = async () => {
+		if (!isAuthenticated) {
+			showNotification("Please sign in to save products", "info");
+			router.push(`/login?callbackUrl=/products/${id}`);
+			return;
+		}
+
+		setIsSaving(true);
+		try {
+			if (isSaved && savedItemId) {
+				// Remove from saved
+				const response = await fetch(`/api/customer/saved/${savedItemId}`, {
+					method: 'DELETE',
+				});
+				
+				if (response.ok) {
+					setIsSaved(false);
+					setSavedItemId(null);
+					showNotification('Product removed from saved items', 'success');
+				}
+			} else {
+				// Add to saved
+				const response = await fetch('/api/customer/saved', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ productId: id }),
+				});
+				
+				if (response.ok) {
+					const data = await response.json();
+					setIsSaved(true);
+					setSavedItemId(data.savedProduct.id);
+					showNotification('Product saved successfully!', 'success');
+				}
+			}
+		} catch (error) {
+			console.error('Error toggling save status:', error);
+			showNotification('Failed to update saved items', 'error');
+		} finally {
+			setIsSaving(false);
+		}
+	};
 
 	if (loading) {
 		return (
@@ -222,24 +303,21 @@ export default function ProductDetailPage() {
 											</Button>
 										</Link>
 									)}
+									{/* Replaced the static heart button with a functional save button */}
 									<button
-										className="p-3 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
-										aria-label="Add to wishlist"
+										className={`p-3 border ${isSaved ? 'border-neonPink bg-neonPink/10' : 'border-gray-300'} rounded-md hover:bg-gray-50 transition-colors relative overflow-hidden`}
+										onClick={toggleSave}
+										disabled={isSaving}
+										aria-label={isSaved ? "Remove from saved" : "Add to wishlist"}
 									>
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											fill="none"
-											viewBox="0 0 24 24"
-											strokeWidth={1.5}
-											stroke="currentColor"
-											className="w-6 h-6 text-neonPink hover:text-pink-600 drop-shadow-sm transition"
-											>
-											<path
-												strokeLinecap="round"
-												strokeLinejoin="round"
-												d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+										{isSaving ? (
+											<Loader2 className="w-6 h-6 text-neonPink drop-shadow-sm animate-spin" />
+										) : (
+											<Heart
+												fill={isSaved ? "#ec4899" : "none"}
+												className="w-6 h-6 text-neonPink hover:text-pink-600 drop-shadow-sm transition"
 											/>
-										</svg>
+										)}
 									</button>
 								</div>
 

@@ -13,10 +13,14 @@ export default function Header() {
 	const isAuthenticated = status === "authenticated";
 	const { showNotification } = useNotification();
 
-	const handleSignOut = async () => {
-		await signOut({ callbackUrl: "/" });
+	const handleSignOut = () => {
 		showNotification("You have been signed out successfully", "info");
-	};
+	
+		// Delay redirect to allow the notification to show
+		setTimeout(() => {
+			signOut({ callbackUrl: "/" });
+		}, 1500); // 1.5 second delay
+	};	
 
 	return (
 			<header className="bg-gradient-to-br from-backgroundDark via-darkPurple to-black text-white py-4 sticky top-0 z-40 shadow-md shadow-neonPink/30 ring-1 ring-white/20">
