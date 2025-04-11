@@ -4,10 +4,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { prisma } from "../../../../../../prisma/client"
 
 // GET a single order by ID
-export async function GET(
-    request: Request,
-    { params }: { params: { id: string } }
-    ) {
+export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+    const params = await props.params;
     try {
         const session = await getServerSession(authOptions)
 

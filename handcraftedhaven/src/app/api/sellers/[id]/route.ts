@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/client";
 
-export async function GET(
-	request: Request,
-	{ params }: { params: { id: string } }
-) {
-	try {
+export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+    const params = await props.params;
+    try {
 		// Fix: Use async/await pattern with dynamic segment params
 		const id = parseInt(params.id as string);
 
