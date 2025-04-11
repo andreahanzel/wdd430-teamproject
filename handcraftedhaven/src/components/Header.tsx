@@ -28,12 +28,12 @@ export default function Header() {
 				{/* Desktop Layout */}
 				<div className="hidden lg:flex lg:items-center lg:justify-between">
 					<div className="flex items-center justify-between w-full">
-						<Link
+						<div
 							className="text-2xl font-poppins font-bold hover:text-white/90 transition-colors"
-							href="/"
+	
 						>
 							Handcrafted Haven
-						</Link>
+						</div>
 						<Nav />
 					</div>
 
