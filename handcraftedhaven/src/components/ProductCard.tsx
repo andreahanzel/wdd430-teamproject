@@ -91,56 +91,55 @@ export default function ProductCard({ product }: ProductProps) {
 		}
 	};
 
-	const handleSaveClick = async (e: React.MouseEvent) => {
-		e.preventDefault();
-		e.stopPropagation();
-		
-		if (!isAuthenticated) {
-			handleAuthenticationRequired();
-			return;
-		}
-
-		setIsSaving(true);
-		try {
-			if (isSaved && savedItemId) {
-				// Remove from saved
-				const response = await fetch(`/api/customer/saved/${savedItemId}`, {
+	const toggleSave = async () => {
+		if (status !== 'authenticated' || session?.user.role !== 'CUSTOMER') {
+				window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname)}`;
+				return;
+				}
+			
+				setIsSaving(true);
+			
+				try {
+				if (isSaved && savedItemId) {
+					// Remove from saved items
+					const deleteResponse = await fetch(`/api/customer/saved/${savedItemId}`, {
 					method: 'DELETE',
-				});
-				
-				if (response.ok) {
+					});
+					
+					if (!deleteResponse.ok) {
+					const errorData = await deleteResponse.json();
+					throw new Error(errorData.error || "Failed to remove from saved items");
+					}
+					
 					setIsSaved(false);
 					setSavedItemId(null);
-					showNotification('Product removed from saved items', 'success');
 				} else {
-					throw new Error("Failed to remove from saved items");
-				}
-			} else {
-				// Add to saved
-				const response = await fetch('/api/customer/saved', {
+					// Add to saved items
+					const response = await fetch('/api/customer/saved', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
 					},
 					body: JSON.stringify({ productId: product.id }),
-				});
-				
-				if (response.ok) {
+					});
+					
+					if (!response.ok) {
+					const errorData = await response.json();
+					throw new Error(errorData.error || "Failed to save product");
+					}
+			
 					const data = await response.json();
 					setIsSaved(true);
-					setSavedItemId(data.savedProduct.id);
-					showNotification('Product saved successfully!', 'success');
-				} else {
-					throw new Error("Failed to save product");
+					// Handle both response formats
+					setSavedItemId(data.savedProduct?.id || data.id);
 				}
-			}
-		} catch (error) {
-			console.error('Error toggling save status:', error);
-			showNotification('Failed to update saved items', 'error');
-		} finally {
-			setIsSaving(false);
-		}
-	};
+				} catch (error) {
+				console.error('Error toggling save status:', error);
+				// You might want to show a notification here too
+				} finally {
+				setIsSaving(false);
+				}
+			};
 
 	return (
 		<div
@@ -159,7 +158,7 @@ export default function ProductCard({ product }: ProductProps) {
 			{isAuthenticated && (
 				<div className="absolute top-4 right-4 z-[30]">
 					<button
-						onClick={handleSaveClick}
+						onClick={toggleSave}
 						disabled={isSaving}
 						aria-label={isSaved ? "Remove from saved" : "Save for later"}
 						className={`p-2 rounded-full transition-all duration-300 ${
@@ -169,9 +168,9 @@ export default function ProductCard({ product }: ProductProps) {
 						}`}
 					>
 						{isSaving ? (
-							<Loader2 className="w-5 h-5 animate-spin" />
+						<Loader2 className="w-5 h-5 animate-spin" />
 						) : (
-							<Heart className={`w-5 h-5 ${isSaved ? 'fill-white' : ''}`} />
+						<Heart className="w-5 h-5" fill={isSaved ? "#ffffff" : "none"} stroke={isSaved ? "#ffffff" : "currentColor"} />
 						)}
 					</button>
 				</div>

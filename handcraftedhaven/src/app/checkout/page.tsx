@@ -13,10 +13,10 @@ const DynamicCheckoutPage = dynamic(() => import('@/components/Checkout'), {
 
 export default function CheckoutPage() {
   return (
-    <section className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 text-white">
       <div className="pt-16">
         <DynamicCheckoutPage />
       </div>
-    </section>
+    </div>
   );
 }

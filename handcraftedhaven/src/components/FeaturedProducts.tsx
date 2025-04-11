@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Button } from "./ui/Button";
+import { buttonVariants } from './ui/Button';
 import { getFeaturedProducts } from "@/services/productServices";
+import { cn } from "@/lib/utils";
 
 export default function FeaturedProducts() {
 	const [isVisible, setIsVisible] = useState(false);
@@ -69,7 +70,7 @@ export default function FeaturedProducts() {
 					{featured.map((product, index) => (
 						<div
 							key={product.id}
-							className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1"
+							className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1"
 						>
 							{/* Product image with overlay */}
 							<div className="relative h-56 overflow-hidden">
@@ -90,22 +91,20 @@ export default function FeaturedProducts() {
 
 								{/* Quick view button */}
 								<div className="absolute inset-x-0 bottom-0 flex justify-center pb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 transform translate-y-4 group-hover:translate-y-0">
-									<Link href={`/products/${product.id}`}>
-										<Button variant="secondary" className="shadow-md">
-											View Details
-										</Button>
-									</Link>
+								<Link href={`/products/${product.id}`} className={cn(buttonVariants({ variant: "secondary" }), "shadow-md")}>
+									View Details
+								</Link>
 								</div>
 							</div>
 
 							{/* Product info */}
 							<div className="p-5">
-								<h3 className="text-lg font-bold font-poppins text-darkPurple group-hover:text-electricBlue transition-colors">
+							<h3 className="text-lg font-bold font-poppins text-white group-hover:text-electricBlue transition-colors">
 									{product.name}
 								</h3>
 
 								<div className="flex justify-between items-center mt-2">
-								<span className="text-lg font-bold text-pink-600">
+								<span className="text-lg font-bold text-neonPink">
 										$
 										{typeof product.price === "number"
 											? product.price.toFixed(2)
@@ -120,6 +119,7 @@ export default function FeaturedProducts() {
 													i < 4 ? "text-yellow-400" : "text-gray-300"
 												}`}
 												fill="currentColor"
+												style={{fill: "currentColor"}}
 												viewBox="0 0 20 20"
 											>
 												<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -133,11 +133,9 @@ export default function FeaturedProducts() {
 				</div>
 
 				<div className="text-center mt-12">
-					<Link href="/products">
-						<Button variant="primary" className="px-8">
-							Explore All Products
-						</Button>
-					</Link>
+				<Link href="/products" className={cn(buttonVariants({ variant: "primary" }), "px-8")}>
+					Explore All Products
+				</Link>
 				</div>
 			</div>
 		</section>

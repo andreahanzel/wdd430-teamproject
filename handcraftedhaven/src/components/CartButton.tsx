@@ -39,6 +39,7 @@ export default function CartButton() {
 					initial={{ scale: 0.6, opacity: 0 }}
 					animate={{ scale: 1, opacity: 1 }}
 					exit={{ scale: 0.6, opacity: 0 }}
+					style={{pointerEvents: "auto"}}
 					className="absolute -top-1 -right-1 bg-pink-600 text-white text-xs font-bold rounded-full h-5 min-w-[20px] px-1 flex items-center justify-center border border-white"
 					>
 						{itemCount}

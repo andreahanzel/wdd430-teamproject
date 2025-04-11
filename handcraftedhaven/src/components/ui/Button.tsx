@@ -6,7 +6,7 @@ import { cn } from "../../lib/utils";
 
 import clsx from "clsx";
 
-const buttonVariants = cva(
+export const buttonVariants = cva(
 	"inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed",
 	{
 		variants: {

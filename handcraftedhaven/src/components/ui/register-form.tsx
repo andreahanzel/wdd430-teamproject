@@ -175,12 +175,9 @@ export default function RegisterForm() {
 			<div className="text-center">
 				<p className="text-pink-100 mb-4 text-sm">Already have an account?</p>
 				<Link href="/login" className="w-full inline-block">
-					<Button
-						variant="primary"
-						className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-lg shadow-md transition duration-300 transform hover:scale-105"
-					>
+					<span className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-lg shadow-md transition duration-300 transform hover:scale-105 flex items-center justify-center">
 						Sign In
-					</Button>
+					</span>
 				</Link>
 			</div>
 		</form>

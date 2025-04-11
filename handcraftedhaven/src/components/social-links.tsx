@@ -18,7 +18,7 @@ export default function SocialLinks() {
           className="hover:opacity-70 transition"
           fgColor="#ffffff"
           bgColor="transparent"
-          style={{ width: 30, height: 30 }}
+          style={{ width: 30, height: 30, pointerEvents: "auto" }}
         />
       ))}
     </div>

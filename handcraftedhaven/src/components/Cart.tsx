@@ -48,7 +48,7 @@ export default function Cart() {
 	}
 
 	return (
-		<div id="main-content" className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 px-4 py-10 text-white">
+		<main id="main-content" className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 px-4 py-10 text-white">
 			<div className="max-w-6xl mx-auto space-y-10">
 				<h1 className="text-3xl font-bold text-white">Your Shopping Cart ({cartItems.length} {cartItems.length === 1 ? "item" : "items"})</h1>
 
@@ -151,6 +151,6 @@ export default function Cart() {
 					</div>
 				</div>
 			</div>
-		</div>
+		</main>
 	);
 }

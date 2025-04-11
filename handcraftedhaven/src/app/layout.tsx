@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Poppins, Fira_Code } from "next/font/google";
+import "./css-reset.css";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -31,31 +32,43 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
 	children,
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
-	return (
-		<html lang="en" className="scroll-smooth">
-			<body
-				className={`${inter.variable} ${poppins.variable} ${firaCode.variable} font-sans min-h-screen flex flex-col bg-gray-50`}
-			>
-				<SessionProvider>
-					<NotificationProvider>
-						<CartProvider>
-							<div className="flex flex-col min-h-screen">
-								<Header />
+	}: Readonly<{
+		children: React.ReactNode;
+	}>) {
+		return (
+		<html lang="en" className="scroll-smooth h-full">
+		<head>
+			{/* Basic favicon */}
+			<link rel="icon" href="/favicon.ico" sizes="any" />
 
-								<main className="flex-grow">
-									<div className="mx-auto w-full max-w-[2000px]">
-										{children}
-									</div>
-								</main>
-
-								<Footer />
-							</div>
-						</CartProvider>
-					</NotificationProvider>
-				</SessionProvider>
+			{/* Optional: higher resolution PNG versions */}
+			<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+			<link rel="icon" type="image/png" sizes="256x256" href="/favicon-256x256.png" />
+			<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png" />
+			{/* Optional: modern scalable icon for sharp display */}
+			<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		</head>
+			<body className={`${inter.variable} ${poppins.variable} ${firaCode.variable} font-sans h-full`}>
+			{/* Add this div to isolate notifications from layout transforms */}
+			<div id="notification-root" className="fixed inset-0 pointer-events-none z-[9999]">
+				{/* NotificationContainer will render here via portal */}
+			</div>
+			
+			<SessionProvider>
+				<NotificationProvider>
+				<CartProvider>
+					<div className="flex flex-col min-h-screen relative"> {/* Added relative */}
+					<Header />
+					<main className="flex-1">
+						<div className="mx-auto w-full max-w-[3000px]">
+						{children}
+						</div>
+					</main>
+					<Footer />
+					</div>
+				</CartProvider>
+				</NotificationProvider>
+			</SessionProvider>
 
 				{/* Skip to content link for accessibility */}
 				<a

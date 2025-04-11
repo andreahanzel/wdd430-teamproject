@@ -20,18 +20,18 @@ export default function CartPage() {
 
 	if (status === "loading") {
 		return (
-			<main
+			<div
 				id="main-content"
 				className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 flex justify-center items-center"
 			>
 				<div className="w-12 h-12 border-t-4 border-white rounded-full animate-spin"></div>
-			</main>
+			</div>
 		);
 	}
 
 	if (status === "unauthenticated") {
 		return (
-			<main
+			<div
 				id="main-content"
 				className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 flex items-center justify-center px-4"
 			>
@@ -60,19 +60,18 @@ export default function CartPage() {
 						</Link>
 					</div>
 				</div>
-			</main>
+			</div>
 		);
 	}
 
 	// Authenticated state
 	return (
-		<main
-			id="main-content"
+		<div
 			className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-700 py-10 px-4"
-		>
+			>
 			<div className="max-w-6xl mx-auto">
 				<Cart />
 			</div>
-		</main>
-	);
+			</div>
+		);
 }
