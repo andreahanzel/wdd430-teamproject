@@ -6,10 +6,8 @@ import fs from 'fs'
 import path from 'path'
 
 // GET a single product
-export async function GET(
-    request: Request,
-    { params }: { params: { id: string } }
-) {
+export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+    const params = await props.params;
     const session = await getServerSession(authOptions)
 
     if (!session || session.user.role !== "SELLER" || !session.user.email) {
@@ -55,10 +53,8 @@ export async function GET(
 }
 
 // PUT update a product
-export async function PUT(
-    request: Request,
-    { params }: { params: { id: string } }
-) {
+export async function PUT(request: Request, props: { params: Promise<{ id: string }> }) {
+    const params = await props.params;
     const session = await getServerSession(authOptions)
 
     if (!session || session.user.role !== "SELLER" || !session.user.email) {
@@ -189,10 +185,8 @@ export async function PUT(
 }
 
 // DELETE a product
-export async function DELETE(
-    request: Request,
-    { params }: { params: { id: string } }
-) {
+export async function DELETE(request: Request, props: { params: Promise<{ id: string }> }) {
+    const params = await props.params;
     const session = await getServerSession(authOptions)
 
     if (!session || session.user.role !== "SELLER" || !session.user.email) {
