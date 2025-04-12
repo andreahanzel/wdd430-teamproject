@@ -67,42 +67,42 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
 function NotificationContainer({
 	notifications,
 	dismissNotification,
-}: {
-	notifications: Notification[];
-	dismissNotification: (id: string) => void;
-}) {
-	return (
-		<div className="fixed top-24 right-6 z-50 flex flex-col gap-4 w-full max-w-md">
+	}: {
+		notifications: Notification[];
+		dismissNotification: (id: string) => void;
+	}) {
+		return (
+		<div className="fixed top-4 right-4 z-[9999]">
 			<AnimatePresence>
-				{notifications.map((notification) => (
-					<motion.div
-						key={notification.id}
-						initial={{ opacity: 0, x: 50 }}
-						animate={{ opacity: 1, x: 0 }}
-						exit={{ opacity: 0, x: 50 }}
-						transition={{ duration: 0.3 }}
-						className={`rounded-xl p-4 flex items-start justify-between border backdrop-blur-lg shadow-lg
-							${
-							notification.type === 'success'
-								? 'bg-green-500/20 text-green-200 border-green-400/20'
-								: notification.type === 'error'
-								? 'bg-red-500/20 text-red-200 border-red-400/20'
-								: notification.type === 'warning'
-								? 'bg-yellow-400/20 text-yellow-200 border-yellow-400/20'
-								: 'bg-blue-500/20 text-blue-200 border-blue-400/20'
-							}`}
+			{notifications.map((notification) => (
+				<motion.div
+				key={notification.id}
+				className={`p-4 mb-2 rounded-lg shadow-lg text-white ${
+					notification.type === 'success' ? 'bg-green-500' : 
+					notification.type === 'error' ? 'bg-red-500' :
+					'bg-blue-500'
+				}`}
+				initial={{ opacity: 0, x: 100 }}
+				animate={{ opacity: 1, x: 0 }}
+				exit={{ opacity: 0, x: 100 }}
+				onClick={() => dismissNotification(notification.id)}
+				>
+				<div className="flex justify-between items-center">
+					<span>{notification.message}</span>
+					<button 
+					onClick={(e) => {
+						e.stopPropagation();
+						dismissNotification(notification.id);
+					}}
+					className="ml-4 text-white hover:text-gray-200"
+					title="Dismiss notification"
 					>
-						<div className="flex-1">{notification.message}</div>
-						<button
-							onClick={() => dismissNotification(notification.id)}
-							className="ml-2 focus:outline-none"
-							aria-label="Dismiss notification"
-						>
-							<X size={16} />
-						</button>
-					</motion.div>
-				))}
+					<X size={16} />
+					</button>
+				</div>
+				</motion.div>
+			))}
 			</AnimatePresence>
 		</div>
-	);
-}
+		);
+	}

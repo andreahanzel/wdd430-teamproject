@@ -56,73 +56,126 @@ export async function GET(req: NextRequest) {
 // POST /api/customer/saved - Add a product to saved items
 export async function POST(req: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
+    const session = await getServerSession(authOptions);
 
     if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      return NextResponse.json(
+        { 
+          success: false,
+          error: 'Unauthorized',
+          message: 'You must be logged in to save products'
+        }, 
+        { status: 401 }
+      );
     }
 
     if (session.user.role !== 'CUSTOMER') {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+      return NextResponse.json(
+        { 
+          success: false,
+          error: 'Forbidden',
+          message: 'Only customers can save products'
+        }, 
+        { status: 403 }
+      );
     }
 
-    const { productId } = await req.json()
+    const { productId } = await req.json();
 
     if (!productId) {
       return NextResponse.json(
-        { error: 'Product ID is required' },
+        { 
+          success: false,
+          error: 'Missing productId',
+          message: 'Product ID is required'
+        }, 
         { status: 400 }
-      )
+      );
+    }
+
+    // Validate productId is a number
+    if (isNaN(Number(productId))) {
+      return NextResponse.json(
+        { 
+          success: false,
+          error: 'Invalid productId',
+          message: 'Product ID must be a number'
+        }, 
+        { status: 400 }
+      );
     }
 
     // Check if the product exists
     const product = await prisma.product.findUnique({
-      where: {
-        id: productId,
-      },
-    })
+      where: { id: Number(productId) },
+    });
 
     if (!product) {
       return NextResponse.json(
-        { error: 'Product not found' },
+        { 
+          success: false,
+          error: 'Product not found',
+          message: 'The specified product does not exist'
+        }, 
         { status: 404 }
-      )
+      );
     }
 
-    // Check if the product is already saved (as a CartItem with quantity 0)
-    const existingSavedProduct = await prisma.cartItem.findFirst({
+    // Check if already saved
+    const existingSavedItem = await prisma.cartItem.findFirst({
       where: {
         userId: session.user.id,
-        productId,
-        quantity: 0, // This indicates a saved product
+        productId: Number(productId),
+        quantity: 0,
       },
-    })
+    });
 
-    if (existingSavedProduct) {
+    if (existingSavedItem) {
       return NextResponse.json(
-        { error: 'Product already saved' },
-        { status: 400 }
-      )
+        { 
+          success: false,
+          error: 'Product already saved',
+          message: 'This product is already in your saved items'
+        }, 
+        { status: 409 } // 409 Conflict
+      );
     }
 
-    // Add to saved products as a CartItem with quantity 0
+    // Create saved item
     const savedProduct = await prisma.cartItem.create({
       data: {
         userId: session.user.id,
-        productId,
-        quantity: 0, // This indicates a saved product, not an actual cart item
+        productId: Number(productId),
+        quantity: 0,
       },
-    })
+      select: {
+        id: true,
+        productId: true,
+        createdAt: true,
+      },
+    });
 
     return NextResponse.json({
+      success: true,
       message: 'Product saved successfully',
-      savedProduct,
-    })
+      data: {
+        savedProduct: {
+          id: savedProduct.id,
+          productId: savedProduct.productId,
+          createdAt: savedProduct.createdAt,
+        }
+      }
+    }, { status: 201 });
+
   } catch (error) {
-    console.error('Error saving product:', error)
+    console.error('Error saving product:', error);
     return NextResponse.json(
-      { error: 'Failed to save product' },
+      { 
+        success: false,
+        error: 'Internal server error',
+        message: 'An unexpected error occurred while saving the product'
+      },
       { status: 500 }
-    )
+    );
   }
 }

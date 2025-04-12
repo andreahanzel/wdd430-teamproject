@@ -167,12 +167,9 @@ export default function LoginForm() {
 				<div className="text-center">
 					<p className="text-pink-100 mb-4 text-sm">Don't have an account?</p>
 					<Link href="/register" className="w-full inline-block">
-						<Button
-							variant="primary"
-							className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-lg shadow-md transition duration-300 transform hover:scale-105"
-						>
+						<span className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-2.5 rounded-lg shadow-md transition duration-300 transform hover:scale-105 flex items-center justify-center">
 							Create Account
-						</Button>
+						</span>
 					</Link>
 				</div>
 			</form>

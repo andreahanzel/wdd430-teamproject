@@ -66,7 +66,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
 	const addToCart = async (product: any, quantity: number = 1) => {
 		if (!isAuthenticated) {
-			showNotification("Please sign in to add items to your cart", "info");
+			showNotification("Please sign in to add items to cart", "info");
 			router.push("/login");
 			return;
 		}
@@ -115,15 +115,16 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 				]);
 			}
 
-			showNotification("Added to cart successfully", "success");
-		} catch (error) {
-			console.error("Error adding to cart:", error);
-			showNotification(
-				error instanceof Error ? error.message : "Failed to add item to cart",
+			await new Promise(resolve => setTimeout(resolve, 100)); 
+    
+			showNotification(`${product.name} added to cart!`, "success");
+			} catch (error) {
+				showNotification(
+				error instanceof Error ? error.message : "Failed to add to cart",
 				"error"
-			);
-		}
-	};
+				);
+			}
+		};
 
 	const removeFromCart = async (productId: number) => {
 		if (!isAuthenticated) return;

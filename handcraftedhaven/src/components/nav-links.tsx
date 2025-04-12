@@ -50,7 +50,7 @@ export default function Nav() {
               }
             )}
           >
-            <LinkIcon className="w-6 h-6 md:hidden text-white" />
+            <LinkIcon className="w-6 h-6 md:hidden text-white" style={{pointerEvents: "auto"}} />
             <p className="hidden md:block text-sm font-medium drop-shadow-md">{link.name}</p>
           </Link>
         );

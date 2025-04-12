@@ -1,0 +1,29 @@
+/* CSS Reset for Standard Properties */
+.pointer-events-none {
+    -webkit-pointer-events: none !important; /* Safari */
+    -moz-pointer-events: none !important; /* Firefox */
+    pointer-events: none !important;
+  }
+  
+    
+    /* SVG Fill Properties */
+    .fill-white {
+        fill: #ffffff !important;
+    }
+    
+    .fill-pink-500 {
+        fill: #ec4899 !important;
+    }
+    
+    /* Font Sizing */
+    .font-size-adjust-112 {
+        font-size: 112.16% !important;
+    }
+    
+    .font-size-adjust-107 {
+        font-size: 107.12% !important;
+    }
+    
+    .font-size-adjust-134 {
+        font-size: 134.59% !important;
+    }

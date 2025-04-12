@@ -1,3 +1,4 @@
+@import './css-reset.css'; /* Must come first */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,7 +16,6 @@ body {
   font-family: var(--font-inter);
 }
 
-/* Add these new styles */
 input, textarea, select {
   @apply text-gray-900 dark:text-white bg-white dark:bg-gray-800;
 }
@@ -79,4 +79,87 @@ select option {
 select option:checked {
   background-color: #5a2d91; /* soft glow */
   color: white;
+}
+
+
+/* Fix for invalid fill properties */
+@layer utilities {
+  .fill-pink-500 {
+    fill: #ec4899 !important;
+  }
+  
+  .fill-white {
+    fill: #ffffff !important;
+  }
+}
+
+/* Fix for invalid size-adjust properties */
+@layer utilities {
+  .text-size-112 { font-size: 112.16% !important; }
+  .text-size-107 { font-size: 107.12% !important; }
+  .text-size-134 { font-size: 134.59% !important; }
+}
+
+/* Fix for pointer-events */
+@layer utilities {
+  .pointer-events-none {
+    pointer-events: none !important;
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: 'AtlassianSans';
+    src: local('Arial'), local('Helvetica');
+    unicode-range: U+0-10FFFF; /* Trick to override any extension fonts */
+  }
+}
+
+.notification-container {
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  z-index: 9999 !important;
+  pointer-events: none;
+}
+
+.notification {
+  pointer-events: auto;
+}
+
+/* Input focus effect */
+input:focus {
+  box-shadow: 0 0 0 2px theme('colors.neonPink');
+}
+
+/* Button hover effect */
+.hover-glow:hover {
+  filter: drop-shadow(0 0 8px theme('colors.neonPink'));
+  transform: translateY(-1px);
+}
+
+/* Success message animation */
+@keyframes confetti {
+  0% { transform: translateY(0) rotate(0); }
+  100% { transform: translateY(-100px) rotate(360deg); }
+}
+
+.success-confetti::after {
+  content: "🎉";
+  position: absolute;
+  animation: confetti 1s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(-50%) translateX(10px);
+  }
+  50% {
+    transform: translateY(-60%) translateX(20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }

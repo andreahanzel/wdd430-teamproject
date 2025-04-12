@@ -187,7 +187,7 @@ export default function CheckoutPage() {
 	}
 
 	return (
-		<div id="main-content" className="max-w-7xl mx-auto p-6">
+		<main id="main-content" className="max-w-7xl mx-auto p-6">
 			{/* Checkout Steps */}
 			<div className="mb-10">
 				<div className="flex justify-between items-center">
@@ -926,6 +926,6 @@ export default function CheckoutPage() {
 					</div>
 				</div>
 			</div>
-		</div>
+		</main>
 	);
 }

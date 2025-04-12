@@ -198,19 +198,19 @@ export default function ProductsPage() {
 									))}
 								</select>
 								<div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-									<svg
-										className="h-5 w-5 text-gray-400"
-										xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 20 20"
-										fill="currentColor"
-										aria-hidden="true"
+								<svg
+									className="h-5 w-5 text-gray-400"
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 20 20"
+									fill="currentColor"
+									aria-hidden="true"
 									>
-										<path
-											fillRule="evenodd"
-											d="M5.293 7.293a1 1 011.414 0L10 10.586l3.293-3.293a1 1 011.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
-											clipRule="evenodd"
-										/>
-									</svg>
+									<path
+										fillRule="evenodd"
+										d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+										clipRule="evenodd"
+									/>
+								</svg>
 								</div>
 							</div>
 						</div>
@@ -234,10 +234,10 @@ export default function ProductsPage() {
 								viewBox="0 0 20 20"
 								fill="currentColor"
 								aria-hidden="true"
-							>
+								>
 								<path
 									fillRule="evenodd"
-									d="M5.293 7.293a1 1 011.414 0L10 10.586l3.293-3.293a1 1 111.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
+									d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
 									clipRule="evenodd"
 								/>
 							</svg>
@@ -259,10 +259,10 @@ export default function ProductsPage() {
 								viewBox="0 0 20 20"
 								fill="currentColor"
 								aria-hidden="true"
-							>
+								>
 								<path
 									fillRule="evenodd"
-									d="M5.293 7.293a1 1 011.414 0L10 10.586l3.293-3.293a1 1 111.414 1.414l-4 4a1 1 01-1.414 0l-4-4a1 1 010-1.414z"
+									d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
 									clipRule="evenodd"
 								/>
 							</svg>
@@ -410,10 +410,10 @@ export default function ProductsPage() {
 								className="h-4 w-4 mr-1"
 								viewBox="0 0 20 20"
 								fill="currentColor"
-							>
+								>
 								<path
 									fillRule="evenodd"
-									d="M4 2a1 1 011 1v2.101a7.002 7.002 0111.601 2.566 1 1 011-1.885.666A5.002 5.002 005.999 7H9a1 1 010 2H4a1 1 01-1-1V3a1 1 011-1zm.008 9.057a1 1 011.276.61A5.002 5.002 0014.001 13H11a1 1 110-2h5a1 1 011 1v5a1 1 11-2 0v-2.101a7.002 7.002 0111.601-2.566 1 1 01.61-1.276z"
+									d="M4 2a1 1 0 011 1v1h3.672a2 2 0 011.414.586l.328.328a2 2 0 000 2.828l-.5.5-2.828-2.828-1.414 1.414 2.828 2.828-.5.5a2 2 0 01-2.828 0l-.328-.328A2 2 0 014 8.328V5H3a1 1 0 01-1-1V2a1 1 0 011-1h1zm5 10a1 1 0 01.707.293l5 5a1 1 0 01-1.414 1.414l-5-5A1 1 0 019 12z"
 									clipRule="evenodd"
 								/>
 							</svg>
