@@ -13,8 +13,8 @@ export default function Login() {
 			<div className="w-16 h-16 mx-auto flex items-center justify-center bg-indigo-600/50 rounded-full shadow-md">
 				<LogIn className="w-8 h-8 text-white" />
 			</div>
-			<h1 className="text-3xl font-bold text-white mt-4">Welcome Back</h1>
-			<p className="text-pink-200 text-sm mt-1">Log in to your account</p> {/* Changed to text-pink-200 and added text-sm */}
+			<h1 className="text-3xl font-bold mt-4 text-center">Login Handcrafted Haven User</h1>
+			<p className="text-pink-200 text-sm mt-1 text-center">Log in to your account</p> {/* Changed to text-pink-200 and added text-sm */}
 			</div>
 
 			<Suspense fallback={<div className="text-white">Loading login form...</div>}>
