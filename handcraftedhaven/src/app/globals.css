@@ -3,6 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
   --primary: #3B1D5E;      /* Dark Purple */
   --secondary: #7F3FFC;    /* Electric Blue */
@@ -11,48 +12,56 @@
   --error: #E63946;        /* Error Red */
 }
 
+
 body {
   @apply bg-white text-gray-900 dark:bg-backgroundDark dark:text-white;
   font-family: var(--font-inter);
 }
 
+
 input, textarea, select {
   @apply text-gray-900 dark:text-white bg-white dark:bg-gray-800;
 }
 
+
 input::placeholder, textarea::placeholder {
   @apply text-gray-400 dark:text-gray-400;
 }
+
 
 /* Focus styles */
 input:focus, textarea:focus, select:focus {
   @apply ring-2 ring-electricBlue outline-none;
 }
 
+
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-poppins);
 }
+
 
 code {
   font-family: var(--font-fira-code);
 }
 
+
 @layer components {
   .btn-primary {
     @apply bg-electricBlue hover:bg-neonPink text-white font-medium py-2 px-6 rounded-md transition-colors;
   }
-  
+
   .btn-secondary {
     @apply border border-darkPurple text-darkPurple hover:bg-darkPurple hover:text-white font-medium py-2 px-6 rounded-md transition-colors;
   }
-  
+
   /* Add form input component */
   .form-input {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
-          focus:outline-none focus:ring-2 focus:ring-electricBlue 
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm
+          focus:outline-none focus:ring-2 focus:ring-electricBlue
           bg-white dark:bg-gray-800 text-gray-900 dark:text-white;
   }
 }
+
 
 @layer utilities {
   .progress-step-0 { width: 0%; }
@@ -60,6 +69,7 @@ code {
   .progress-step-2 { width: 66.66%; }
   .progress-step-3 { width: 100%; }
 }
+
 
 /* Match the dropdown and options to the gradient theme look */
 select {
@@ -69,11 +79,13 @@ select {
   border-radius: 0.5rem;
 }
 
+
 /* Style dropdown options in opened menu */
 select option {
   background-color: #3B1D5E; /* YOUR --primary purple */
   color: white;
 }
+
 
 /* Optional: highlight selected option in a slightly lighter purple */
 select option:checked {
@@ -82,16 +94,19 @@ select option:checked {
 }
 
 
+
+
 /* Fix for invalid fill properties */
 @layer utilities {
   .fill-pink-500 {
     fill: #ec4899 !important;
   }
-  
+
   .fill-white {
     fill: #ffffff !important;
   }
 }
+
 
 /* Fix for invalid size-adjust properties */
 @layer utilities {
@@ -100,12 +115,14 @@ select option:checked {
   .text-size-134 { font-size: 134.59% !important; }
 }
 
+
 /* Fix for pointer-events */
 @layer utilities {
   .pointer-events-none {
     pointer-events: none !important;
   }
 }
+
 
 @layer base {
   @font-face {
@@ -115,6 +132,7 @@ select option:checked {
   }
 }
 
+
 .notification-container {
   position: fixed !important;
   top: 20px !important;
@@ -123,14 +141,17 @@ select option:checked {
   pointer-events: none;
 }
 
+
 .notification {
   pointer-events: auto;
 }
+
 
 /* Input focus effect */
 input:focus {
   box-shadow: 0 0 0 2px theme('colors.neonPink');
 }
+
 
 /* Button hover effect */
 .hover-glow:hover {
@@ -138,11 +159,13 @@ input:focus {
   transform: translateY(-1px);
 }
 
+
 /* Success message animation */
 @keyframes confetti {
   0% { transform: translateY(0) rotate(0); }
   100% { transform: translateY(-100px) rotate(360deg); }
 }
+
 
 .success-confetti::after {
   content: "🎉";
@@ -150,6 +173,7 @@ input:focus {
   animation: confetti 1s ease-in-out forwards;
   opacity: 0;
 }
+
 
 @keyframes float {
   0%, 100% {
@@ -160,6 +184,55 @@ input:focus {
   }
 }
 
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+
+/* iOS Form Control Reset */
+@supports (-webkit-touch-callout: none) {
+  /* Reset form controls */
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.5rem;
+  }
+ 
+  /* Fix for transparent backgrounds */
+  .login-input-bg {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+ 
+  /* Enhanced backdrop-filter */
+  .login-backdrop {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  /* Placeholder fix */
+  .login-input::placeholder {
+    opacity: 1 !important;
+    color: #f9a8d4 !important;
+  }
+}
+
+
+/* iOS input reset */
+.ios-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+
+@supports (-webkit-touch-callout: none) {
+  .ios-input {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  .ios-input::placeholder {
+    opacity: 1 !important;
+  }
 }

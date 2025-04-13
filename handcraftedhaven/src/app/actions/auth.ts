@@ -1,11 +1,14 @@
 "use server";
 
+
 import { SignupFormSchema, FormState, LoginFormSchema } from "@/lib/definitions";
 import { createSession, deleteSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { createUser, findUserByEmail, validatePassword } from "@/services/authServices";
 
+
 export async function signup(state: FormState, formData: FormData) {
+
 
     // Validate form fields
     const validatedFields = SignupFormSchema.safeParse({
@@ -13,7 +16,7 @@ export async function signup(state: FormState, formData: FormData) {
         email: formData.get("email"),
         password: formData.get("password"),
     })
-    
+
     // If any form fields are invalid, return early
     if (!validatedFields.success) {
         return {
@@ -21,23 +24,28 @@ export async function signup(state: FormState, formData: FormData) {
         }
     }
 
-    // Prepare data and create a new user
-    const { name, email, password } = validatedFields.data;
-    const user = await createUser(name, email, password);
 
-    // If the user wasn't created successfully, return an error message
-    if (!user) {
+   // Prepare data and create a new user
+const { name, email, password } = validatedFields.data;
+const result = await createUser(name, email, password);
+
+
+// If the user wasn't created successfully, return an error message
+    if (!result.success || 'error' in result) {
         return {
-            message: "An error occurred while creating your account. Please try again.",
+            message: result.error || "An error occurred while creating your account. Please try again.",
         }
     }
 
+
     // Create a session for the user
-    await createSession(user.id);
+    await createSession(Number(result.user.id));
+
 
     // Redirect the user to the login page
-    redirect("/login");
-}
+        redirect("/login");
+    }
+
 
 export async function login(state: FormState, formData: FormData) {
     // Validate form fields
@@ -46,6 +54,7 @@ export async function login(state: FormState, formData: FormData) {
         password: formData.get("password"),
     })
 
+
     // If any form fields are invalid, return early
     if (!validatedFields.success) {
         return {
@@ -53,9 +62,11 @@ export async function login(state: FormState, formData: FormData) {
         }
     }
 
+
     // Compare the password with the hashed password in the database
     const { email, password } = validatedFields.data;
     const user = await findUserByEmail(email);
+
 
     if (!user) {
         return {
@@ -66,6 +77,7 @@ export async function login(state: FormState, formData: FormData) {
     }
     const isPasswordValid = await validatePassword(password, user.password);
 
+
     if (!isPasswordValid) {
         return {
             errors: {
@@ -74,15 +86,18 @@ export async function login(state: FormState, formData: FormData) {
         }
     }
     // Create a session for the user
-    await createSession(user.id);
+    await createSession(Number(user.id));
+
 
     // Redirect the user to the home page
     redirect("/");
 }
 
+
 export async function logout() {
+
 
     deleteSession();
     // Redirect the user to the home page
     redirect("/");
-} 
+}
