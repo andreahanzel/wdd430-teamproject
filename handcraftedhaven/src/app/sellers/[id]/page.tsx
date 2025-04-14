@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { getSellerById } from "@/services/sellerServices";
 import { Seller } from "@/types/database";
 import ProductCard from "@/components/ProductCard";
@@ -70,10 +71,13 @@ export default function SellerDetailPage() {
 				{/* Seller Profile Header */}
 				<div className="bg-white/10 backdrop-blur-lg shadow-xl border border-white/10 rounded-xl overflow-hidden mb-12">
 					<div className="relative h-64 md:h-80">
-						<img
+						<Image
 							src={seller.profileImage}
 							alt={seller.name}
+							fill
 							className="w-full h-full object-cover"
+							sizes="100vw"
+							priority
 						/>
 						<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
 

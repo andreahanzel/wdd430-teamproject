@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 interface SellerProfileCardProps {
     seller: {
         id: number;
@@ -19,9 +21,12 @@ export default function SellerProfileCard({ seller }: SellerProfileCardProps) {
     return (
         <div className="bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/10 p-8 md:p-12 mb-12">
         <div className="flex flex-col md:flex-row gap-8 items-center">
-            <img
+            <Image
             src={seller.profileImage}
             alt={`profile picture of ${seller.name}`}
+            width={96}
+            height={96}
+            priority
             className="w-24 h-24 rounded-full object-cover border-2 border-electricBlue"
             />
             <div className="text-center md:text-left">

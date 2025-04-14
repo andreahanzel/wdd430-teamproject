@@ -77,8 +77,8 @@ export default function SellersPage() {
 					</div>
 				) : (
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-						{sellers.map((seller) => (
-							<SellerCard key={seller.id} seller={seller} />
+						{sellers.map((seller, index) => (
+							<SellerCard key={seller.id} seller={seller} isFirst={index === 0} />
 						))}
 					</div>
 				)}

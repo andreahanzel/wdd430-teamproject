@@ -1,28 +1,33 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "./ui/Button";
 import { Seller } from "@/types/database";
 import { useState } from "react";
 
 interface SellerCardProps {
 	seller: Seller;
+	isFirst?: boolean;
 }
 
-export default function SellerCard({ seller }: SellerCardProps) {
+export default function SellerCard({ seller, isFirst = false }: SellerCardProps) {
 	const [imageLoaded, setImageLoaded] = useState(false);
 
 	return (
 		<div className="bg-purple-900/70 backdrop-blur-lg border border-white/10 rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 h-[350px] flex flex-col">
 			<div className="relative h-52 overflow-hidden bg-gray-100">
 				{/* Profile image */}
-				<img
+				<Image
 					src={seller.profileImage}
 					alt={seller.name}
+					fill
 					className={`w-full h-full object-cover transition-opacity duration-300 ${
 						imageLoaded ? "opacity-100" : "opacity-0"
 					}`}
 					onLoad={() => setImageLoaded(true)}
+					sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+					priority={isFirst}
 				/>
 
 				{/* Image placeholder */}
