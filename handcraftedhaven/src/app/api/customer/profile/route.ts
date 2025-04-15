@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
         let address = {};
         let paymentInfo = {};
 
-        profileOrders.forEach(order => {
+        profileOrders.forEach((order) => {
         if (order.status === 'PROFILE_ADDRESS' && order.shippingAddress) {
             address = order.shippingAddress;
         }
