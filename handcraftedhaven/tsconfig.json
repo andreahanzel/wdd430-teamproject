@@ -8,6 +8,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"noEmit": true,
 		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
 		"module": "esnext",
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
@@ -15,6 +16,7 @@
 		"jsx": "preserve",
 		"incremental": true,
 		"baseUrl": ".",
+		"types": ["node"],
 		"plugins": [
 			{
 				"name": "next"
